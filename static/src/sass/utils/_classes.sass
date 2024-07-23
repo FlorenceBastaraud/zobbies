@@ -1,0 +1,19 @@
+.wrapper
+  width: 100%
+  max-width: 1280px
+  margin: 0 auto
+
+  @include media-query(1280px)
+    padding: 0 20px
+
+
+.logo
+  color: #fff
+  font-size: toRem(24)
+  font-weight: bold
+  font-style: italic
+  transition: all .3s ease-in-out
+
+  &:hover
+    color: $primaryHoverColor
+    scale: 1.1

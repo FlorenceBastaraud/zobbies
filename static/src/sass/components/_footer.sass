@@ -1,0 +1,56 @@
+.footer
+  padding: toRem(58) 0 toRem(22)
+
+  @include media-query(666px)
+    padding: toRem(20) 0  
+
+  &__content
+    @include displayFlex(row, space-between, flex-end)
+
+    @include media-query(666px)
+      @include displayFlex(column, flex-end, flex-start)
+      row-gap: 20px
+
+    &--nav
+      @include displayFlex(column, flex-end, flex-start)
+      row-gap: 2px
+
+      a
+        font-size: toRem(16)
+        font-weight: 500
+        position: relative
+        transition: color .3s ease-in-out
+
+        @include media-query(666px)
+          font-size: toRem(14)
+
+        &:hover
+          color: $primaryHoverColor
+
+          &::after
+            width: 100%
+
+        &::after
+          content: ''
+          position: absolute
+          left: 0
+          bottom: 0
+          height: 1px
+          width: 0
+          background-color: $primaryHoverColor
+          transition: all .3s ease-in-out
+
+    &--copyrights
+      @include media-query(666px)
+          font-size: toRem(12)
+          
+      a
+        font-size: toRem(14)
+        font-weight: 400
+        transition: color .3s ease-in-out
+
+        @include media-query(666px)
+          font-size: toRem(12)
+
+        &:hover
+          color: $primaryHoverColor
