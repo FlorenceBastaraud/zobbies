@@ -1,0 +1,52 @@
+.primary-cta
+  font-size: toRem(18)
+  font-weight: 700
+  color: #000
+  border-radius: 40px
+  border: none
+  padding: toEm(12) toEm(40)
+  background: none
+  position: relative
+  overflow: hidden
+  transition: .1s, scale .3s
+
+  @include media-query(1240px)
+    font-size: toRem(16)
+
+  @include media-query(666px)
+    font-size: toRem(15)
+
+  &:hover
+    color: $mainBackground
+    font-style: italic
+    font-weight: 400
+    scale: .9
+
+    &::after
+      height: 100%
+      
+  
+  &::before
+    content: ''
+    position: absolute
+    width: 100%
+    height: 100%
+    left: 0
+    bottom: 0
+    background-color: $buttonBackgroundColor
+    z-index: -2
+
+  &::after
+    content: ''
+    position: absolute
+    width: 100%
+    height: 0%
+    left: 0
+    bottom: 0
+    border-radius: 40% 70% 30% 30%
+    background-color: $labelColor
+    z-index: -1
+    transition: .3s
+
+
+    

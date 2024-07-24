@@ -1,8 +1,8 @@
 .header
-  padding: toRem(40) 0
+  padding: toEm(40) 0
 
   @include media-query(666px)
-    padding: toRem(20) 0  
+    padding: toEm(20) 0  
 
   &__content
     @include displayFlex(row, space-between, center)
@@ -15,11 +15,11 @@
 
     &--nav
       @include displayFlex(row, center, center)
-      column-gap: toRem(30)
+      column-gap: toEm(30)
 
       @include media-query(666px)
         @include displayFlex(column, center, flex-end)
-        row-gap: 5px
+        row-gap: toEm(5)
 
       a
         font-size: toRem(18)

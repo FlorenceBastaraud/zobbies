@@ -22,11 +22,11 @@
 }
 
 .header {
-  padding: 2.5rem 0;
+  padding: 2.5em 0;
 }
 @media (max-width: 666px) {
   .header {
-    padding: 1.25rem 0;
+    padding: 1.25em 0;
   }
 }
 .header__content {
@@ -51,7 +51,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  column-gap: 1.875rem;
+  column-gap: 1.875em;
 }
 @media (max-width: 666px) {
   .header__content--nav {
@@ -59,7 +59,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    row-gap: 5px;
+    row-gap: 0.3125em;
   }
 }
 .header__content--nav a {
@@ -97,11 +97,12 @@
 }
 
 .footer {
-  padding: 3.625rem 0 1.375rem;
+  margin-top: auto;
+  padding: 3.625em 0 1.375em;
 }
 @media (max-width: 666px) {
   .footer {
-    padding: 1.25rem 0;
+    padding: 1.25em 0;
   }
 }
 .footer__content {
@@ -116,7 +117,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    row-gap: 20px;
+    row-gap: 1.25em;
   }
 }
 .footer__content--nav {
@@ -124,7 +125,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  row-gap: 2px;
+  row-gap: 0.125em;
 }
 .footer__content--nav a {
   font-size: 1rem;
@@ -172,6 +173,134 @@
   color: #D7F5F3;
 }
 
+.primary-cta {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #000;
+  border-radius: 40px;
+  border: none;
+  padding: 0.75em 2.5em;
+  background: none;
+  position: relative;
+  overflow: hidden;
+  transition: 0.1s, scale 0.3s;
+}
+@media (max-width: 1240px) {
+  .primary-cta {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 666px) {
+  .primary-cta {
+    font-size: 0.9375rem;
+  }
+}
+.primary-cta:hover {
+  color: #070707;
+  font-style: italic;
+  font-weight: 400;
+  scale: 0.9;
+}
+.primary-cta:hover::after {
+  height: 100%;
+}
+.primary-cta::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+  background-color: #D7F5F3;
+  z-index: -2;
+}
+.primary-cta::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0%;
+  left: 0;
+  bottom: 0;
+  border-radius: 40% 70% 30% 30%;
+  background-color: #FFAFAF;
+  z-index: -1;
+  transition: 0.3s;
+}
+
+.landing-page {
+  padding: 5em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.landing-page__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: -0.625em;
+  text-align: center;
+}
+@media (max-width: 1140px) {
+  .landing-page__content {
+    padding: 0em 1.25em;
+  }
+}
+.landing-page__content--title, .landing-page__content--subtitle {
+  font-size: 4.5rem;
+  font-weight: 700;
+  max-width: 1230px;
+}
+@media (min-width: 887px) {
+  .landing-page__content--subtitle {
+    line-height: 2rem;
+  }
+}
+.landing-page__content--label {
+  color: #FFAFAF;
+  font-weight: 700;
+  font-size: 4.5rem;
+  font-style: italic;
+}
+@media (max-width: 1240px) {
+  .landing-page__content--title, .landing-page__content--subtitle, .landing-page__content--label {
+    font-size: 3.125rem;
+  }
+}
+@media (max-width: 666px) {
+  .landing-page__content--title, .landing-page__content--subtitle, .landing-page__content--label {
+    font-size: 2.75rem;
+  }
+}
+@media (max-width: 440px) {
+  .landing-page__content--title, .landing-page__content--subtitle, .landing-page__content--label {
+    font-size: 2.375rem;
+  }
+}
+.landing-page__content--description {
+  margin-top: 1.875em;
+  font-size: 1.125rem;
+  font-weight: 400;
+  max-width: 780px;
+}
+@media (max-width: 1240px) {
+  .landing-page__content--description {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 666px) {
+  .landing-page__content--description {
+    font-size: 0.9375rem;
+  }
+}
+.landing-page__content--cta {
+  margin-top: 1.875em;
+}
+.landing-page__blobs {
+  display: none;
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -186,11 +315,23 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: #070707;
   color: #FFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
   color: #FFF;
   text-decoration: none;
+}
+
+a, button {
+  font-family: "Montserrat", sans-serif;
+}
+
+::selection {
+  background: #FFAFAF;
+  color: #070707;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,4 +1,4 @@
-import router from './router/router.js';
+import Router from './router/router.js';
 import Nav from './components/nav.js';
 
 
@@ -22,14 +22,13 @@ window.addEventListener('DOMContentLoaded', () => {
   
 });
 
-// const renderView = async (route) => {
-//   return route.routes[0].view;
-// }
+
 
 
 const navLinksList = document.querySelector("#navlinks");
 navLinksList.innerHTML = new Nav().renderLinks();
 
 
-// const zobbies = document.querySelector("#app");
-// zobbies.innerHTML = await renderView(router);
+const zobbies = document.querySelector("#app");
+const theView = new Router(location.pathname);
+zobbies.innerHTML = theView.viewSet;

@@ -5,6 +5,8 @@
 
 @import './components/header'
 @import './components/footer'
+@import './components/buttons'
+@import './components/blobs'
 
 @import './views/landing-page'
 
@@ -21,8 +23,19 @@ body
   font-family: $primaryFont
   background-color: $mainBackground
   color: $primaryColor
+  min-height: 100vh
+  display: flex
+  flex-direction: column
 
 a
   color: $primaryColor
   text-decoration: none
+
+a, button
+  font-family: $primaryFont
+
+::selection
+  background: $labelColor
+  color: $mainBackground
+
 
