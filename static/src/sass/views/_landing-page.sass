@@ -1,5 +1,6 @@
 .landing-page
   padding: toEm(80) 0
+  position: relative
   @include displayFlex(column, center, center)
 
   &__content
@@ -50,10 +51,21 @@
     &--cta
       margin-top: toEm(30)
 
+      @include media-query(900px)
+        z-index: 3
+
+
 
   &__blobs
-    display: none
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 100%
+    max-width: 90%
+    height: 100%
+    z-index: -1
 
-    // &--item
-
-    //   span
+    @include media-query(1340px)
+      min-width: 50%
+      max-width: 70%

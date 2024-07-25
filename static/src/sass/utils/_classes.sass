@@ -17,3 +17,67 @@
   &:hover
     color: $primaryHoverColor
     scale: 1.1
+
+
+
+.ptl
+  top: 0
+  left: 0
+
+  @include media-query(900px)
+    top: 30%
+    left: -15%
+
+.pt
+  top: 0
+  left: 50%
+  transform: translateX(-50%) translateY(-50%)
+
+  @include media-query(900px)
+    left: 30%
+
+.ptr
+  top: 0
+  right: 0
+
+.pr
+  top: 53%
+  right: 0
+  transform: translateX(50%) translateY(-50%)
+
+.pbr
+  bottom: 0
+  right: 13%
+
+  @include media-query(900px)
+    bottom: -5%
+    right: 6%
+
+.pb
+  bottom: 0
+  left: 50%
+  transform: translateX(-50%) translateY(50%)
+
+.pbl
+  top: 75%
+  left: 3%
+  transform: translateX(50%) translateY(-50%)
+
+  @include media-query(1066px)
+    top: unset
+    bottom: -16%
+    left: 0%
+
+  @include media-query(900px)
+    bottom: -20%
+    left: -10%
+
+  @include media-query(630px)
+    bottom: -10%
+    left: -15%
+
+
+.pl
+  top: 50%
+  left: 0
+  transform: translateX(-50%) translateY(-50%)

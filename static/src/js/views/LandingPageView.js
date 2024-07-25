@@ -19,22 +19,22 @@ export default class LandingPageView {
       </div>
 
       <div class="landing-page__blobs blobs">
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-1 ptl">
           <span data-blob="gaming">gaming</span>
         </div>
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-2 pt">
           <span data-blob="traveling">traveling</span>
         </div>
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-3 ptr">
           <span data-blob="dancing">dancing</span>
         </div>
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-1 pr">
           <span data-blob="hiking">hiking</span>
         </div>
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-2 pbr">
           <span data-blob="clubbing">clubbing</span>
         </div>
-        <div class="landing-page__blobs--item blob">
+        <div class="landing-page__blobs--item blob background-3 pbl">
           <span data-blob="reading">reading</span>
         </div>
       </div>
