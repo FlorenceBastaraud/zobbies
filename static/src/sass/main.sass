@@ -10,6 +10,7 @@
 @import './components/blobs'
 
 @import './views/landing-page'
+@import './views/enter-space'
 
 
 *, *::before, *::after
@@ -27,6 +28,14 @@ body
   min-height: 100vh
   display: flex
   flex-direction: column
+
+  &[view="enter-space"]
+    background: $labelColor
+    background: conic-gradient(from 315deg, $labelColor, #ECECA5)
+    color: $mainBackground
+
+    a
+      color: $mainBackground
 
 a
   color: $primaryColor

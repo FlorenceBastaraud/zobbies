@@ -1,0 +1,162 @@
+.enter-space
+  padding: toEm(80) 0
+  position: relative
+  @include displayFlex(row, space-between, flex-start)
+  column-gap: 40px
+
+  @include media-query(1350px)
+    justify-content: center
+    align-content: center
+
+  &__login, &__register
+    background: #ffffff
+    border-radius: 20px 53px 8px 10px / 10px 42px 5px 17px
+    border-radius: 40px
+    row-gap: 25px
+    padding: toEm(40)
+    @include displayFlex(column, flex-start, flex-start)
+
+    @include media-query(600px)
+      max-width: 95%
+
+    &--title
+      font-size: toRem(52)
+      font-weight: 400
+      color: $mainBackground
+
+    &--title
+      text-align: center
+      width: 100%
+      @include media-query(1240px)
+        font-size: toRem(42)
+
+      @include media-query(666px)
+          font-size: toRem(32)
+
+      @include media-query(440px)
+          font-size: toRem(26)
+
+    &--description
+      text-align: center
+      width: 100%
+      font-size: toRem(20)
+      font-weight: 400
+      max-width: 780px
+
+      @include media-query(1240px)
+        font-size: toRem(16)
+
+      @include media-query(666px)
+          font-size: toRem(15)
+
+    &--form
+      width: 100%
+      @include displayFlex(column, flex-start, center)
+      row-gap: 20px
+
+      fieldset
+        border: none
+        width: 100%
+        margin-bottom: 10px
+        @include displayFlex(column, flex-start, center)
+        font-size: toRem(16)
+        
+        & > *
+          width: 80%
+
+          @include media-query(600px)
+            width: 100%
+
+        &.gender
+          label
+            input
+              margin-right: 3px
+
+        legend
+          text-transform: uppercase
+          font-weight: 500
+          margin-bottom: 15px
+
+        label
+          margin: 7px 0
+          font-weight: 400
+          font-style: italic
+
+        input, select
+          background: #07070726
+          border: none
+          padding: toEm(6) toEm(10)
+          font-size: toRem(16)
+          border-radius: 40px
+          position: relative
+
+          &[type="radio"]
+            accent-color: $labelColor
+
+          &::placeholder
+            visibility: hidden
+
+
+      a
+        position: relative
+
+        &:hover
+          &::after
+            display: flex
+
+        &::after
+          content: ''
+          position: absolute
+          width: 98%
+          height: 1px
+          background-color: #000000d1
+          left: 0
+          bottom: -1px
+          display: none
+
+      .legal
+        a
+          font-weight: 500
+
+      .submit
+        cursor: pointer
+        font-size: toRem(16)
+        font-weight: 400
+        padding: toEm(12) toEm(40)
+        background: $labelColor
+
+        @include media-query(1240px)
+          font-size: toRem(14)
+
+        @include media-query(666px)
+          font-size: toRem(12)
+
+        &.submit-register
+          background-color: #f4ac9a
+
+    &--toggle
+      width: 100%
+      text-align: center
+
+      span
+        position: relative
+        cursor: pointer
+
+        &:hover
+
+          &::after
+            display: bloc
+
+        &::after
+          content: ''
+          position: absolute
+          width: 98%
+          height: 1px
+          background-color: #000000d1
+          left: 0
+          bottom: -1px
+          display: none
+
+  &__register
+    @include media-query(910px)
+        max-width: 95%

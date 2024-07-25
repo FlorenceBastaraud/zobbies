@@ -1,34 +1,21 @@
-import Router from './router/router.js';
-import Nav from './components/nav.js';
+import {callRouter, goTo, updateNav} from './helpers/managmentFunctions.js';
 
 
 
+window.addEventListener('popstate', callRouter);
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-
-  const goTo = url => {
-    history.pushState(null, null, url);
-  };
-
-
-  document.addEventListener('click', (e) => {
+  
+  document.body.addEventListener('click', (e) => {
     if(e.target.matches('[data-link]')){
       e.preventDefault();
       goTo(e.target.href);
+      updateNav();
     }
   });
   
-  
-});
+  updateNav();
+  callRouter();
 
-
-
-
-const navLinksList = document.querySelector("#navlinks");
-navLinksList.innerHTML = new Nav().renderLinks();
-
-
-const zobbies = document.querySelector("#app");
-const theView = new Router(location.pathname);
-zobbies.innerHTML = theView.viewSet;
+})

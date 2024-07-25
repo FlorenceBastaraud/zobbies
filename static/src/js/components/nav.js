@@ -11,6 +11,7 @@ export default class Nav {
   generatedetailsLinks(){
     switch(location.pathname){
       case '/':
+      case '/enter-space':
         this.detailsLinks = [
           {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
           {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},
