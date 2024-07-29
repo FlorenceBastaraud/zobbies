@@ -18,14 +18,14 @@
     "url": "https://github.com/FlorenceBastaraud/zobbies/issues"
   },
   "homepage": "https://github.com/FlorenceBastaraud/zobbies#readme",
-  "dependencies": {
-    "express": "^4.19.2"
-  },
   "devDependencies": {
     "connect-livereload": "^0.6.1",
     "livereload": "^0.9.3",
     "node-js": "^1.0.0",
     "node-sass": "^9.0.0",
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
