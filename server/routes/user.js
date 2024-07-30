@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import {User} from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+import { isUserConnected } from '../helpers/functions.js';
 
 const router = express.Router();
 
@@ -165,5 +166,15 @@ router.post('/reset-password/:token', async (req, res) => {
 
 
 });
+
+
+
+router.get('/connected', isUserConnected, async (req, res) => {
+
+  return res.json({status: true, message: 'connected'})
+
+});
+
+
 
 export {router as UserRouter}

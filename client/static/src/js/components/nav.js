@@ -5,8 +5,30 @@ export default class Nav {
     this.linksItems = []; 
     this.detailsLinks = [];
     this.generatedetailsLinks();
+    this.checkUserLoggedIn();
 
   }
+
+
+  async checkUserLoggedIn(){
+
+    const connectData = {
+      method: 'GET',
+      'credentials': 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+
+    
+    const response = await fetch('http://localhost:5000/auth/connected', connectData);
+    const data = await response.json();
+
+    return data.status;
+
+  }
+  
 
   generatedetailsLinks(){
     switch(location.pathname){
@@ -21,6 +43,7 @@ export default class Nav {
         ]; 
         break;
       case '/channels':
+      case '/profile':
         this.detailsLinks = [
           {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
           {path: 'stats', title: 'Stats', name: 'Stats'},
@@ -33,10 +56,12 @@ export default class Nav {
         break;
 
     }
+
   }
 
 
   generateLinkElements(){
+
     this.detailsLinks.map(detailsLink => {
       this.linksItems +=  `<a 
                 href="/${detailsLink.path}"
@@ -46,12 +71,38 @@ export default class Nav {
                   ${detailsLink.name}
               </a>`;
     });
+
   }
 
 
-  renderLinks(){
+  generateConnectedElements(){
+    this.linksItems +=  `
+
+      <a class="profile" href="/profile">
+        <i class="fa-solid fa-user"></i>
+      </a>
+      <a class="profile" href="/logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
+
+    `;
+  }
+
+
+  async renderLinks(){
+
     this.generateLinkElements();
+
+    const loggedin = await this.checkUserLoggedIn();
+
+    if(loggedin){
+      this.generateConnectedElements();
+    }
+
     return this.linksItems;
+
   }
 
+
+  
 }

@@ -174,3 +174,22 @@ export async function handleResetPassword(formData, event){
   }
 
 }
+
+
+
+export async function checkUserConnexionStatus(){
+
+  const connectData = {
+    method: 'GET',
+    'credentials': 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  };
+
+  const response = await fetch('http://localhost:5000/auth/connected', connectData);
+  const data = await response.json();
+  return data.status;
+  
+}
