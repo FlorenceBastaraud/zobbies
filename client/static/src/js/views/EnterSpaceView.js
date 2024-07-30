@@ -7,7 +7,6 @@ export default class extends AbstractView {
       this.setWindowDetails('Zobbies - Enter the world now', 'enter-space');
       this.countriesListHtml = "";
       this.getCountryList();
-      this.dateValue = "2018-07-22";
 
     }
 
@@ -34,7 +33,7 @@ export default class extends AbstractView {
               <h2 class="enter-space__login--title">Login</h2>
               <p class="enter-space__login--description">Enter your login informations to access the Space.</p>
               
-              <form class="enter-space__login--form">
+              <form class="enter-space__login--form" id="LoginForm">
                   
                 <fieldset>
 
@@ -47,7 +46,7 @@ export default class extends AbstractView {
                 </fieldset>
 
 
-                <a href="/" id="forgot-password">Forgot password?</a>
+                <a href="/forgot-password" id="forgot-password">Forgot password?</a>
 
                 <input type="submit" name="login" value="Login" class="primary-cta submit submit-login">
 

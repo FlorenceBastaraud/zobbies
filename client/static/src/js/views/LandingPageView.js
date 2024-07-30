@@ -17,7 +17,7 @@ export default class extends AbstractView {
                 <h2 class="landing-page__content--subtitle">and make genuine connections</h2>
                 <h3 class="landing-page__content--label">Freely</h3>
                 <p class="landing-page__content--description">A place to escape et rejoice. Somewhere to discuss about all the things you're passionate about with people who feel and like the same things you do. A dream, right?</p>
-                <a class="landing-page__content--cta primary-cta" href="enter-space" data-link=>Enter now</a>
+                <a class="landing-page__content--cta primary-cta" href="enter-space" data-link>Enter now</a>
         
 
               </div>

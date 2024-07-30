@@ -12,9 +12,19 @@ export default class Nav {
     switch(location.pathname){
       case '/':
       case '/enter-space':
+      case '/forgot-password':
+      case '/reset-password':
         this.detailsLinks = [
           {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
           {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},
+          {path: 'genesis', title: 'Genesis', name: 'Genesis'}
+        ]; 
+        break;
+      case '/channels':
+        this.detailsLinks = [
+          {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
+          {path: 'stats', title: 'Stats', name: 'Stats'},
+          {path: 'requests', title: 'Request', name: 'Requests'},
           {path: 'genesis', title: 'Genesis', name: 'Genesis'}
         ]; 
         break;

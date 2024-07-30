@@ -1,7 +1,9 @@
 import {callRouter, goTo, updateNav} from './helpers/managmentFunctions.js';
-import {handleRegister} from './helpers/apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword} from './helpers/apiCallsFunctions.js';
 
 
+
+// history, router and click events
 window.addEventListener('popstate', callRouter);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
   updateNav();
   callRouter();
 
-  
+
 
 })
 
 
-
+// enter space view specificities
 window.document.addEventListener('DOMContentLoaded', () => {
 
   const registerBloc = document.getElementById('register-bloc');
@@ -71,10 +73,10 @@ window.document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
+// handle register form submit event
 window.document.addEventListener('DOMContentLoaded', function(){
 
-  document.getElementById('registerForm').addEventListener('submit', function(e){
+  document.getElementById('registerForm')?.addEventListener('submit', function(e){
 
     e.preventDefault();
 
@@ -127,6 +129,116 @@ window.document.addEventListener('DOMContentLoaded', function(){
         }
 
         handleRegister(registerValues, e);
+        errorMessageSpan.innerText = '';
+        
+
+    }
+
+    
+  })
+
+});
+
+
+// handle login form submit event
+window.document.addEventListener('DOMContentLoaded', function(){
+
+  document.getElementById('LoginForm')?.addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    const loginUsername = document.getElementById('username').value;
+    const loginPassword = document.getElementById('password').value;
+    
+    const errorMessageSpan = document.getElementById('error-login');
+    let errorMessage = '';
+
+
+    if(loginUsername == "" || loginPassword == "") {
+
+        errorMessage = "Please make sure no field is empty";
+        errorMessageSpan.innerText = errorMessage;
+
+      } else {
+
+        const loginValues = {
+          username: loginUsername,
+          password: loginPassword,
+        }
+
+        handleLogin(loginValues, e);
+        errorMessageSpan.innerText = '';
+        
+
+    }
+
+    
+  })
+
+});
+
+
+// handle forgot password form submit event
+window.document.addEventListener('DOMContentLoaded', function(){
+
+  document.getElementById('ForgotPasswordForm')?.addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    const userEmail = document.getElementById('forgot-password-email').value;
+    
+    const errorMessageSpan = document.getElementById('error-forgot-password');
+    let errorMessage = '';
+
+
+    if(userEmail == "") {
+
+        errorMessage = "Please enter your email address.";
+        errorMessageSpan.innerText = errorMessage;
+
+      } else {
+
+  
+        handleForgotPassword({ email: userEmail}, e);
+        errorMessageSpan.innerText = '';
+        
+
+    }
+
+    
+  })
+
+});
+
+
+// handle reset password form submit event
+window.document.addEventListener('DOMContentLoaded', function(){
+
+  document.getElementById('ResetPasswordForm')?.addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    const userNewPassword = document.getElementById('new-password').value;
+    const userNewPasswordConfirm = document.getElementById('confirm-new-password').value;
+
+    const errorMessageSpan = document.getElementById('error-reset-password');
+    let errorMessage = '';
+
+
+    if(userNewPassword == "" || userNewPasswordConfirm == "") {
+
+        errorMessage = "Please make sure no field is empty.";
+        errorMessageSpan.innerText = errorMessage;
+
+      } else if(userNewPassword !== userNewPasswordConfirm) {
+
+        errorMessage = "Your confirm password should be identical to your new password";
+        errorMessageSpan.innerText = errorMessage;
+
+      } else {
+
+  
+        handleResetPassword({ password: userNewPassword}, e);
         errorMessageSpan.innerText = '';
         
 

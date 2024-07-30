@@ -1,0 +1,71 @@
+.channels
+  padding: toEm(80) 0
+  position: relative
+  @include displayFlex(column, center, center)
+
+  &__content
+    @include displayFlex(column, center, center)
+    row-gap: toEm(-10)
+    text-align: center
+
+    @include media-query(1140px)
+        padding: toEm(0) toEm(20)
+
+    &--title, &--subtitle
+      font-size: toRem(72)
+      font-weight: 700
+      max-width: 1230px
+
+    &--subtitle
+      @include media-query(887px, false)
+        line-height: toRem(32)
+
+    &--label
+      color: $labelColor
+      font-weight: 700
+      font-size: toRem(72)
+      font-style: italic
+
+    &--title, &--subtitle, &--label
+      @include media-query(1240px)
+        font-size: toRem(50)
+
+      @include media-query(666px)
+          font-size: toRem(44)
+
+      @include media-query(440px)
+          font-size: toRem(38)
+
+    &--description
+      margin-top: toEm(30)
+      font-size: toRem(18)
+      font-weight: 400
+      max-width: 780px
+
+      @include media-query(1240px)
+        font-size: toRem(16)
+
+      @include media-query(666px)
+          font-size: toRem(15)
+
+    &--cta
+      margin-top: toEm(30)
+
+      @include media-query(900px)
+        z-index: 3
+
+
+
+  &__blobs
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    width: 100%
+    max-width: 90%
+    height: 100%
+    z-index: -1
+
+    @include media-query(1340px)
+      min-width: 50%
+      max-width: 70%

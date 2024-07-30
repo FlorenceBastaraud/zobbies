@@ -4,7 +4,7 @@ import Nav from "../components/nav.js";
 export async function callRouter(){
 
   const router = new Router();
-  const view = new router.match.route.view();
+  const view = await new router.match.route.view();
   const zobbies = document.querySelector("#app");
   const viewHtml = await view.getHtml();
     

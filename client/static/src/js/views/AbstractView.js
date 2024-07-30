@@ -4,7 +4,7 @@ export default class {
 
   setWindowDetails(title, bodyViewAttribute){
     document.title = title;
-    window.document.body.setAttribute('view',bodyViewAttribute);
+    window.document.body.setAttribute('view', bodyViewAttribute);
   }
 
 
