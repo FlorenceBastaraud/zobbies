@@ -39,6 +39,44 @@ router.post('/register', async (req, res) => {
     isVerified: false
   });
 
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'florence.bastaraud.dw@gmail.com',
+      pass: process.env.GOOGLEMAILERPASSWORD
+    }
+  });
+
+  const token = jwt.sign({id: newUser._id}, process.env.JWTSECRETKEY, {expiresIn: 60000});
+
+
+  const mailOptions = {
+    from: 'florence.bastaraud.dw@gmail.com',
+    to: email,
+    subject: 'Zobbies: verify your account',
+    html: `
+    
+      Hi ${firstname},<br><br>
+      Your <strong><em><a href="http://localhost:3000/" target="_blank">Zobbies</a></em></strong> account has been created.<br><br>
+      Make sure to verify your account by clicking on the following link <a href="http://localhost:3000/verify-account#${token}" target="_blank">here</a>.<br><br>
+      Thanks,<br>
+      <strong><em>Zobbies</em></strong>
+
+
+    
+    `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      return res.json({message: "Error sending the email with verification link"});
+    } else {
+      return res.json({message: "Email sent successfully"});
+    }
+  });
+
+
   await newUser.save();
   return res.json({message: 'Registration was successful.'});
 
@@ -119,10 +157,8 @@ router.post('/forgot-password', async (req, res) => {
       
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          console.log(error);
-          return res.json({message: "Error the email with reset link"});
+          return res.json({message: "Error sending the email with reset link"});
         } else {
-          console.log(info.response);
           return res.json({message: "Email sent successfully"});
         }
       });
@@ -171,9 +207,38 @@ router.post('/reset-password/:token', async (req, res) => {
 
 router.get('/connected', isUserConnected, async (req, res) => {
 
+  console.log('test');
   return res.json({status: true, message: 'connected'})
 
 });
+
+
+
+router.post('/verify-account/:token', async (req, res) => {
+
+  const {token} = req.params;
+
+  try {
+
+    const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
+    const userId = tokenDecoded.id;
+
+    const user = await User.findByIdAndUpdate(
+      {_id: userId},
+      {isVerified: true}
+    );
+
+    return res.json({status: true, message: 'Account verified successfully', user: { userFirstname: user.firstname }})
+
+  } catch(err){
+
+    return res.json({status: false, message: 'Error verifying the account'})
+    
+  }
+
+
+});
+
 
 
 

@@ -1047,6 +1047,126 @@
   }
 }
 
+.verify-account {
+  padding: 5em 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: -0.625em;
+  text-align: center;
+}
+@media (max-width: 1140px) {
+  .verify-account {
+    padding: 0em 1.25em;
+  }
+}
+.verify-account__title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  max-width: 1230px;
+}
+.verify-account__description {
+  margin-top: 1.875em;
+  font-size: 1.125rem;
+  font-weight: 400;
+  max-width: 780px;
+}
+@media (max-width: 1240px) {
+  .verify-account__description {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 666px) {
+  .verify-account__description {
+    font-size: 0.9375rem;
+  }
+}
+@media (max-width: 1240px) {
+  .verify-account__title, .verify-account__description {
+    font-size: 3.125rem;
+  }
+}
+@media (max-width: 666px) {
+  .verify-account__title, .verify-account__description {
+    font-size: 2.75rem;
+  }
+}
+@media (max-width: 440px) {
+  .verify-account__title, .verify-account__description {
+    font-size: 2.375rem;
+  }
+}
+.verify-account__cta {
+  margin-top: 1.875em;
+}
+@media (max-width: 900px) {
+  .verify-account__cta {
+    z-index: 3;
+  }
+}
+
+.profile {
+  padding: 5em 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: -0.625em;
+  text-align: center;
+}
+@media (max-width: 1140px) {
+  .profile {
+    padding: 0em 1.25em;
+  }
+}
+.profile__title {
+  font-size: 4.5rem;
+  font-weight: 700;
+  max-width: 1230px;
+}
+.profile__description {
+  margin-top: 1.875em;
+  font-size: 1.125rem;
+  font-weight: 400;
+  max-width: 780px;
+}
+@media (max-width: 1240px) {
+  .profile__description {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 666px) {
+  .profile__description {
+    font-size: 0.9375rem;
+  }
+}
+@media (max-width: 1240px) {
+  .profile__title, .profile__description {
+    font-size: 3.125rem;
+  }
+}
+@media (max-width: 666px) {
+  .profile__title, .profile__description {
+    font-size: 2.75rem;
+  }
+}
+@media (max-width: 440px) {
+  .profile__title, .profile__description {
+    font-size: 2.375rem;
+  }
+}
+.profile__cta {
+  margin-top: 1.875em;
+}
+@media (max-width: 900px) {
+  .profile__cta {
+    z-index: 3;
+  }
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;

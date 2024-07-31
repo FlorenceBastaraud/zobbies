@@ -36,6 +36,7 @@ export default class Nav {
       case '/enter-space':
       case '/forgot-password':
       case '/reset-password':
+      case '/verify-account':
         this.detailsLinks = [
           {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
           {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},

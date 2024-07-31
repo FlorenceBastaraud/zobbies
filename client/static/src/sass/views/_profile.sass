@@ -1,0 +1,44 @@
+.profile
+  padding: toEm(80) 0
+  position: relative
+  @include displayFlex(column, center, center)
+  row-gap: toEm(-10)
+  text-align: center
+
+  @include media-query(1140px)
+      padding: toEm(0) toEm(20)
+
+  &__title
+    font-size: toRem(72)
+    font-weight: 700
+    max-width: 1230px
+
+  &__description
+    margin-top: toEm(30)
+    font-size: toRem(18)
+    font-weight: 400
+    max-width: 780px
+
+    @include media-query(1240px)
+      font-size: toRem(16)
+
+    @include media-query(666px)
+        font-size: toRem(15)
+
+
+  &__title, &__description
+    @include media-query(1240px)
+      font-size: toRem(50)
+
+    @include media-query(666px)
+        font-size: toRem(44)
+
+    @include media-query(440px)
+        font-size: toRem(38)
+
+
+  &__cta
+    margin-top: toEm(30)
+
+    @include media-query(900px)
+      z-index: 3
