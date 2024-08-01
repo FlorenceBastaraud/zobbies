@@ -77,13 +77,17 @@ export default class Nav {
 
 
   generateConnectedElements(){
-    this.linksItems +=  `
+
+    if(location.pathname !== '/profile'){
+      this.linksItems +=  `
 
       <a href="/profile" title="Profile" data-link class="nav-link">
         <i class="fa-solid fa-user"></i>
       </a>
 
     `;
+    }
+    
   }
 
 
