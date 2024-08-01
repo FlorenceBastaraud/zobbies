@@ -11,15 +11,13 @@ export default class extends AbstractView {
         return `
             <div class="profile wrapper">
 
-              <div class="profile__content">
 
-                <h1 class="profile__content--title">Profile page</h1>
+              <h1 class="profile__title">Profile page</h1>
 
-                <a class="profile__content--cta primary-cta">
-                  <i class="fa-solid fa-right-from-bracket"></i>
-                </a>
-                
-              </div>
+              <a class="profile__cta primary-cta" id="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+              </a>
+              
 
             </div>
         `;

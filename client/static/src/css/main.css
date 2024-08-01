@@ -482,6 +482,7 @@
   }
 }
 .landing-page__content--cta {
+  cursor: pointer;
   margin-top: 1.875em;
 }
 @media (max-width: 900px) {
@@ -766,6 +767,7 @@
   }
 }
 .channels__content--cta {
+  cursor: pointer;
   margin-top: 1.875em;
 }
 @media (max-width: 900px) {
@@ -1114,7 +1116,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: -0.625em;
+  row-gap: 0.625em;
   text-align: center;
 }
 @media (max-width: 1140px) {
@@ -1159,6 +1161,7 @@
   }
 }
 .profile__cta {
+  cursor: pointer;
   margin-top: 1.875em;
 }
 @media (max-width: 900px) {

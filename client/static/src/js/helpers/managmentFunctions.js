@@ -228,6 +228,40 @@ export async function callRouter(){
       })
 
 
+      // handle logout
+      document.getElementById('logout')?.addEventListener('click', async function(e){
+        e.preventDefault();
+            
+        try {
+
+          const logoutData = {
+            method: 'GET',
+            'credentials': 'include',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            }
+          };
+        
+      
+          const response = await fetch(`http://localhost:5000/auth/logout/`, logoutData);
+          const data = await response.json();
+
+          if(data.status){
+            goTo('enter-space');
+            updateNav();
+          }
+          
+      
+        } catch(err){
+      
+          return err;
+      
+        }
+
+      })
+
+
   });
 
 

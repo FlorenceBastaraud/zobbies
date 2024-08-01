@@ -5,8 +5,6 @@ export default class extends AbstractView {
 
       super();
       this.setWindowDetails('Zobbies - Account verified', 'verify-account');
-      this.verifyAccount();
-      this.userFirstname = '';
 
     }
 
@@ -25,14 +23,7 @@ export default class extends AbstractView {
     
       try {
     
-        const response = await fetch(`http://localhost:5000/auth/verify-account/${token}`, verifyData);
-        const data = await response.json();
-    
-        if(!data.status){
-    
-          this.userFirstname = data.user.userFirstname;
-
-        }
+        await fetch(`http://localhost:5000/auth/verify-account/${token}`, verifyData);
         
     
       } catch(err){
@@ -47,11 +38,12 @@ export default class extends AbstractView {
 
 
     async getHtml() {
+      this.verifyAccount();
         return `
             
           <div class="verify-account wrapper">
         
-            <h1 class="verify-account__title">Hooray</h1>
+            <h1 class="verify-account__title">Hooray!</h1>
             <h1 class="verify-account__description">Your <strong><em>Zobbies</em></strong> account has been verified!</h1>
             <a class="verify-account__cta primary-cta" href="channels">Browse channels</a>
 

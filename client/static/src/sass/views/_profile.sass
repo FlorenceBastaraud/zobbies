@@ -2,7 +2,7 @@
   padding: toEm(80) 0
   position: relative
   @include displayFlex(column, center, center)
-  row-gap: toEm(-10)
+  row-gap: toEm(10)
   text-align: center
 
   @include media-query(1140px)
@@ -38,6 +38,7 @@
 
 
   &__cta
+    cursor: pointer
     margin-top: toEm(30)
 
     @include media-query(900px)

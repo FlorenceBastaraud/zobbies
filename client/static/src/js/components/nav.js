@@ -79,11 +79,8 @@ export default class Nav {
   generateConnectedElements(){
     this.linksItems +=  `
 
-      <a class="profile" href="/profile">
+      <a href="/profile" title="Profile" data-link class="nav-link">
         <i class="fa-solid fa-user"></i>
-      </a>
-      <a class="profile" href="/logout">
-        <i class="fa-solid fa-right-from-bracket"></i>
       </a>
 
     `;

@@ -167,9 +167,9 @@ router.post('/forgot-password', async (req, res) => {
     }
 
   } catch(err){
-    console.log(err);
-    return err;
 
+    return err;
+  
   }
 
 
@@ -207,7 +207,6 @@ router.post('/reset-password/:token', async (req, res) => {
 
 router.get('/connected', isUserConnected, async (req, res) => {
 
-  console.log('test');
   return res.json({status: true, message: 'connected'})
 
 });
@@ -240,6 +239,11 @@ router.post('/verify-account/:token', async (req, res) => {
 });
 
 
+router.get('/logout', (req, res) => {
 
+  res.clearCookie('token');
+  return res.json({status: true});
+
+});
 
 export {router as UserRouter}
