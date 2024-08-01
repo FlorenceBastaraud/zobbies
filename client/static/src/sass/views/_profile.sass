@@ -21,7 +21,7 @@
       padding: toEm(40) toEm(20)
 
     &--sidebar
-      border: 1px solid #FFF
+      border: 1px solid $primaryHoverColor
       border-radius: 30% 40% 26% 44% / 24% 21% 29% 36%
       min-height: 600px
       @include displayFlex(column, flex-start, center)
@@ -77,13 +77,14 @@
           align-items: flex-start
 
         & > *
-          font-size: toRem(16)
+          font-size: toRem(15)
           font-weight: 400
 
         &__username
           font-size: toRem(18)
           font-weight: 500
           color: $primaryHoverColor
+          text-transform: lowercase
         
 
       .platform

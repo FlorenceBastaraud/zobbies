@@ -9,7 +9,7 @@ export default class {
     window.document.body.setAttribute('view', bodyViewAttribute);
   }
 
-  
+
   async getHtml(){
    return ""; 
   }

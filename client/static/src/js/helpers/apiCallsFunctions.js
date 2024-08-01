@@ -193,3 +193,24 @@ export async function checkUserConnexionStatus(){
   return data.status;
   
 }
+
+
+export async function getUserInfos(){
+
+  const profileData = {
+    method: 'GET',
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }
+  };
+
+  const response = await fetch('http://localhost:5000/auth/user', profileData);
+  const data = await response.json();
+
+  if(data.status){
+   return data.user; 
+  }
+
+}

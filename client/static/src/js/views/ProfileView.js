@@ -21,10 +21,10 @@ export default class extends AbstractView {
                   </div>
 
                   <div class="user-infos">
-                    <h4 class="user-infos__username">Username</h4>
+                    <h4 class="user-infos__username">@username</h4>
                     <h4 class="user-infos__lastname">Lastname</h4>
                     <h4 class="user-infos__firstname">Firstname</h4>
-                    <h4 class="user-infos__gender">woman</h4>
+                    <h4 class="user-infos__gender">Gender</h4>
                   </div>
 
                   <div class="platform">

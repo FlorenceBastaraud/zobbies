@@ -212,7 +212,6 @@ router.get('/connected', isUserConnected, async (req, res) => {
 });
 
 
-
 router.post('/verify-account/:token', async (req, res) => {
 
   const {token} = req.params;
@@ -245,5 +244,31 @@ router.get('/logout', (req, res) => {
   return res.json({status: true});
 
 });
+
+
+router.get('/user', async (req, res) => {
+
+  try {
+
+    const token = await req.cookies?.token;
+
+    const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
+
+    const username = tokenDecoded.username;
+
+    const user = await User.findOne({username: username});
+
+    return res.json({status: true, message: 'User found succesfully', user: user})
+
+  } catch(err){
+
+    return res.json({status: false, message: 'User not found'})
+    
+  }
+
+
+});
+
+
 
 export {router as UserRouter}

@@ -1145,7 +1145,7 @@
   padding: 2.5em 1.25em;
 }
 .profile__main--sidebar {
-  border: 1px solid #FFF;
+  border: 1px solid #D7F5F3;
   border-radius: 30% 40% 26% 44%/24% 21% 29% 36%;
   min-height: 600px;
   display: flex;
@@ -1225,13 +1225,14 @@
   }
 }
 .profile__main--sidebar .user-infos > * {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 400;
 }
 .profile__main--sidebar .user-infos__username {
   font-size: 1.125rem;
   font-weight: 500;
   color: #D7F5F3;
+  text-transform: lowercase;
 }
 .profile__main--sidebar .platform {
   display: flex;

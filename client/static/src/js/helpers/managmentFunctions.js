@@ -9,7 +9,7 @@ import ResetPasswordView from '../views/ResetPasswordView.js';
 import ProfileView from '../views/ProfileView.js';
 import VerifyAccountView from "../views/VerifyAccountView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos} from './apiCallsFunctions.js';
 
 
 
@@ -227,7 +227,6 @@ export async function callRouter(){
         
       })
 
-
       // handle logout
       document.getElementById('logout')?.addEventListener('click', async function(e){
         e.preventDefault();
@@ -261,6 +260,19 @@ export async function callRouter(){
 
       })
 
+      // handle profile page
+      const userInfos = async () => {
+        const {username, firstname, lastname, gender} = await getUserInfos();
+
+        document.querySelector('.user-infos__username').innerText = '@' + username;
+        document.querySelector('.user-infos__lastname').innerText = lastname;
+        document.querySelector('.user-infos__firstname').innerText = firstname;
+        document.querySelector('.user-infos__gender').innerText = gender;
+
+
+      }
+
+      userInfos();
 
   });
 
