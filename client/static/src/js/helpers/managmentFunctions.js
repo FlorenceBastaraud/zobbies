@@ -6,10 +6,12 @@ import EnterSpaceView from '../views/EnterSpaceView.js';
 import ChannelsView from '../views/ChannelsView.js';
 import ForgotPasswordView from '../views/ForgotPasswordView.js';
 import ResetPasswordView from '../views/ResetPasswordView.js';
-import ProfileView from '../views/ProfileView.js';
 import VerifyAccountView from "../views/VerifyAccountView.js";
+import ProfileView from '../views/ProfileView.js';
+import EditProfileView from "../views/EditProfileView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos} from './apiCallsFunctions.js';
+import { getStaticImgFolder, getUploadImgFolder } from "./functions.js";
 
 
 
@@ -24,13 +26,14 @@ export async function callRouter(){
       routes = [
         {path: '/', view: LandingPageView},
         {path: '/channels', view: ChannelsView},
-        {path: '/forgot-password', view: ForgotPasswordView},
-        {path: '/reset-password', view: ResetPasswordView},
+        {path: '/verify-account', view: VerifyAccountView},
         {path: '/profile', view: ProfileView},
-        {path: '/verify-account', view: VerifyAccountView}
+        {path: '/edit-profile', view: EditProfileView},
       ];
 
-      if(location.pathname == '/' || location.pathname == '/enter-space' || location.pathname == '/forgot-password' || location.pathname == '/reset-password'){
+      const routesPaths = routes.map(route => route.path);
+
+      if(!routesPaths.includes(location.pathname)){
         history.pushState(null, null, '/channels');
         updateNav();
       }
@@ -45,7 +48,9 @@ export async function callRouter(){
         {path: '/verify-account', view: VerifyAccountView}
       ];
 
-      if(location.pathname == '/channels' || location.pathname == '/forgot-password' || location.pathname == '/reset-password' || location.pathname == '/profile'){
+      const routesPaths = routes.map(route => route.path);
+
+      if(!routesPaths.includes(location.pathname)){
         history.pushState(null, null, '/');
         updateNav();
       }
@@ -260,19 +265,122 @@ export async function callRouter(){
 
       })
 
-      // handle profile page
-      const userInfos = async () => {
-        const {username, firstname, lastname, gender} = await getUserInfos();
+      // handle profile view
+      if(location.pathname == '/profile'){
+        
+        const userInfos = async () => {
+          const userDetails = await getUserInfos();
 
-        document.querySelector('.user-infos__username').innerText = '@' + username;
-        document.querySelector('.user-infos__lastname').innerText = lastname;
-        document.querySelector('.user-infos__firstname').innerText = firstname;
-        document.querySelector('.user-infos__gender').innerText = gender;
+          const userPictureName = JSON.parse(userDetails.userPicture).filename;
+          const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+          const username = '@' + userDetails.username || '@username-undefined';
+          const displayName = userDetails.displayName || userDetails.lastname + ' ' + userDetails.firstname;
+          const bio = userDetails.bio || '';
+          const gender = userDetails.gender ? (userDetails.gender == 'man') ? '♂' : (userDetails.gender == 'woman') ? '♀️' : '⚧' : 'Gender undefined';
+  
+          document.querySelector('#profile-view-user-picture').setAttribute('src', profilePicture);
+          document.querySelector('.user-infos__username').innerText = username;
+          document.querySelector('.user-infos__display-name').innerText = displayName;
+          document.querySelector('.user-infos__bio').innerText = bio;
+          document.querySelector('.user-infos__gender').innerText = gender;
+
+        }  
+
+        userInfos();
+
+      }
+
+
+      // handle edit profile view
+      if(location.pathname == '/edit-profile'){
+
+        let newUserProfileFile;
+        
+        const userInfos = async () => {
+          const user = await getUserInfos();
+
+          const userPictureName = JSON.parse(user.userPicture).filename;
+          const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+          const displayName = user.displayName || user.lastname + ' ' + user.firstname;
+          const bio = user.bio || `No bio yet`;
+          
+          document.querySelector('#edit-profile-view-user-picture').setAttribute('src', profilePicture);
+          document.querySelector('#profile-display-name').setAttribute('value', displayName);
+          document.querySelector('#profile-display-name').setAttribute('placeholder', displayName);
+          document.querySelector('#profile-bio').setAttribute('value', bio);
+          document.querySelector('#profile-bio').innerText = bio;
+
+        }  
+
+        userInfos();
+
+
+        document.querySelector('.edit-profile__form--cancel').addEventListener('click', (e) => {
+          
+          e.preventDefault();
+          document.getElementById('edit-profile-form').reset();
+          goTo('/profile');
+
+
+        });
+
+
+        document.querySelector('#profile-picture').addEventListener('change', (e) => {
+
+          newUserProfileFile = e.target.files[0];
+          const imgUrl = e.target.files[0];
+          const reader = new FileReader();
+          reader.addEventListener('load', (e) => {
+            document.querySelector('#edit-profile-view-user-picture').setAttribute('src', e.target.result);
+            document.querySelector('#edit-profile-view-user-picture').setAttribute('data-img', imgUrl.name);
+          });
+          reader.readAsDataURL(imgUrl);
+
+        });
+
+
+
+        document.getElementById('edit-profile-form').addEventListener('submit', (e) => {
+
+          e.preventDefault();
+
+          const profilePicture = document.getElementById("edit-profile-view-user-picture").getAttribute('src') == "profile-picture-default.jpg" ? '' : document.getElementById("edit-profile-view-user-picture").getAttribute('data-img');
+          const displayName = document.getElementById("profile-display-name").value;
+          const bio = document.getElementById("profile-bio").value;
+          
+
+          const errorMessageSpan = document.getElementById('error-edit-profile');
+          let errorMessage = '';
+
+
+          if(profilePicture == "" || displayName == "" || bio == "") {
+
+              errorMessage = "Please make sure no field is empty";
+              errorMessageSpan.innerText = errorMessage;
+
+            } else {
+
+
+              const bodyFormData = new FormData();
+              bodyFormData.append('user_picture', newUserProfileFile);
+              bodyFormData.append('displayName', displayName);
+              bodyFormData.append('bio', bio);
+
+              handleUpdateUserInfos(bodyFormData, e);
+              errorMessageSpan.innerText = '';
+              
+
+          }
+
+          
+        });
+
+
 
 
       }
 
-      userInfos();
+
 
   });
 

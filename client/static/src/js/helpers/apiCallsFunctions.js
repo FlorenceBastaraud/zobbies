@@ -176,7 +176,6 @@ export async function handleResetPassword(formData, event){
 }
 
 
-
 export async function checkUserConnexionStatus(){
 
   const connectData = {
@@ -211,6 +210,50 @@ export async function getUserInfos(){
 
   if(data.status){
    return data.user; 
+  }
+
+}
+
+
+export async function handleUpdateUserInfos(formData, event){
+
+  const userInfosData = {
+    method: 'POST',
+    'credentials': 'include',
+    body: formData
+  };
+
+
+  try {
+
+    const response = await fetch("http://localhost:5000/auth/update-user", userInfosData);
+    const data = await response.json();
+
+    if(!data.status){
+
+      document.getElementById('error-edit-profile').innerText = 'Sorry, error updating your informations';
+
+    } else {
+
+      event.target.reset();
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      document.querySelector('.edit-profile__title').innerText = "Profile updated!";
+      document.getElementById('edit-profile-form').innerHTML = "";
+
+      setTimeout(() => {
+        goTo('/profile');
+      }, 3000);
+
+
+    }
+
+    
+
+  } catch(err){
+
+    return err;
+
   }
 
 }

@@ -1,0 +1,171 @@
+.edit-profile
+  margin-top: 80px
+  background: #ffffff
+  border-radius: 20px 53px 8px 10px / 10px 42px 5px 17px
+  border-radius: 40px
+  row-gap: 25px
+  padding: toEm(40)
+  @include displayFlex(column, flex-start, center)
+
+  @include media-query(600px)
+    max-width: 95%
+
+  & > *
+    color: $mainBackground
+
+  &__title
+    font-size: toRem(52)
+    font-weight: 400
+    text-align: center
+    width: 100%
+    @include media-query(1240px)
+      font-size: toRem(42)
+
+    @include media-query(666px)
+        font-size: toRem(32)
+
+    @include media-query(440px)
+        font-size: toRem(26)
+
+  &__description
+    text-align: center
+    width: 100%
+    font-size: toRem(20)
+    font-weight: 400
+    max-width: 780px
+
+    @include media-query(1240px)
+      font-size: toRem(16)
+
+    @include media-query(666px)
+        font-size: toRem(15)
+
+  &__form
+    width: 100%
+    @include displayFlex(column, flex-start, center)
+    row-gap: 8px
+
+    &--field
+      border: none
+      width: 100%
+      margin-bottom: 10px
+      @include displayFlex(column, flex-start, center)
+      font-size: toRem(16)
+      
+      & > *
+        width: 80%
+
+        @include media-query(600px)
+          width: 100%
+
+
+      label
+        margin: 7px 0
+        font-weight: 400
+        font-style: italic
+
+      input, textarea
+        background: #07070726
+        border: none
+        padding: toEm(13) toEm(30)
+        font-size: toRem(16)
+        border-radius: 40px
+
+        &::placeholder
+          visibility: hidden
+
+      
+    .profile-picture
+      @include displayFlex(column, center, center)
+      gap: 6px
+
+      & > *
+        width: 80%
+
+        @include media-query(600px)
+          width: 100%
+
+      &__image
+        width: 120px
+        height: 120px
+        border: 3px solid $labelColor
+        border-radius: 50%
+        overflow: hidden
+        
+        img
+          width: 100%
+          height: 100%
+          object-fit: cover
+
+      &__label
+        width: auto
+        margin: 0 auto
+        color: #F4F4F4
+        background-color: #4f4b4b
+        padding: toEm(8) toEm(14)
+        border-radius: 10px
+        cursor: pointer
+        font-size: toRem(14)
+        transition: .3s ease-in-out
+
+        &:hover
+          background-color: #F4F4F4
+          color: #4f4b4b
+
+      &__input
+        display: none
+
+
+    a
+      position: relative
+
+      &:hover
+        &::after
+          display: flex
+
+      &::after
+        content: ''
+        position: absolute
+        width: 98%
+        height: 1px
+        background-color: #000000d1
+        left: 0
+        bottom: -1px
+        display: none
+
+
+    button
+      cursor: pointer
+      border: none
+      background: none
+      position: relative
+      transition: .3s ease-in-out
+
+      &:hover
+        &::after
+          display: flex
+
+      &::after
+        content: ''
+        position: absolute
+        width: 98%
+        height: 1px
+        background-color: $mainBackground
+        left: 0
+        bottom: -1px
+        display: none
+
+
+    .save
+      cursor: pointer
+      font-size: toRem(16)
+      font-weight: 400
+      padding: toEm(12) toEm(40)
+      background: $labelColor
+      margin-top: 15px
+
+      @include media-query(1240px)
+        font-size: toRem(14)
+
+      @include media-query(666px)
+        font-size: toRem(12)

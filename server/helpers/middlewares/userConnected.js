@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export async function isUserConnected(req, res, next){
+export default async function isUserConnected(req, res, next){
   
   try {
     

@@ -37,7 +37,7 @@ export default class Nav {
       case '/forgot-password':
       case '/reset-password':
       case '/verify-account':
-        this.detailsLinks = [
+          this.detailsLinks = [
           {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
           {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},
           {path: 'genesis', title: 'Genesis', name: 'Genesis'}
@@ -45,6 +45,7 @@ export default class Nav {
         break;
       case '/channels':
       case '/profile':
+      case '/edit-profile':
         this.detailsLinks = [
           {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
           {path: 'stats', title: 'Stats', name: 'Stats'},

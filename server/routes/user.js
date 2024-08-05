@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt';
 import {User} from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-import { isUserConnected } from '../helpers/functions.js';
+import isUserConnected from '../helpers/middlewares/userConnected.js';
+import upload from '../helpers/middlewares/upload.js';
 
 const router = express.Router();
 
@@ -36,7 +37,10 @@ router.post('/register', async (req, res) => {
     email,
     username,
     password: hashedPassword,
-    isVerified: false
+    isVerified: false,
+    displayName: lastname + ' ' + firstname,
+    bio: '',
+    userPicture: ''
   });
 
 
@@ -204,7 +208,6 @@ router.post('/reset-password/:token', async (req, res) => {
 });
 
 
-
 router.get('/connected', isUserConnected, async (req, res) => {
 
   return res.json({status: true, message: 'connected'})
@@ -269,6 +272,33 @@ router.get('/user', async (req, res) => {
 
 });
 
+
+router.post('/update-user', upload.single('user_picture'), async (req, res) => {
+
+  const {displayName, bio} = req.body;
+  const userPicture = JSON.stringify(req.file) || '';
+
+  try {
+
+    const token = await req.cookies?.token;
+    const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
+    const username = tokenDecoded.username;
+
+    await User.findOneAndUpdate(
+      {username},
+      { "$set": { userPicture, displayName, bio}}
+    );
+
+    return res.json({status: true, message: 'User infos updated successfully'});
+
+  } catch(err){
+
+    return res.json({status: false, message: 'Error updating user infos'});
+    
+  }
+
+
+});
 
 
 export {router as UserRouter}

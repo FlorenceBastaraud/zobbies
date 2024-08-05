@@ -17,18 +17,18 @@ export default class extends AbstractView {
                 <div class="profile__main--sidebar">
 
                   <div class="profile-picture">
-                    <img src="./src/images/default/profile-picture-default.jpg" alt="Profile picture">
+                    <img src="" alt="Profile picture" id="profile-view-user-picture">
                   </div>
 
                   <div class="user-infos">
-                    <h4 class="user-infos__username">@username</h4>
-                    <h4 class="user-infos__lastname">Lastname</h4>
-                    <h4 class="user-infos__firstname">Firstname</h4>
-                    <h4 class="user-infos__gender">Gender</h4>
+                    <h4 class="user-infos__username"></h4>
+                    <h4 class="user-infos__display-name"></h4>
+                    <h4 class="user-infos__bio"></h4>
+                    <h4 class="user-infos__gender"></h4>
                   </div>
 
                   <div class="platform">
-                    <a href="/" title="Edit profile" data-link class="platform__edit-profile">Edit profile</a>
+                    <a href="/edit-profile" title="Edit profile" data-link class="platform__edit-profile">Edit profile</a>
                     <a href="/" title="Settings" class="platform__settings">Settings</a>
                     <a href="/" class="platform__logout" id="logout">
                       <i class="fa-solid fa-right-from-bracket"></i>
