@@ -11,7 +11,7 @@ import ProfileView from '../views/ProfileView.js';
 import EditProfileView from "../views/EditProfileView.js";
 import SettingsView from "../views/SettingsView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
 
@@ -406,7 +406,7 @@ export async function callRouter(){
 
           document.querySelector('#email').setAttribute('value', email);
           document.querySelector('#settings-username').setAttribute('value', username);    
-          document.querySelector('#settings-old-password').setAttribute('placeholder', getStars(pl));
+          document.querySelector('#settings-password').setAttribute('placeholder', getStars(pl));
         
 
         }  
@@ -434,66 +434,63 @@ export async function callRouter(){
 
         
 
-        // document.getElementById('settings-form')?.addEventListener('submit', function(e){
+        document.getElementById('settings-form')?.addEventListener('submit', function(e){
 
-        //   e.preventDefault();
+          e.preventDefault();
   
-        //   const lastname = document.getElementById("lastname").value;
-        //   const firstname = document.getElementById("firstname").value;
-        //   const dateOfBirth = document.getElementById("dateofbirth").value;
-        //   const gender = document.querySelector('input[name="gender"]:checked')?.value;
-        //   const country = document.getElementById('country').value;
-        //   const email = document.getElementById('email').value;
-        //   const registerUsername = document.getElementById('register-username').value;
-        //   const registerPassword = document.getElementById('register-password').value;
-        //   const registerPasswordConfirmation = document.getElementById('register-password-confirmation').value;
-          
+          const lastname = document.getElementById("lastname").value;
+          const firstname = document.getElementById("firstname").value;
+          const dateOfBirth = document.getElementById("dateofbirth").value;
+          const gender = document.querySelector('input[name="gender"]:checked')?.value;
+          const country = document.getElementById('country').value;
+          const email = document.getElementById('email').value;
+          const username = document.getElementById('settings-username').value;
+          const newPassword = document.getElementById('settings-new-password').value;
+          const newPasswordConfirmation = document.getElementById('settings-new-password-confirmation').value;
+
   
-        //   const errorMessageSpan = document.getElementById('error-register');
-        //   let errorMessage = '';
+          const errorMessageSpan = document.getElementById('error-settings');
+          let errorMessage = '';
   
   
-        //   if(
-        //       lastname == "" ||
-        //       firstname == "" ||
-        //       dateOfBirth == "" ||
-        //       gender == "" ||
-        //       country == "" ||
-        //       email == "" ||
-        //       registerUsername == "" ||
-        //       registerPassword == "" ||
-        //       registerPasswordConfirmation == ""
-        //     ) {
+          if(
+              lastname == "" ||
+              firstname == "" ||
+              dateOfBirth == "" ||
+              gender == "" ||
+              country == "" ||
+              email == ""
+            ) {
   
-        //       errorMessage = "Please make sure no field is empty";
-        //       errorMessageSpan.innerText = errorMessage;
+              errorMessage = "Please make sure no field is empty";
+              errorMessageSpan.innerText = errorMessage;
   
-        //     } else if(registerPassword !== registerPasswordConfirmation){
+            } else if(newPassword !== newPasswordConfirmation){
   
-        //       errorMessage = "Your confirmation password must be the same as your password.";
-        //       errorMessageSpan.innerText = errorMessage;
+              errorMessage = "Your confirmation password must be the same as your password.";
+              errorMessageSpan.innerText = errorMessage;
   
-        //     } else {
+            } else {
   
-        //       const registerValues = {
-        //         lastname,
-        //         firstname,
-        //         dateOfBirth,
-        //         gender,
-        //         country,
-        //         email,
-        //         username: registerUsername,
-        //         password: registerPassword,
-        //       }
+              const settingsValues = {
+                lastname,
+                firstname,
+                dateOfBirth,
+                gender,
+                country,
+                email,
+                username,
+                password: newPassword,
+              }
   
-        //       handleRegister(registerValues, e);
-        //       errorMessageSpan.innerText = '';
+              handleSettings(settingsValues, e);
+              errorMessageSpan.innerText = '';
               
   
-        //   }
+          }
   
           
-        // })
+        })
 
       }
 

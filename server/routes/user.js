@@ -307,4 +307,83 @@ router.post('/update-user', upload.single('user_picture'), async (req, res) => {
 });
 
 
+
+router.post('/settings', async (req, res) => {
+  const {
+    lastname,
+    firstname,
+    dateOfBirth,
+    gender,
+    country,
+    email,
+    username,
+    password
+  } = req.body;
+
+  
+  const token = await req.cookies?.token;
+  const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
+  const currentUserUsername = tokenDecoded.username;
+  
+  const currentUser = await User.findOne({username: currentUserUsername});
+  const userFoundByEmail = await User.findOne({email});
+  const userFoundByUsername = await User.findOne({username});
+  
+
+  if(userFoundByEmail && (userFoundByEmail.id !== currentUser.id)){
+    
+    return res.json({status: false, message: 'This user already exists', spec: 'Email already taken'});
+    
+  } else if(userFoundByUsername && (userFoundByUsername.id !== currentUser.id)){
+    
+    return res.json({status: false, message: 'This user already exists', spec: 'Username already taken'});
+
+  }
+  
+  
+  try {
+
+
+    if(username !== currentUser.username){
+      const token = jwt.sign(
+        {username},
+        process.env.JWTSECRETKEY,
+        {expiresIn: 2 * 60 * 60 * 1000}
+      );
+    
+      res.cookie('token', token, {httpOnly: true, maxAge: 2 * 60 * 60 * 1000})
+    }
+
+    if(password.length > 0){ 
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      
+      const pl = password.length;
+      
+      await User.findOneAndUpdate(
+        {username: currentUser.username},
+        { "$set": { lastname, firstname, dateOfBirth, gender, country, email, username, password: hashedPassword, pl}}
+      );
+      
+
+    } else {
+      
+      await User.findOneAndUpdate(
+        {username: currentUser.username},
+        { "$set": { lastname, firstname, dateOfBirth, gender, country, email, username}}
+      );      
+
+    }
+    
+
+  } catch(e){
+    return res.json({status: false, message: 'Error updating the user informations.'});
+  }
+
+
+  return res.json({status: true, message: 'Update was successful.'});
+
+})
+
+
 export {router as UserRouter}

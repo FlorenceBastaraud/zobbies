@@ -159,7 +159,7 @@ export async function handleResetPassword(formData, event){
       event.target.reset();
 
       document.querySelector('.reset-password__title').innerText = "Your password has been reset!";
-      document.querySelector('.reset-password__description').innerHTML = `<span>You can now <a href="/enter-space">log in</a> into your account, using your username (<em>${data.user.username}</em>), your new password.</span>`;
+      document.querySelector('.reset-password__description').innerHTML = `<span>You can now <a href="/enter-space">log in</a> into your account, using your username (<strong><em>${data.user.username}</em></strong>), your new password.</span>`;
       document.getElementById('ResetPasswordForm').innerHTML = "";
       window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -245,6 +245,57 @@ export async function handleUpdateUserInfos(formData, event){
         goTo('/profile');
       }, 3000);
 
+
+    }
+
+    
+
+  } catch(err){
+
+    return err;
+
+  }
+
+}
+
+
+export async function handleSettings(formData, event){
+
+  const userSettingsData = {
+    method: 'POST',
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  };
+
+
+  try {
+
+    const response = await fetch("http://localhost:5000/auth/settings", userSettingsData);
+    const data = await response.json();
+
+    if(!data.status && data.spec == 'Email already taken'){
+
+      document.getElementById('error-settings').innerText = 'Sorry, this email address is already taken.';
+
+    } else if(!data.status && data.spec == 'Username already taken'){
+
+      document.getElementById('error-settings').innerText = 'Sorry, this username is already taken.';
+
+    } else {
+
+      event.target.reset();
+
+      document.querySelector('.settings__title').innerText = "Informations saved!";
+      document.getElementById('settings-form').innerHTML = "";
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      setTimeout(() => {
+        goTo('/profile');
+      }, 2000);
 
     }
 

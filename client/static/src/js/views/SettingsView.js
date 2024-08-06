@@ -74,13 +74,13 @@ export default class extends AbstractView {
                   <input id="settings-username" type="text" name="settings-username" value="" placeholder="Username">
 
                   <label for="settings-password" id="settings-password-label"><span id="settings-password-label-value">Password</span> <button id="trigger-update-password-bloc">Update password</button></label>
-                  <input id="settings-password" type="password" name="settings-password" value="" placeholder="**********" autocomplete>
+                  <input id="settings-password" type="password" name="settings-password" value="" placeholder="**********" readonly>
         
                   <label for="settings-new-password" class="password-update">New password</label>
-                  <input id="settings-new-password" type="password" name="settings-new-password" value="" placeholder="Enter a new password" autocomplete class="password-update">
+                  <input id="settings-new-password" type="password" name="settings-new-password" value="" placeholder="" autocomplete class="password-update">
 
                   <label for="settings-new-password-confirmation" class="password-update">New password confirmation</label>
-                  <input id="settings-new-password-confirmation" type="password" name="settings-new-password-confirmation" value="" placeholder="Confirm your new password" autocomplete class="password-update">
+                  <input id="settings-new-password-confirmation" type="password" name="settings-new-password-confirmation" value="" placeholder="" autocomplete class="password-update">
 
                 </fieldset>
 
