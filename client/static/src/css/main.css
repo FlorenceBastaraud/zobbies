@@ -1514,6 +1514,196 @@
   }
 }
 
+.settings {
+  background-color: #FFF;
+  padding: 5em 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 40px;
+}
+@media (max-width: 1350px) {
+  .settings {
+    justify-content: center;
+    align-content: center;
+  }
+}
+@media (max-width: 785px) {
+  .settings {
+    padding: 2.5em;
+  }
+}
+.settings__title {
+  font-size: 3.25rem;
+  font-weight: 400;
+  color: #070707;
+  text-align: center;
+  width: 100%;
+}
+@media (max-width: 1240px) {
+  .settings__title {
+    font-size: 2.625rem;
+  }
+}
+@media (max-width: 666px) {
+  .settings__title {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 440px) {
+  .settings__title {
+    font-size: 1.625rem;
+  }
+}
+.settings__description {
+  text-align: center;
+  width: 100%;
+  font-size: 1.25rem;
+  font-weight: 400;
+  max-width: 780px;
+}
+@media (max-width: 1240px) {
+  .settings__description {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 666px) {
+  .settings__description {
+    font-size: 0.9375rem;
+  }
+}
+.settings__form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 20px;
+  color: #070707;
+}
+@media (max-width: 785px) {
+  .settings__form {
+    width: 95%;
+    padding: 1.25em 0;
+  }
+}
+.settings__form fieldset {
+  border: none;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+}
+.settings__form fieldset > * {
+  width: 80%;
+}
+@media (max-width: 600px) {
+  .settings__form fieldset > * {
+    width: 100%;
+  }
+}
+.settings__form fieldset.gender label input {
+  margin-right: 3px;
+}
+.settings__form fieldset legend {
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.settings__form fieldset label {
+  margin: 7px 0;
+  font-weight: 400;
+  font-style: italic;
+}
+.settings__form fieldset input, .settings__form fieldset select {
+  background: rgba(7, 7, 7, 0.1490196078);
+  border: none;
+  padding: 0.375em 0.625em;
+  font-size: 1rem;
+  border-radius: 40px;
+  position: relative;
+}
+.settings__form fieldset input[type=radio], .settings__form fieldset select[type=radio] {
+  accent-color: #FFAFAF;
+}
+.settings__form fieldset input::placeholder, .settings__form fieldset select::placeholder {
+  color: #070707;
+}
+.settings__form fieldset #settings-password.hide {
+  display: none;
+}
+.settings__form fieldset #settings-password-label {
+  position: relative;
+}
+.settings__form fieldset #settings-password-label button {
+  position: absolute;
+  bottom: -5px;
+  height: fit-content;
+  width: fit-content;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+.settings__form fieldset #settings-password-label button:hover {
+  text-decoration: underline;
+}
+.settings__form fieldset #settings-password-label button.clicked {
+  color: red;
+  font-style: italic;
+}
+.settings__form fieldset #settings-password-label button.clicked:hover {
+  text-decoration: none;
+  color: #a79a9a;
+}
+.settings__form fieldset .password-update {
+  display: none;
+  transition: display 0.3s ease-in-out;
+}
+.settings__form fieldset .password-update.show {
+  display: flex;
+}
+.settings__form a {
+  position: relative;
+}
+.settings__form a:hover::after {
+  display: flex;
+}
+.settings__form a::after {
+  content: "";
+  position: absolute;
+  width: 98%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.8196078431);
+  left: 0;
+  bottom: -1px;
+  display: none;
+}
+.settings__form .submit {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.75em 2.5em;
+  background: #FFAFAF;
+}
+@media (max-width: 1240px) {
+  .settings__form .submit {
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 666px) {
+  .settings__form .submit {
+    font-size: 0.75rem;
+  }
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;

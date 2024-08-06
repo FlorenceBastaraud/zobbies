@@ -1,0 +1,162 @@
+.settings
+  background-color: $primaryColor
+  padding: toEm(80) 0
+  position: relative
+  @include displayFlex(column, flex-start, center)
+  column-gap: 40px
+
+  @include media-query(1350px)
+    justify-content: center
+    align-content: center  
+
+  @include media-query(785px)
+    padding: toEm(40)
+
+  &__title
+    font-size: toRem(52)
+    font-weight: 400
+    color: $mainBackground
+    text-align: center
+    width: 100%
+    @include media-query(1240px)
+      font-size: toRem(42)
+
+    @include media-query(666px)
+        font-size: toRem(32)
+
+    @include media-query(440px)
+        font-size: toRem(26)
+
+  &__description
+    text-align: center
+    width: 100%
+    font-size: toRem(20)
+    font-weight: 400
+    max-width: 780px
+
+    @include media-query(1240px)
+      font-size: toRem(16)
+
+    @include media-query(666px)
+        font-size: toRem(15)
+
+  &__form
+    width: 80%
+    @include displayFlex(column, flex-start, center)
+    row-gap: 20px
+    color: $mainBackground
+
+    @include media-query(785px)
+      width: 95%
+      padding: toEm(20) 0
+
+    fieldset
+      border: none
+      width: 100%
+      margin-bottom: 10px
+      @include displayFlex(column, flex-start, center)
+      font-size: toRem(16)
+      
+      & > *
+        width: 80%
+
+        @include media-query(600px)
+          width: 100%
+
+      &.gender
+        label
+          input
+            margin-right: 3px
+
+      legend
+        text-transform: uppercase
+        font-weight: 500
+        margin-bottom: 15px
+
+      label
+        margin: 7px 0
+        font-weight: 400
+        font-style: italic
+
+      input, select
+        background: #07070726
+        border: none
+        padding: toEm(6) toEm(10)
+        font-size: toRem(16)
+        border-radius: 40px
+        position: relative
+
+        &[type="radio"]
+          accent-color: $labelColor
+
+        &::placeholder
+          color: $mainBackground
+
+      #settings-password
+        &.hide
+          display: none
+
+      #settings-password-label
+        position: relative
+
+        button
+          position: absolute
+          bottom: -5px
+          height: fit-content
+          width: fit-content
+          right: 10px
+          background: none
+          border: none
+          cursor: pointer
+          font-weight: 500
+          transition: .3s ease
+
+          &:hover
+            text-decoration: underline
+
+          &.clicked
+            color: red
+            font-style: italic
+
+            &:hover
+              text-decoration: none
+              color: #a79a9a
+      
+      .password-update
+        display: none
+        transition: display .3s ease-in-out
+
+        &.show
+          display: flex
+
+
+    a
+      position: relative
+
+      &:hover
+        &::after
+          display: flex
+
+      &::after
+        content: ''
+        position: absolute
+        width: 98%
+        height: 1px
+        background-color: #000000d1
+        left: 0
+        bottom: -1px
+        display: none
+
+
+    .submit
+      cursor: pointer
+      font-size: toRem(16)
+      font-weight: 400
+      padding: toEm(12) toEm(40)
+      background: $labelColor
+
+      @include media-query(1240px)
+        font-size: toRem(14)
+
+      @include media-query(666px)
+        font-size: toRem(12)

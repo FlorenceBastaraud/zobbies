@@ -46,6 +46,7 @@ export default class Nav {
       case '/channels':
       case '/profile':
       case '/edit-profile':
+      case '/settings':
         this.detailsLinks = [
           {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
           {path: 'stats', title: 'Stats', name: 'Stats'},

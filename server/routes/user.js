@@ -20,6 +20,8 @@ router.post('/register', async (req, res) => {
     password
   } = req.body;
 
+  const pl = password.length;
+
   const user = await User.findOne({email});
 
 
@@ -37,10 +39,11 @@ router.post('/register', async (req, res) => {
     email,
     username,
     password: hashedPassword,
+    pl,
     isVerified: false,
     displayName: lastname + ' ' + firstname,
     bio: '',
-    userPicture: ''
+    userPicture: '',
   });
 
 
@@ -185,6 +188,8 @@ router.post('/reset-password/:token', async (req, res) => {
   const {token} = req.params;
   const {password} = req.body;
 
+  const pl = password.length;
+
   try {
 
     const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
@@ -193,7 +198,8 @@ router.post('/reset-password/:token', async (req, res) => {
 
     const user = await User.findByIdAndUpdate(
       {_id: userId},
-      {password: hashedPassword}
+      {password: hashedPassword},
+      {pl: pl}
     );
 
     return res.json({status: true, message: 'Password reset successfully', user: { username: user.username }})

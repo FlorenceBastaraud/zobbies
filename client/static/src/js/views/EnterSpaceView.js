@@ -5,22 +5,7 @@ export default class extends AbstractView {
 
       super();
       this.setWindowDetails('Zobbies - Enter the world now', 'enter-space');
-      this.countriesListHtml = "";
       this.getCountryList();
-
-    }
-
-    async getCountryList(){
-
-      const response = await fetch('https://restcountries.com/v2/all');
-      const data = await response.json();
-      const countryList = data.map(country => country.name);
-      const countriesInOrder = countryList.sort((a, b) => a.localeCompare(b));
-      countriesInOrder.map(country => {
-        this.countriesListHtml += `<option value="${country}">${country}</option>`;
-      });
-
-      document.getElementById('country').innerHTML = this.countriesListHtml;
 
     }
 

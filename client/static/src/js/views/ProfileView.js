@@ -29,7 +29,7 @@ export default class extends AbstractView {
 
                   <div class="platform">
                     <a href="/edit-profile" title="Edit profile" data-link class="platform__edit-profile">Edit profile</a>
-                    <a href="/" title="Settings" class="platform__settings">Settings</a>
+                    <a href="/settings" title="Settings" class="platform__settings">Settings</a>
                     <a href="/" class="platform__logout" id="logout">
                       <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
