@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { UserRouter } from './routes/user.js';
+import { ChannelRouter } from './routes/channel.js';
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -22,6 +23,7 @@ app.use(cors({
   credentials: true
 }));
 app.use('/auth', UserRouter);
+app.use('/auth', ChannelRouter);
 
 app.listen(PORT, () => {
   console.log("Servir running on " + PORT + "...");

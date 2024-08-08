@@ -1,3 +1,5 @@
+import { getAdminAccess } from "../helpers/apiCallsFunctions.js";
+
 export default class Nav {
 
   constructor(){
@@ -38,8 +40,8 @@ export default class Nav {
       case '/reset-password':
       case '/verify-account':
           this.detailsLinks = [
-          {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
-          {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},
+          // {path: 'the-concept', title: 'The Concept', name: 'The Concept'},
+          // {path: 'top-channels', title: 'Top Channels', name: 'Top Channels'},
           {path: 'genesis', title: 'Genesis', name: 'Genesis'}
         ]; 
         break;
@@ -47,10 +49,11 @@ export default class Nav {
       case '/profile':
       case '/edit-profile':
       case '/settings':
+      case '/add-channel':
         this.detailsLinks = [
-          {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
-          {path: 'stats', title: 'Stats', name: 'Stats'},
-          {path: 'requests', title: 'Request', name: 'Requests'},
+          // {path: 'my-currents', title: 'My Currents', name: 'My Currents'},
+          // {path: 'stats', title: 'Stats', name: 'Stats'},
+          // {path: 'requests', title: 'Request', name: 'Requests'},
           {path: 'genesis', title: 'Genesis', name: 'Genesis'}
         ]; 
         break;
@@ -78,7 +81,7 @@ export default class Nav {
   }
 
 
-  generateConnectedElements(){
+  generateConnectedElements(isAdmin){
 
     if(location.pathname !== '/profile'){
       this.linksItems +=  `
@@ -88,6 +91,17 @@ export default class Nav {
       </a>
 
     `;
+
+      if(isAdmin){
+        this.linksItems +=  `
+
+          <a href="/add-channel" title="Add Channel" data-link class="nav-link">
+            + channel
+          </a>
+
+    `;
+      }
+
     }
     
   }
@@ -98,9 +112,10 @@ export default class Nav {
     this.generateLinkElements();
 
     const loggedin = await this.checkUserLoggedIn();
+    const isAdmin = await getAdminAccess();    
 
     if(loggedin){
-      this.generateConnectedElements();
+      this.generateConnectedElements(isAdmin);
     }
 
     return this.linksItems;

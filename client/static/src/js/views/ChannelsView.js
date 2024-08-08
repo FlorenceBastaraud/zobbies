@@ -11,36 +11,44 @@ export default class extends AbstractView {
         return `
             <div class="channels wrapper">
 
-              <div class="channels__content">
-
-                <h1 class="channels__content--title">All Channels</h1>
-                <h2 class="channels__content--subtitle">here</h2>
-                <h3 class="channels__content--label">Now</h3>
-                <p class="channels__content--description">Browse through all the channels</p>
-                <a class="channels__content--cta primary-cta">Browse</a>
-        
-
-              </div>
-
               <div class="channels__blobs blobs">
-                <div class="channels__blobs--item blob background-1 ptl">
-                  <span data-blob="gaming">gaming</span>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/channel" data-link data-blob="gaming">gaming</a>
                 </div>
-                <div class="channels__blobs--item blob background-2 pt">
-                  <span data-blob="traveling">traveling</span>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/reading" data-link data-blob="gaming">reading</a>
                 </div>
-                <div class="channels__blobs--item blob background-3 ptr">
-                  <span data-blob="dancing">dancing</span>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/clubbing" data-link data-blob="gaming">clubbing</a>
                 </div>
-                <div class="channels__blobs--item blob background-1 pr">
-                  <span data-blob="hiking">hiking</span>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/channel" data-link data-blob="gaming">gaming</a>
                 </div>
-                <div class="channels__blobs--item blob background-2 pbr">
-                  <span data-blob="clubbing">clubbing</span>
+                
+                <div class="channels__blobs--item blob">
+                  <a href="/reading" data-link data-blob="gaming">reading</a>
                 </div>
-                <div class="channels__blobs--item blob background-3 pbl">
-                  <span data-blob="reading">reading</span>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/clubbing" data-link data-blob="gaming">clubbing</a>
                 </div>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/channel" data-link data-blob="gaming">gaming</a>
+                </div>
+                
+                <div class="channels__blobs--item blob">
+                  <a href="/reading" data-link data-blob="gaming">reading</a>
+                </div>
+
+                <div class="channels__blobs--item blob">
+                  <a href="/clubbing" data-link data-blob="gaming">clubbing</a>
+                </div>
+
               </div>
 
             </div>

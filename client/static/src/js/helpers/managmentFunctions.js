@@ -10,13 +10,16 @@ import VerifyAccountView from "../views/VerifyAccountView.js";
 import ProfileView from '../views/ProfileView.js';
 import EditProfileView from "../views/EditProfileView.js";
 import SettingsView from "../views/SettingsView.js";
+import AddChannelView from "../views/AddChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
 
 
 export async function callRouter(){
+
+  const isAdmin = await getAdminAccess();
 
   await checkUserConnexionStatus().then((checkStatus) => {
 
@@ -30,10 +33,17 @@ export async function callRouter(){
         {path: '/verify-account', view: VerifyAccountView},
         {path: '/profile', view: ProfileView},
         {path: '/edit-profile', view: EditProfileView},
-        {path: '/settings', view: SettingsView}
+        {path: '/settings', view: SettingsView},
+        {path: '/add-channel', view: AddChannelView}
       ];
 
       const routesPaths = routes.map(route => route.path);
+      
+      if(!isAdmin && location.pathname == "/add-channel"){
+        routes = routes.filter(route => route.path !== location.pathname);
+        history.pushState(null, null, '/channels');
+        updateNav(); 
+      }      
 
       if(!routesPaths.includes(location.pathname)){
         history.pushState(null, null, '/channels');
@@ -493,6 +503,41 @@ export async function callRouter(){
         })
 
       }
+
+
+      // handle add channel form event
+      if(location.pathname == '/add-channel'){
+
+        document.getElementById('addChannelForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+  
+          const channelName = document.getElementById('channel-name').value;
+          const displayChannelName = document.getElementById('display-channel-name').value;
+  
+          const errorMessageSpan = document.getElementById('error-add-channel');
+          let errorMessage = '';
+  
+  
+          if(channelName == "" || displayChannelName == "") {
+  
+              errorMessage = "Please make sure no field is empty";
+              errorMessageSpan.innerText = errorMessage;
+  
+            } else {
+  
+              const addChannelData = {
+                name: channelName,
+                displayName: displayChannelName
+              }
+              
+              handleAddChannel(addChannelData, e);
+      
+          }
+  
+        });
+
+      }
+      
 
   });
 

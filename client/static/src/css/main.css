@@ -699,97 +699,18 @@
 }
 
 .channels {
+  width: 100%;
   padding: 5em 0;
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-}
-.channels__content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: -0.625em;
-  text-align: center;
-}
-@media (max-width: 1140px) {
-  .channels__content {
-    padding: 0em 1.25em;
-  }
-}
-.channels__content--title, .channels__content--subtitle {
-  font-size: 4.5rem;
-  font-weight: 700;
-  max-width: 1230px;
-}
-@media (min-width: 887px) {
-  .channels__content--subtitle {
-    line-height: 2rem;
-  }
-}
-.channels__content--label {
-  color: #FFAFAF;
-  font-weight: 700;
-  font-size: 4.5rem;
-  font-style: italic;
-}
-@media (max-width: 1240px) {
-  .channels__content--title, .channels__content--subtitle, .channels__content--label {
-    font-size: 3.125rem;
-  }
-}
-@media (max-width: 666px) {
-  .channels__content--title, .channels__content--subtitle, .channels__content--label {
-    font-size: 2.75rem;
-  }
-}
-@media (max-width: 440px) {
-  .channels__content--title, .channels__content--subtitle, .channels__content--label {
-    font-size: 2.375rem;
-  }
-}
-.channels__content--description {
-  margin-top: 1.875em;
-  font-size: 1.125rem;
-  font-weight: 400;
-  max-width: 780px;
-}
-@media (max-width: 1240px) {
-  .channels__content--description {
-    font-size: 1rem;
-  }
-}
-@media (max-width: 666px) {
-  .channels__content--description {
-    font-size: 0.9375rem;
-  }
-}
-.channels__content--cta {
-  cursor: pointer;
-  margin-top: 1.875em;
-}
-@media (max-width: 900px) {
-  .channels__content--cta {
-    z-index: 3;
-  }
 }
 .channels__blobs {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 90%;
-  height: 100%;
-  z-index: -1;
-}
-@media (max-width: 1340px) {
-  .channels__blobs {
-    min-width: 50%;
-    max-width: 70%;
-  }
+  background-color: pink;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .forgot-password {
@@ -1702,6 +1623,129 @@
   .settings__form .submit {
     font-size: 0.75rem;
   }
+}
+
+.add-channel {
+  padding: 5em 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 40px;
+}
+@media (max-width: 1350px) {
+  .add-channel {
+    justify-content: center;
+    align-content: center;
+  }
+}
+.add-channel__title {
+  font-size: 3.25rem;
+  font-weight: 400;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+}
+@media (max-width: 1240px) {
+  .add-channel__title {
+    font-size: 2.625rem;
+  }
+}
+@media (max-width: 666px) {
+  .add-channel__title {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 440px) {
+  .add-channel__title {
+    font-size: 1.625rem;
+  }
+}
+.add-channel__form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 20px;
+}
+.add-channel__form fieldset {
+  border: none;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+}
+.add-channel__form fieldset > * {
+  width: 80%;
+}
+@media (max-width: 600px) {
+  .add-channel__form fieldset > * {
+    width: 100%;
+  }
+}
+.add-channel__form fieldset legend {
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.add-channel__form fieldset label {
+  margin: 7px 0;
+  font-weight: 400;
+  font-style: italic;
+}
+.add-channel__form fieldset input {
+  border: none;
+  padding: 0.375em 0.625em;
+  font-size: 1rem;
+  border-radius: 40px;
+  position: relative;
+}
+.add-channel__form fieldset input[type=radio] {
+  accent-color: #FFAFAF;
+}
+.add-channel__form fieldset input::placeholder {
+  visibility: hidden;
+}
+.add-channel__form a {
+  position: relative;
+}
+.add-channel__form a:hover::after {
+  display: flex;
+}
+.add-channel__form a::after {
+  content: "";
+  position: absolute;
+  width: 98%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.8196078431);
+  left: 0;
+  bottom: -1px;
+  display: none;
+}
+.add-channel__form .submit {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.75em 2.5em;
+  background: #FFAFAF;
+}
+@media (max-width: 1240px) {
+  .add-channel__form .submit {
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 666px) {
+  .add-channel__form .submit {
+    font-size: 0.75rem;
+  }
+}
+.add-channel__form .submit.submit-add-channel {
+  background-color: #f4ac9a;
 }
 
 *, *::before, *::after {

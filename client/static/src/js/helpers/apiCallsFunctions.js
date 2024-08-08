@@ -308,3 +308,80 @@ export async function handleSettings(formData, event){
   }
 
 }
+
+
+
+export async function getAdminAccess(){
+
+  const addChannelData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch('http://localhost:5000/auth/add-channel', addChannelData);
+  const data = await response.json();  
+
+  return data.status; 
+
+}
+
+
+export async function handleAddChannel(formData, event){
+
+  const addChannelData = {
+    method: 'POST',
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  }
+
+
+  try {
+
+    const response = await fetch('http://localhost:5000/auth/add-channel', addChannelData);
+    const data = await response.json();
+
+    if(!data.status){
+
+      if(data.message == 'error adding the channel'){
+
+        document.getElementById('error-add-channel').innerText = 'Error adding the channel. Please try again later.';
+
+      } else if(data.message == 'Channel already exists') {
+
+        document.getElementById('error-add-channel').innerText = "Sorry, this channel already exists.";
+
+      } else {
+
+        document.getElementById('error-add-channel').innerText = 'Make sure no field is empty';
+
+      }
+
+    } else {
+
+      event.target.reset();
+
+      document.querySelector('.add-channel__title').innerText = "Channel Added!";
+      document.getElementById('addChannelForm').innerHTML = "";
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      setTimeout(() => {
+        goTo('/channels');
+      }, 2000);
+
+    }
+
+    
+
+  } catch(err){
+
+    return err;
+
+  }
+
+
+
+}

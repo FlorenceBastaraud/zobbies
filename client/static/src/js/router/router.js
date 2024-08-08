@@ -4,7 +4,6 @@ export default class Router  {
     this.routes = routes;
 
     this.routesMatches = this?.routes.map(route => {
-
       return {
         route: route,
         isCurrent: location.pathname === route.path
