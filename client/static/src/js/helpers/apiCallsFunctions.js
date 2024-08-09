@@ -310,7 +310,6 @@ export async function handleSettings(formData, event){
 }
 
 
-
 export async function getAdminAccess(){
 
   const addChannelData = {
@@ -324,7 +323,6 @@ export async function getAdminAccess(){
   return data.status; 
 
 }
-
 
 export async function handleAddChannel(formData, event){
 
@@ -386,7 +384,33 @@ export async function handleAddChannel(formData, event){
 
 }
 
+export async function userChannelInteractions(token, channel){
 
+  try {
+
+    const fetchData = {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        Accept: 'Application/json',
+        'Content-Type': 'Application/json'
+      },
+      body: JSON.parse({token, channel})
+    }
+  
+    const response = await fetch('http://localhost:5000/channel-interactions', fetchData)
+    const data = await response.json();
+
+    return data;
+
+  } catch (err){
+
+    return err;
+
+  }
+
+
+}
 
 export async function getChannels(){
 
@@ -400,6 +424,69 @@ export async function getChannels(){
 
   if(data.status){
    return data.channels; 
+  }
+
+}
+
+
+
+export async function getChannel(){
+
+  const userChannelData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const name = location.hash.replace('#', '');
+
+  try {
+
+    const response = await fetch(`http://localhost:5000/auth/channel/${name}`, userChannelData);
+    const data = await response.json();
+
+    if(data.status){
+      return data.channel; 
+     }
+
+  } catch(err){
+
+    return err;
+
+  }
+
+}
+
+
+
+export async function getUserById(id){
+
+  const userData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch(`http://localhost:5000/auth/user/${id}`, userData);
+  const data = await response.json();  
+
+  if(data.status){
+   return data.user; 
+  }
+
+}
+
+
+export async function getUsers(){
+
+  const usersData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch(`http://localhost:5000/auth/users`, usersData);
+  const data = await response.json();  
+
+  if(data.status){
+   return data.users; 
   }
 
 }

@@ -386,4 +386,34 @@ router.post('/settings', async (req, res) => {
 })
 
 
+router.get('/user/:id', async (req, res) => {
+
+  const {id} = req.params;
+
+  const user = await User.findById({_id: id});
+
+  if(user){
+    res.json({status: true, message: "User found", user});
+  } else {
+    res.json({status: false, message: 'User not found'});
+  }
+  
+
+});
+
+
+router.get('/users', async (req, res) => {
+
+  const users = await User.find({});
+
+  if(users){
+    res.json({status: true, message: "Users list found", users});
+  } else {
+    res.json({status: false, message: 'Users not found'});
+  }
+  
+
+});
+
+
 export {router as UserRouter}

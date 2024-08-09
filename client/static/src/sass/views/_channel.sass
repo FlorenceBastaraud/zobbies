@@ -1,0 +1,166 @@
+.channel
+  @include displayFlex(column, space-between, flex-start)
+  gap: 30px
+
+  & > *
+    padding: toEm(20)
+    border-radius: 10px
+
+  &__top-ctas
+    @include displayFlex(row, space-between, flex-start)
+    width: 100%
+
+    &--back
+      @include displayFlex(row, flex-start, center)
+      gap: 9px
+
+      span
+        text-transform: uppercase
+
+    &--leave
+      background: none
+      cursor: pointer
+      border: none
+      color: $primaryColor
+      padding: 0
+      font-size: toRem(13)
+      text-transform: lowercase
+      transition: .3s ease-in-out
+
+      &:hover
+        text-decoration: underline
+
+  &__join
+    position: absolute
+    z-index: 20
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    text-align: center
+    @include displayFlex(column, center, center)
+    gap: 10px
+    background: $mainBackground
+
+    &--title
+      font-size: toRem(72)
+      font-weight: 700
+      max-width: 1230px
+
+      @include media-query(1240px)
+        font-size: toRem(50)
+
+      @include media-query(666px)
+        font-size: toRem(44)
+
+      @include media-query(440px)
+        font-size: toRem(38)
+
+    &--description
+      font-size: toRem(18)
+      font-weight: 400
+      max-width: 780px
+
+      @include media-query(1240px)
+        font-size: toRem(16)
+
+      @include media-query(666px)
+        font-size: toRem(15)
+
+    &--buttons
+      margin-top: 20px
+      @include displayFlex(column, center, center)
+      gap: 7px
+
+      @include media-query(1240px)
+        font-size: toRem(14)
+
+      @include media-query(666px)
+        font-size: toRem(12)
+
+      button, a
+        cursor: pointer
+        font-size: toRem(16)
+        font-weight: 400
+        padding: toEm(12) toEm(40)
+        background: $labelColor
+
+        &.cancel
+          background: none
+          border: none
+          color: $primaryColor
+          padding: 0
+          font-size: toRem(14)
+          text-transform: lowercase
+          transition: .3s ease-in-out
+
+          &:hover
+            text-decoration: underline
+
+
+  &__infos
+    color: $primaryColor
+    align-self: center
+    @include displayFlex(column, center, center)
+
+    &--title
+      font-size: toRem(42)
+      font-weight: 500
+      font-style: italic
+      
+    &--members
+      @include displayFlex(row, center, center)
+      gap: 15px
+
+    &--description
+      margin-top: 15px
+      width: 100%
+      font-size: toRem(16)
+      font-weight: 400
+      max-width: 780px
+      text-align: center
+      font-style: italic
+
+
+  &__chat
+    background-color: #282323
+    @include displayFlex(column, flex-start, flex-start)
+    gap: 10px
+
+    &--date
+      align-self: center
+      font-style: italic
+      font-size: toRem(13)
+
+    &--item
+      background-color: $mainBackground
+      padding: toEm(10)
+      border-radius: 10px
+      @include displayFlex(column, flex-start, flex-start)
+      gap: 10px
+      
+      .user
+        @include displayFlex(row, flex-start, center)
+        gap: 10px
+
+        &__image
+          width: 40px
+          height: 40px
+          border-radius: 50%
+          border: 2px solid $primaryHoverColor
+          overflow: hidden
+
+          &--item
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+        &__username
+          color: $buttonBackgroundColor
+            
+      .message
+        font-size: toRem(18)
+
+      .publish-time
+        font-size: toRem(12)
+        font-style: italic

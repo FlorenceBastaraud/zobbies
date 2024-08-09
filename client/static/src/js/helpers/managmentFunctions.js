@@ -11,8 +11,9 @@ import ProfileView from '../views/ProfileView.js';
 import EditProfileView from "../views/EditProfileView.js";
 import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
+import ChannelView from "../views/ChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUserById, getUsers} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
 
@@ -34,7 +35,8 @@ export async function callRouter(){
         {path: '/profile', view: ProfileView},
         {path: '/edit-profile', view: EditProfileView},
         {path: '/settings', view: SettingsView},
-        {path: '/add-channel', view: AddChannelView}
+        {path: '/add-channel', view: AddChannelView},
+        {path: '/channel', view: ChannelView}
       ];
 
       const routesPaths = routes.map(route => route.path);
@@ -547,7 +549,6 @@ export async function callRouter(){
 
       }
 
-
       // handle add channel form event
       if(location.pathname == '/add-channel'){
 
@@ -581,7 +582,7 @@ export async function callRouter(){
 
       }
       
-
+      // channels view
       if(location.pathname == '/channels'){
 
         let channelElements = ``;
@@ -593,7 +594,7 @@ export async function callRouter(){
             
             channelElements += `
                     <div class="channels__blobs--item blob">
-                      <a href="/channel:${name}" data-link data-blob="${name}">${displayName}</a>
+                      <a href="/channel#${name}" data-link data-blob="${name}">${displayName}</a>
                       <div class="members">
                         <i class="fa-solid fa-user"></i>
                         <span>${members.length}</span>
@@ -612,6 +613,108 @@ export async function callRouter(){
 
 
       }
+
+      // channel view      
+      if(location.pathname == '/channel'){
+
+
+        async function currentChannel(){
+          const {name, displayName, description, members, chat} = await getChannel();
+
+          const membersText = members.length > 1 ? members.length + ' members': members.length + ' member';
+
+          document.querySelector('.channel').setAttribute('data-channel', name);
+          document.querySelector('.channel__infos--title').innerText = displayName;
+          document.querySelector('.channel__join--title').innerText = displayName;
+          document.querySelector('.channel__infos--members').innerText = membersText;
+          document.querySelector('.channel__infos--description').innerText = description || '';
+          const chatWrapper = document.querySelector('.channel__chat');
+          let chatItems = ``;
+
+          
+          if(Object.keys(chat).length < 1){
+            
+            chatItems += `<span class="channel__chat--empty">Chat's empty :( Would you change that? </span>`;
+
+          } else {
+
+
+            const users = await getUsers();
+
+            chat.map(el => el.messages.map(message => {
+  
+              users.map(user => {              
+                if(user._id == message.userId){
+                  message.userId = user;
+                }
+              })
+              
+            }));
+                      
+            chat.map(chatItem => {
+  
+              const date = chatItem.date.replaceAll(':', '/');
+  
+              chatItems += `
+                <div class="channel__chat--date">${date}</div>
+              `;
+              
+              chatItem.messages.map((message) => {              
+  
+                const {userId: user} = message;
+  
+                const userPictureName = user.userPicture ? JSON.parse(user.userPicture).filename : '';
+                const userPhoto = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+                const username = '@' + user.username || '@username-undefined';
+  
+                chatItems += `
+                    <div class="channel__chat--item">
+  
+                      <div class="user" data-user="${user.id}">
+                        <div class="user__image">
+                          <img class="user__image--item" src="${userPhoto}" alt="${displayName} profile picture">
+                        </div>
+                        <span class="user__username">${username}</span>
+                      </div>
+  
+                      <p class="message">${message.message}</p>
+  
+                      <span class="publish-time">${message.time}</span>
+  
+                  </div>
+                `;
+  
+              });
+              
+            });
+  
+
+
+          }
+
+          chatWrapper.innerHTML = chatItems;
+
+
+        }
+        currentChannel();
+
+
+        document.querySelector('.channel-join').addEventListener('click', (e) => {
+          e.preventDefault();          
+          document.querySelector('.channel__join').classList.add('display-none');
+          currentChannel();
+
+        });
+
+        document.querySelector('#leave-channel').addEventListener('click', (e) => {
+          e.preventDefault();  
+
+          
+        });
+
+      }
+
+
 
   });
 

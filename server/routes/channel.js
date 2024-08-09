@@ -95,4 +95,24 @@ router.get('/channels', async (req, res) => {
 
 });
 
+
+router.get('/channel/:name', async (req, res) => {
+
+  const {name} = req.params;
+  
+  try {
+
+    const channel = await Channel.findOne({name});
+    
+    return res.json({status: true, message: 'Channels sent succesfully', channel})
+
+  } catch(err){
+
+    return res.json({status: false, message: 'Channel not found'})
+    
+  }
+
+
+});
+
 export {router as ChannelRouter}  
