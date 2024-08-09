@@ -385,3 +385,21 @@ export async function handleAddChannel(formData, event){
 
 
 }
+
+
+
+export async function getChannels(){
+
+  const channelsData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch('http://localhost:5000/auth/channels', channelsData);
+  const data = await response.json();
+
+  if(data.status){
+   return data.channels; 
+  }
+
+}

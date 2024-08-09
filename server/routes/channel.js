@@ -78,27 +78,21 @@ router.post('/add-channel', async (req, res) => {
 });
 
 
-// router.get('/channels', async (req, res) => {
+router.get('/channels', async (req, res) => {
 
-//   try {
+  try {
 
-//     const token = await req.cookies?.token;
+    const channels = await Channel.find({});
 
-//     const tokenDecoded = jwt.verify(token, process.env.JWTSECRETKEY);
+    return res.json({status: true, message: 'Channels sent succesfully', channels})
 
-//     const username = tokenDecoded.username;
+  } catch(err){
 
-//     const user = await Channel.findOne({username: username});
-
-//     return res.json({status: true, message: 'User found succesfully', user: user})
-
-//   } catch(err){
-
-//     return res.json({status: false, message: 'User not found'})
+    return res.json({status: false, message: 'Channels not found'})
     
-//   }
+  }
 
 
-// });
+});
 
 export {router as ChannelRouter}  

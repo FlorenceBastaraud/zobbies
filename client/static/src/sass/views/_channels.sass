@@ -1,11 +1,81 @@
 .channels
+  z-index: 1
   width: 100%
-  padding: toEm(80) 0
+  padding: toEm(20)
   @include displayFlex(column, flex-start, center)
+  gap: 50px
 
-
+  &__title
+    color: $primaryColor
+    font-size: toRem(50)
+    font-style: italic
+  
   &__blobs
+    z-index: 2
     width: 100%
-    background-color: pink
     display: grid
-    grid-template-columns: repeat(3, 1fr)
+    justify-content: center
+    align-items: center
+    grid-template-columns: repeat(10, 1fr)
+    gap: toEm(40)
+
+    @include media-query(1350px)
+      grid-template-columns: repeat(6, 1fr)
+
+    @include media-query(955px)
+      grid-template-columns: repeat(2, 1fr)
+
+    @include media-query(955px)
+      grid-template-columns: 1fr
+    
+
+    .blob
+      z-index: 3
+      position: relative
+      width: auto
+      grid-column: span 2
+      @include displayFlex(column, center, center)
+      gap: 10px
+      transition: .3s ease-in-out
+
+      @include media-query(955px)
+        grid-column: unset
+
+      &:hover
+        scale: 1.1
+        .members
+          display: flex
+    
+      a
+        color: #000
+        font-size: toRem(18)!important
+        font-style: italic
+        font-weight: 500
+        text-align: center
+        cursor: pointer
+
+        @include media-query(700px)
+        font-size: toRem(12)
+
+        &:last-child:nth-child(3n - 1)
+        grid-column-end: -2
+
+        &:nth-last-child(2):nth-child(3n + 1)
+          grid-column-end: 4
+        
+        &:last-child:nth-child(3n - 2)
+          grid-column-end: 5
+
+        &:last-child:nth-child(3n - 1)
+        &:nth-last-child(2):nth-child(3n + 1)      
+        &:last-child:nth-child(3n - 2)
+          @include media-query(955px)
+            grid-column-end: unset
+
+
+      .members
+        @include displayFlex(row, space-betwen, center)
+        gap: 10px
+        color: $mainBackground
+        display: none
+        transition: .3s ease

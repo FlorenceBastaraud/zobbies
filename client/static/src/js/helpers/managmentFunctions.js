@@ -12,7 +12,7 @@ import EditProfileView from "../views/EditProfileView.js";
 import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
 
@@ -86,6 +86,49 @@ export async function callRouter(){
 
   }).then(() => {
 
+      // enter space view specificities
+      if(location.pathname == '/enter-space'){
+        const registerBloc = document.getElementById('register-bloc');
+        const loginBloc = document.getElementById('login-bloc');
+        const toggleFormBtns = document.querySelectorAll('.toggle-form');
+
+        toggleFormBtns.forEach(toggleFormBtn => {
+          toggleFormBtn.addEventListener('click', function(e){
+
+            let currentForm = e.target.getAttribute('data-toggle');
+
+            if(currentForm == 'register'){
+              registerBloc?.classList.add('display-none');
+              loginBloc?.classList.remove('display-none');
+            } else {
+              registerBloc?.classList.remove('display-none');
+              loginBloc?.classList.add('display-none');
+            }
+        
+          }, true)
+        });
+
+
+        function responsiveView(){
+          const windowWidth = window.innerWidth;
+          const widthBreakpoint = 1350;
+
+          if(windowWidth < widthBreakpoint){
+            registerBloc?.classList.add('display-none');
+            toggleFormBtns?.forEach(toggleFormBtn => toggleFormBtn.classList.remove('display-none'));
+          } else {
+            registerBloc?.classList.remove('display-none');
+            toggleFormBtns?.forEach(toggleFormBtn => toggleFormBtn.classList.add('display-none'));
+          }
+
+        }
+
+        responsiveView();
+
+        if(document.body.getAttribute('view') === "enter-space"){
+          window.addEventListener('resize', responsiveView);
+        }
+      }
 
       // handle register form submit event
       document.getElementById('registerForm')?.addEventListener('submit', function(e){
@@ -538,6 +581,37 @@ export async function callRouter(){
 
       }
       
+
+      if(location.pathname == '/channels'){
+
+        let channelElements = ``;
+        async function channelsItems(){
+
+          const channels = await getChannels();
+          channels.map(channel => {
+            const {name, displayName, members} = channel;
+            
+            channelElements += `
+                    <div class="channels__blobs--item blob">
+                      <a href="/channel:${name}" data-link data-blob="${name}">${displayName}</a>
+                      <div class="members">
+                        <i class="fa-solid fa-user"></i>
+                        <span>${members.length}</span>
+                      </div>
+                    </div>`;
+                    
+          });  
+
+          document.querySelector('.channels__blobs').innerHTML = channelElements;
+
+          
+        }
+
+        channelsItems();
+
+
+
+      }
 
   });
 
