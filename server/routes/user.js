@@ -44,6 +44,8 @@ router.post('/register', async (req, res) => {
     displayName: lastname + ' ' + firstname,
     bio: '',
     userPicture: '',
+    channels: [],
+    socketId: ''
   });
 
 
@@ -91,7 +93,7 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
-  const {username, password} = req.body;
+  const {username, password} = req.body;  
 
   const user = await User.findOne({username});
 
@@ -414,6 +416,23 @@ router.get('/users', async (req, res) => {
   
 
 });
+
+
+router.get('/current-user/:socketId', async (req, res) => {
+
+  const {socketId} = req.params;
+
+  const user = await User.findOne({socketId});
+
+  if(user){
+    res.json({status: true, message: "User found", user});
+  } else {
+    res.json({status: false, message: 'User not found'});
+  }
+  
+
+});
+
 
 
 export {router as UserRouter}

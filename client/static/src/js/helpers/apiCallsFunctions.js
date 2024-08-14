@@ -1,6 +1,5 @@
 import {goTo, updateNav} from './managmentFunctions.js';
 
-
 export async function handleRegister(formData, event){
 
   const userRegisterData = {
@@ -45,7 +44,7 @@ export async function handleRegister(formData, event){
 
 
 export async function handleLogin(formData, event){
-
+  
   const userLoginData = {
     method: 'POST',
     'credentials': 'include',
@@ -384,10 +383,11 @@ export async function handleAddChannel(formData, event){
 
 }
 
-export async function userChannelInteractions(token, channel){
+export async function userChannelInteractions(channel, action, updateChatData = null){
 
+  
   try {
-
+    
     const fetchData = {
       method: 'POST',
       credentials: 'include',
@@ -395,15 +395,18 @@ export async function userChannelInteractions(token, channel){
         Accept: 'Application/json',
         'Content-Type': 'Application/json'
       },
-      body: JSON.parse({token, channel})
+      body: JSON.stringify({channel, action, updateChatData})
     }
+    
   
-    const response = await fetch('http://localhost:5000/channel-interactions', fetchData)
+    const response = await fetch('http://localhost:5000/auth/channel-interactions', fetchData)
     const data = await response.json();
-
-    return data;
-
-  } catch (err){
+    
+    if(data.status){
+      return data;
+    }
+    
+  } catch (err){    
 
     return err;
 
@@ -487,6 +490,23 @@ export async function getUsers(){
 
   if(data.status){
    return data.users; 
+  }
+
+}
+
+
+export async function getUserBySocketId(socketId){
+
+  const userData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch(`http://localhost:5000/auth/current-user/${socketId}`, userData);
+  const data = await response.json();  
+
+  if(data.status){
+   return data.user; 
   }
 
 }

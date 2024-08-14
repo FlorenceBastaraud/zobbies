@@ -1,12 +1,14 @@
 .channel
   @include displayFlex(column, space-between, flex-start)
-  gap: 30px
+  gap: 13px
+  padding: 0 toEm(20) toEm(10)
 
   & > *
-    padding: toEm(20)
+    padding: toEm(10) toEm(20)
     border-radius: 10px
 
   &__top-ctas
+    padding: toEm(15) 0
     @include displayFlex(row, space-between, flex-start)
     width: 100%
 
@@ -100,52 +102,70 @@
 
   &__infos
     color: $primaryColor
-    align-self: center
-    @include displayFlex(column, center, center)
+    padding: 0
+    display: grid
+    grid-template-columns: auto auto 1fr
+    align-items: center
+    gap: 15px
+    width: 100%
+
+    @include media-query(620px)
+      @include displayFlex(column, center, center)
+      gap: 10px
 
     &--title
-      font-size: toRem(42)
+      font-size: toRem(30)
       font-weight: 500
-      font-style: italic
-      
-    &--members
-      @include displayFlex(row, center, center)
-      gap: 15px
+      font-style: italic      
 
     &--description
-      margin-top: 15px
-      width: 100%
-      font-size: toRem(16)
+      font-size: toRem(15)
       font-weight: 400
-      max-width: 780px
-      text-align: center
-      font-style: italic
 
+    &--members
+      text-align: right
+      font-size: toRem(13)
+      font-weight: 300
+      
+      .amount
+        padding: 0 toEm(5)
 
   &__chat
+    width: 100%
     background-color: #282323
     @include displayFlex(column, flex-start, flex-start)
     gap: 10px
+    height: 420px
+    overflow-y: scroll
+
+    @media (min-width: 1400px) and (min-height:733px)
+      height: 500px
+
+    &::-webkit-scrollbar
+      display: none
 
     &--date
-      align-self: center
+      align-self: flex-start
       font-style: italic
-      font-size: toRem(13)
+      font-size: toRem(10)
+      padding: 0 toEm(10)
 
     &--item
       background-color: $mainBackground
+      width: 100%
       padding: toEm(10)
       border-radius: 10px
       @include displayFlex(column, flex-start, flex-start)
       gap: 10px
+      position: relative
       
       .user
         @include displayFlex(row, flex-start, center)
         gap: 10px
 
         &__image
-          width: 40px
-          height: 40px
+          width: 20px
+          height: 20px
           border-radius: 50%
           border: 2px solid $primaryHoverColor
           overflow: hidden
@@ -156,11 +176,69 @@
             object-fit: cover
 
         &__username
+          font-size: toRem(14)
           color: $buttonBackgroundColor
             
       .message
-        font-size: toRem(18)
+        font-size: toRem(15)
 
       .publish-time
-        font-size: toRem(12)
+        position: absolute
+        top: 10px
+        right: 10px
+        font-size: toRem(10)
         font-style: italic
+
+
+  &__input
+    width: 100%
+    background-color: #282323
+    padding: toEm(10)
+
+    &--form
+      width: 100%
+      display: grid
+      grid-template-columns: 96% 1fr
+      align-items: center
+      justify-content: space-between
+      gap: 10px
+
+      @include media-query(930px)
+        grid-template-columns: 1fr auto
+
+      label
+        display: none
+
+      textarea
+        outline: none
+        background: none
+        resize: none
+        color: $primaryColor
+        font-size: toRem(15)
+        border: none
+        border-radius: 10px
+        padding: toEm(10)
+        transition: .3s ease-in-out
+
+        &::-webkit-scrollbar
+          display: none
+
+        &:focus
+          background-color: $primaryHoverColor
+          color: $mainBackground
+
+      input
+        @include displayFlex(row, center, center)
+        background: $mainBackground
+        color: $primaryColor
+        border-radius: 50%
+        border: none
+        font-size: toRem(20)
+        padding: toEm(5)
+        cursor: pointer
+        transition: .3s ease-in-out          
+
+        &:hover
+          background-color: $primaryColor
+          color: $mainBackground
+        

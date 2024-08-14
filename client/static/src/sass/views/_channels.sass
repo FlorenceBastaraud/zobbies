@@ -66,8 +66,8 @@
         &:last-child:nth-child(3n - 2)
           grid-column-end: 5
 
-        &:last-child:nth-child(3n - 1)
-        &:nth-last-child(2):nth-child(3n + 1)      
+        &:last-child:nth-child(3n - 1),
+        &:nth-last-child(2):nth-child(3n + 1),  
         &:last-child:nth-child(3n - 2)
           @include media-query(955px)
             grid-column-end: unset

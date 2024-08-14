@@ -13,7 +13,7 @@ export default class extends AbstractView {
             
           <div class="channel wrapper" data-channel="">
 
-            <div class="channel__top-ctas">
+            <div class="channel__top-ctas display-none">
               <a href="/channels" data-link class="channel__top-ctas--back">
               <i class="fa-solid fa-arrow-left-long"></i> <span>Channels</span>
               </a>
@@ -29,15 +29,24 @@ export default class extends AbstractView {
               </div>
             </div>
 
-            <div class="channel__infos">
+            <div class="channel__infos display-none">
               <h1 class="channel__infos--title"></h1>
+              <h4 class="channel__infos--description"></h4>
               <div class="channel__infos--members">
+                <i class="fa-regular fa-user"></i>
                 <span class="amount"></span>
               </div>
-              <h4 class="channel__infos--description"></h4>
             </div>
 
-            <div class="channel__chat">
+            <div class="channel__chat display-none">
+            </div>
+
+            <div class="channel__input display-none">
+              <form class="channel__input--form">
+                <label for="text-message"></label>
+                <textarea id="text-message" name="text-message"></textarea>
+                <input type="submit" value="↑"></input
+              </form>
             </div>
 
           </div>

@@ -5,7 +5,7 @@ const livereload = require('livereload');
 const connectLiveReload = require('connect-livereload');
 
 // variables
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3050;
 const app = express();
 
 // reload

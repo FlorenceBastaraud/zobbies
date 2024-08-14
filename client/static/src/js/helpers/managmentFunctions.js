@@ -13,10 +13,10 @@ import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 import ChannelView from "../views/ChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUserById, getUsers} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
-
+const socket = io('http://localhost:5000');
 
 export async function callRouter(){
 
@@ -215,12 +215,12 @@ export async function callRouter(){
 
             const loginValues = {
               username: loginUsername,
-              password: loginPassword,
+              password: loginPassword
             }
 
             handleLogin(loginValues, e);
+
             errorMessageSpan.innerText = '';
-            
 
         }
 
@@ -328,7 +328,7 @@ export async function callRouter(){
         const userInfos = async () => {
           const userDetails = await getUserInfos();
 
-          const userPictureName = JSON.parse(userDetails.userPicture).filename;
+          const userPictureName = userDetails.userPicture.length > 0 ? JSON.parse(userDetails.userPicture).filename : '';
           const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
           const username = '@' + userDetails.username || '@username-undefined';
           const displayName = userDetails.displayName || userDetails.lastname + ' ' + userDetails.firstname;
@@ -355,7 +355,7 @@ export async function callRouter(){
         const userInfos = async () => {
           const user = await getUserInfos();
 
-          const userPictureName = JSON.parse(user.userPicture).filename;
+          const userPictureName = user.userPicture.length > 0 ? JSON.parse(user.userPicture).filename : '';
           const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
           const displayName = user.displayName || user.lastname + ' ' + user.firstname;
           const bio = user.bio || `No bio yet`;
@@ -617,22 +617,138 @@ export async function callRouter(){
       // channel view      
       if(location.pathname == '/channel'){
 
+        let currUserSocketId;
 
-        async function currentChannel(){
-          const {name, displayName, description, members, chat} = await getChannel();
 
-          const membersText = members.length > 1 ? members.length + ' members': members.length + ' member';
+        async function currentChannel(options = {}){
+          
+          let channel = await getChannel();
+          
+          if(Object.keys(options).length > 0){
 
+            if(options.action == 'firstLoaded'){
+              
+              const currUser = await getUserInfos();
+              
+              if(channel?.members.find(member => member == currUser._id)){
+
+                document.querySelector('.channel__join').classList.add('display-none');
+                document.querySelector('.channel__top-ctas').classList.remove('display-none');
+                document.querySelector('.channel__infos').classList.remove('display-none');
+                document.querySelector('.channel__chat').classList.remove('display-none');
+                document.querySelector('.channel__input').classList.remove('display-none');
+                
+              }
+              
+              
+
+            } else {
+
+              userChannelInteractions(channel.name, options.action);
+              channel = await getChannel();
+
+              if(options.action == 'redirect'){
+                return goTo('/channels');
+              }
+
+
+              if(options.action == 'leave'){
+                return await currentChannel({action: 'redirect'});
+              }
+
+              return await currentChannel();
+
+            }
+
+          }
+
+          
+          const {name, displayName, description, members, chat} = channel;
+          
+          
+          // chat config
+          const socket = io('http://localhost:5000');
+          socket.on("connect", () => {
+            currUserSocketId = socket.id;
+            userChannelInteractions('', 'socket', currUserSocketId);
+          });
+
+          socket.on('newMessage', async newMessage => {
+
+              const {messageSocketId, incomingMessage} = newMessage;
+                            
+              const isMyMessage = currUserSocketId == messageSocketId;
+                                    
+              if(newMessage !== ''){
+
+                const dateISO = moment().toISOString(true).split('T');
+                const date = dateISO[0];
+                const time = dateISO[1].split(':', 2).join(':');
+
+                const currentDateThread = chat.find(chatItem => chatItem.date === date);
+                        
+                
+                
+                if(isMyMessage){
+
+                  let dataToAdd;
+
+                  if(currentDateThread){
+
+                    dataToAdd = {newThread: false, date, incomingMessage, time};
+                    await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
+  
+                    
+                  } else {
+  
+                    dataToAdd = {newThread: true, date, incomingMessage, time};
+                    await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
+  
+                  }
+
+                }
+
+                let currentUser = await getUserBySocketId(messageSocketId);  
+                
+                const currentUserPictureName = currentUser.userPicture?.length > 0 ? JSON.parse(currentUser.userPicture).filename : '';
+                const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+                const currentUserUsername = '@' + currentUser.username || '@username-undefined';
+                const mainChatWrapper = document.querySelector('.channel__chat');
+                const chatElement = `
+                        <div class="channel__chat--item">
+          
+                              <div class="user" data-user="${currentUser._id}">
+                                <div class="user__image">
+                                  <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
+                                </div>
+                                <span class="user__username">${currentUserUsername}</span>
+                              </div>
+          
+                              <p class="message">${incomingMessage}</p>
+          
+                              <span class="publish-time">${time}</span>
+          
+                          </div>`;
+                  mainChatWrapper.innerHTML += chatElement;
+
+                  document.querySelector('.channel__chat').scrollTop = 9999999;
+
+
+              }
+            
+          });
+        
+          
           document.querySelector('.channel').setAttribute('data-channel', name);
           document.querySelector('.channel__infos--title').innerText = displayName;
           document.querySelector('.channel__join--title').innerText = displayName;
-          document.querySelector('.channel__infos--members').innerText = membersText;
+          document.querySelector('.channel__infos--members .amount').innerText = members?.length;
           document.querySelector('.channel__infos--description').innerText = description || '';
           const chatWrapper = document.querySelector('.channel__chat');
           let chatItems = ``;
 
           
-          if(Object.keys(chat).length < 1){
+          if(Object.keys(chat || {}).length < 1){
             
             chatItems += `<span class="channel__chat--empty">Chat's empty :( Would you change that? </span>`;
 
@@ -641,36 +757,36 @@ export async function callRouter(){
 
             const users = await getUsers();
 
-            chat.map(el => el.messages.map(message => {
+            chat?.map(el => el.messages?.map(message => {
   
               users.map(user => {              
-                if(user._id == message.userId){
+                if(user._id == message?.userId){
                   message.userId = user;
                 }
               })
               
             }));
                       
-            chat.map(chatItem => {
+            chat?.map(chatItem => {
   
-              const date = chatItem.date.replaceAll(':', '/');
+              const date = chatItem.date?.replaceAll('-', '/');
   
               chatItems += `
                 <div class="channel__chat--date">${date}</div>
               `;
               
-              chatItem.messages.map((message) => {              
+              chatItem.messages?.map((message) => {              
   
                 const {userId: user} = message;
   
-                const userPictureName = user.userPicture ? JSON.parse(user.userPicture).filename : '';
+                const userPictureName = user.userPicture.length > 0 ? JSON.parse(user.userPicture).filename : '';
                 const userPhoto = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
                 const username = '@' + user.username || '@username-undefined';
   
                 chatItems += `
                     <div class="channel__chat--item">
   
-                      <div class="user" data-user="${user.id}">
+                      <div class="user" data-user="${user._id}">
                         <div class="user__image">
                           <img class="user__image--item" src="${userPhoto}" alt="${displayName} profile picture">
                         </div>
@@ -693,24 +809,48 @@ export async function callRouter(){
           }
 
           chatWrapper.innerHTML = chatItems;
+  
+          document.querySelector('.channel__chat').scrollTop = 9999999;
+
+        }
+
+        if(document.querySelector('.channel-join')){
+          
+          document.querySelector('.channel-join').addEventListener('click', (e) => {
+            e.preventDefault();          
+            document.querySelector('.channel__join').classList.add('display-none');
+            document.querySelector('.channel__top-ctas').classList.remove('display-none');
+            document.querySelector('.channel__infos').classList.remove('display-none');
+            document.querySelector('.channel__chat').classList.remove('display-none');
+            document.querySelector('.channel__input').classList.remove('display-none');
+            currentChannel({isNewMember: true, action: 'join'});
+  
+          });
 
 
         }
-        currentChannel();
 
+        currentChannel({action: 'firstLoaded'});
 
-        document.querySelector('.channel-join').addEventListener('click', (e) => {
-          e.preventDefault();          
-          document.querySelector('.channel__join').classList.add('display-none');
-          currentChannel();
-
-        });
 
         document.querySelector('#leave-channel').addEventListener('click', (e) => {
-          e.preventDefault();  
+          e.preventDefault();            
+          currentChannel({isNewMember: false, action: 'leave'});
+        });
 
+        
+        document.querySelector('.channel__input--form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const message = document.getElementById('text-message').value;
+          
+          if(message === '') return
+          
+          socket.emit("message", {messageSocketId: currUserSocketId, message});
+          e.target.reset();
           
         });
+
+
 
       }
 
