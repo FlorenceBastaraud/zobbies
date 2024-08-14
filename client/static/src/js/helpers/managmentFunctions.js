@@ -587,12 +587,13 @@ export async function callRouter(){
   
           const channelName = document.getElementById('channel-name').value;
           const displayChannelName = document.getElementById('display-channel-name').value;
+          const channelDescription = document.getElementById('channel-description').value;
   
           const errorMessageSpan = document.getElementById('error-add-channel');
           let errorMessage = '';
   
   
-          if(channelName == "" || displayChannelName == "") {
+          if(channelName == "" || displayChannelName == "" || channelDescription == "") {
   
               errorMessage = "Please make sure no field is empty";
               errorMessageSpan.innerText = errorMessage;
@@ -601,7 +602,8 @@ export async function callRouter(){
   
               const addChannelData = {
                 name: channelName,
-                displayName: displayChannelName
+                displayName: displayChannelName,
+                description: channelDescription
               }
               
               handleAddChannel(addChannelData, e);

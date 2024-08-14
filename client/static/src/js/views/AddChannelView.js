@@ -25,6 +25,9 @@ export default class extends AbstractView {
                 <label for="display-channel-name">Display channel name</label>
                 <input id="display-channel-name" type="text" name="display-channel-name" value="" placeholder="Display Channel name">
 
+                <label for="channel-description">Channel Description</label>
+                <input id="channel-description" type="text" name="channel-description" value="" placeholder="Channel Description">
+
               </fieldset>
 
               <input type="submit" name="add-channel" value="Add channel" class="primary-cta submit submit-add-channel">

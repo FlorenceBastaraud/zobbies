@@ -39,9 +39,9 @@ router.get('/add-channel', async (req, res) => {
 
 router.post('/add-channel', async (req, res) => {
 
-  const {name, displayName} = req.body;
+  const {name, displayName, description} = req.body;
 
-  if(name.length > 0 && displayName.length > 0){
+  if(name.length > 0 && displayName.length > 0 && description.length > 0){
 
     const channel = await Channel.findOne({name});    
 
@@ -56,7 +56,7 @@ router.post('/add-channel', async (req, res) => {
         displayName,
         members: [],
         chat: [],
-        description: ''
+        description
       });
 
       await newChannel.save();
@@ -131,9 +131,7 @@ router.post('/channel-interactions', async (req, res) => {
     try {
       
       const channelDetails = await Channel.findOne({name: channel});
-      
-      console.log(channelDetails);
-      
+            
       const user = await User.findOneAndUpdate(
         {username},
         {$addToSet: {channels: {
@@ -142,10 +140,7 @@ router.post('/channel-interactions', async (req, res) => {
           description: channelDetails.description
         }}},
         {new: true}
-      );
-
-      console.log(user);
-      
+      );      
       
       
       const currChannel = await Channel.findOneAndUpdate(
@@ -163,7 +158,6 @@ router.post('/channel-interactions', async (req, res) => {
 
   } else if(action == 'leave') {
 
-    console.log(channel);
 
     try {
       

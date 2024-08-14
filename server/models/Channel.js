@@ -5,7 +5,7 @@ const ChannelSchema = new mongoose.Schema({
   displayName: {type: String, required: true, unique: true},
   members: {type: Array, required: true},
   chat: {type: Array, required: true},
-  description: {type: String}
+  description: {type: String, required: true}
 });
 
 
