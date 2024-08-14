@@ -45,7 +45,7 @@ export default class extends AbstractView {
               <form class="channel__input--form">
                 <label for="text-message"></label>
                 <textarea id="text-message" name="text-message"></textarea>
-                <input type="submit" value="↑"></input
+                <input id="submit-message" type="submit" value="↑"></input
               </form>
             </div>
 

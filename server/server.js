@@ -34,6 +34,7 @@ const socketsOptions = {cors: true, origin: ["http://localhost:5000"], credentia
 const io = new Server(server, socketsOptions);
 
 io.on("connection", socket => {
+  
   socket.join('room');
   socket.on('message', (message) => {       
     io.to('room').emit('newMessage', {

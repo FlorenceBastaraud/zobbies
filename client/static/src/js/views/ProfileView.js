@@ -41,42 +41,6 @@ export default class extends AbstractView {
 
                   <div class="flux-item">
 
-                    <div class="flux-item__box">
-                      <a class="flux-item__box--link" href="/" title="Hiking" data-link>
-                        <span class="label">Hiking</span>
-                        <p class="message">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire...</p>
-                      </a>
-                    </div>
-
-                    <div class="flux-item__box">
-                      <a class="flux-item__box--link" href="/" title="Reading" data-link>
-                        <span class="label">Reading</span>
-                        <p class="message">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire...</p>
-                      </a>
-                    </div>
-
-                    <div class="flux-item__box">
-                      <a class="flux-item__box--link" href="/" title="Surfing" data-link>
-                        <span class="label">Surfing</span>
-                        <p class="message">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire...</p>
-                      </a>
-                    </div>
-
-                    <div class="flux-item__box">
-                      <a class="flux-item__box--link" href="/" title="Clubbing" data-link>
-                        <span class="label">Clubbing</span>
-                        <p class="message">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire...</p>
-                      </a>
-                    </div>
-
-                    <div class="flux-item__box">
-                      <a class="flux-item__box--link" href="/" title="Hiking" data-link>
-                        <span class="label">Hiking</span>
-                        <p class="message">On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire...</p>
-                      </a>
-                    </div>
-                    
-
                   </div>
 
                 </div>

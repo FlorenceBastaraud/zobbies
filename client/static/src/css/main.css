@@ -1267,6 +1267,7 @@
   margin-top: 10px;
 }
 .profile__main--flux {
+  width: 100%;
   border-radius: 20px;
   background-color: #151414;
   display: flex;
@@ -1276,6 +1277,7 @@
   gap: 30px;
 }
 .profile__main--flux .flux-item {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1283,6 +1285,7 @@
   gap: 20px;
 }
 .profile__main--flux .flux-item__box {
+  width: 100%;
   border-radius: 30px;
   padding: 0.9375em 1.875em;
   background-color: #D7F5F3;
@@ -2002,10 +2005,10 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  height: 420px;
+  height: 460px;
   overflow-y: scroll;
 }
-@media (min-width: 1400px) and (min-height: 733px) {
+@media (min-width: 1550px) and (min-height: 733px) {
   .channel__chat {
     height: 500px;
   }
@@ -2151,17 +2154,17 @@ body[view=enter-space] a {
 body[view=channel] header {
   display: none;
 }
-@media (max-width: 1400px) and (max-height: 733px) {
+@media (max-width: 1550px) and (max-height: 733px) {
   body[view=channel] footer {
     display: none;
   }
 }
-@media (min-width: 1400px) and (min-height: 733px) {
+@media (min-width: 1550px) and (min-height: 733px) {
   body[view=channel] footer {
     padding: 0 0.625em 0.625em;
   }
 }
-@media (min-width: 1400px) and (min-height: 733px) {
+@media (min-width: 1550px) and (min-height: 733px) {
   body[view=channel] footer .footer__content {
     padding: 0 1.25em;
   }

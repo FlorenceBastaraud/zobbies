@@ -13,7 +13,7 @@ import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 import ChannelView from "../views/ChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId, getMessagesByUser} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
 
 const socket = io('http://localhost:5000');
@@ -324,6 +324,7 @@ export async function callRouter(){
 
       // handle profile view
       if(location.pathname == '/profile'){
+
         
         const userInfos = async () => {
           const userDetails = await getUserInfos();
@@ -334,12 +335,41 @@ export async function callRouter(){
           const displayName = userDetails.displayName || userDetails.lastname + ' ' + userDetails.firstname;
           const bio = userDetails.bio || '';
           const gender = userDetails.gender ? (userDetails.gender == 'man') ? '♂' : (userDetails.gender == 'woman') ? '♀️' : '⚧' : 'Gender undefined';
-  
+          
           document.querySelector('#profile-view-user-picture').setAttribute('src', profilePicture);
           document.querySelector('.user-infos__username').innerText = username;
           document.querySelector('.user-infos__display-name').innerText = displayName;
           document.querySelector('.user-infos__bio').innerText = bio;
           document.querySelector('.user-infos__gender').innerText = gender;
+          
+          const profileChannelsFlux = document.querySelector('.profile__main--flux .flux-item');
+          let channelsItems = ``;
+
+          const userChannels = userDetails.channels;
+
+          userChannels.map(userChannel => {
+
+            const {name, displayName, description} = userChannel;
+            const displayDescription = description.length > 170 ? description.slice(0, 170) + '...' : description.length < 2 ? "It's helpful to realize that this very body that we have, right here, with its aches and it pleasures, is exactly what we need to be fully human, fully awake, fully alive..." : description;       
+
+          
+            
+
+            channelsItems += `
+            
+                    <div class="flux-item__box">
+                      <a class="flux-item__box--link" href="/channel#${name}" title="${displayName}" data-link>
+                        <span class="label">${displayName}</span>
+                        <p class="message description">${displayDescription}</p>
+                      </a>
+                    </div>
+
+            `;
+
+          });
+
+          profileChannelsFlux.innerHTML = channelsItems;
+
 
         }  
 
@@ -643,7 +673,7 @@ export async function callRouter(){
               
 
             } else {
-
+              
               userChannelInteractions(channel.name, options.action);
               channel = await getChannel();
 
@@ -690,21 +720,17 @@ export async function callRouter(){
                 
                 
                 if(isMyMessage){
+                  
+                  let dataToAdd = {newThread: false, date, incomingMessage, time};
 
-                  let dataToAdd;
+                  if(!currentDateThread){
 
-                  if(currentDateThread){
-
-                    dataToAdd = {newThread: false, date, incomingMessage, time};
-                    await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
-  
-                    
-                  } else {
-  
-                    dataToAdd = {newThread: true, date, incomingMessage, time};
-                    await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
+                    dataToAdd.newThread = true;
   
                   }
+
+                  await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
+
 
                 }
 
@@ -847,6 +873,20 @@ export async function callRouter(){
           
           socket.emit("message", {messageSocketId: currUserSocketId, message});
           e.target.reset();
+          
+        });
+
+        document.querySelector('#text-message').addEventListener('keypress', (e) => {
+          const message = document.getElementById('text-message').value;
+          
+          if(message === '') return
+
+          if(e.key === 'Enter'){
+            
+            e.preventDefault();
+            document.getElementById("submit-message").click();
+          
+          }
           
         });
 

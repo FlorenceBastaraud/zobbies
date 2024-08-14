@@ -367,7 +367,7 @@ export async function handleAddChannel(formData, event){
 
       setTimeout(() => {
         goTo('/channels');
-      }, 2000);
+      }, 1000);
 
     }
 
@@ -507,6 +507,46 @@ export async function getUserBySocketId(socketId){
 
   if(data.status){
    return data.user; 
+  }
+
+}
+
+
+export async function getMessagesByUser(userId){
+
+  const userData = {
+    method: 'GET',
+    'credentials': 'include'
+  };
+
+  const response = await fetch(`http://localhost:5000/auth/all-messages/`, userData);
+  const data = await response.json();  
+
+  if(data.status){
+
+    const channels = data.channels;
+
+    const userMessages = [];
+
+    channels.map(channel => {
+      if(channel.members.length > 0){      
+        if(channel.members.includes(userId)){
+          if(channel.chat.length > 0){
+            channel.chat.map(chat => {
+              chat.messages.filter(message => {
+                if(message.userId === userId){
+                  userMessages.push({channel: {name: channel.name, displayName: channel.displayName}, message});
+                }
+              })         
+            })
+          }
+        }
+      }
+    })
+
+    
+   return userMessages; 
+
   }
 
 }

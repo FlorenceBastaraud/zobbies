@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import {User} from '../models/User.js';
+import {Channel} from '../models/Channel.js';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import isUserConnected from '../helpers/middlewares/userConnected.js';
@@ -426,6 +427,20 @@ router.get('/current-user/:socketId', async (req, res) => {
 
   if(user){
     res.json({status: true, message: "User found", user});
+  } else {
+    res.json({status: false, message: 'User not found'});
+  }
+  
+
+});
+
+
+router.get('/all-messages/', async (req, res) => {
+
+  const channels = await Channel.find({});
+
+  if(channels){
+    res.json({status: true, message: "User found", channels});
   } else {
     res.json({status: false, message: 'User not found'});
   }

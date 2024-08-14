@@ -56,7 +56,7 @@ router.post('/add-channel', async (req, res) => {
         displayName,
         members: [],
         chat: [],
-        descriptop: ''
+        description: ''
       });
 
       await newChannel.save();
@@ -65,7 +65,7 @@ router.post('/add-channel', async (req, res) => {
 
     } catch(err){
 
-      res.json({status: false, message: 'error adding the channel'});
+      res.json({status: false, message: 'error adding the channel', err});
 
     }
     
@@ -129,13 +129,24 @@ router.post('/channel-interactions', async (req, res) => {
   if(action == 'join'){
 
     try {
-  
+      
+      const channelDetails = await Channel.findOne({name: channel});
+      
+      console.log(channelDetails);
+      
       const user = await User.findOneAndUpdate(
         {username},
-        {$addToSet: {channels: channel}},
+        {$addToSet: {channels: {
+          name: channel,
+          displayName: channelDetails.displayName,
+          description: channelDetails.description
+        }}},
         {new: true}
       );
-  
+
+      console.log(user);
+      
+      
       
       const currChannel = await Channel.findOneAndUpdate(
         {name: channel},
@@ -152,14 +163,16 @@ router.post('/channel-interactions', async (req, res) => {
 
   } else if(action == 'leave') {
 
+    console.log(channel);
+
     try {
       
       const user = await User.findOneAndUpdate(
         {username},
-        {$pull: {channels: channel}},
+        {$pull: {"channels": {"name": channel}}},
         {new: true}
       );
-  
+      
       
       const currChannel = await Channel.findOneAndUpdate(
         {name: channel},
@@ -186,6 +199,7 @@ router.post('/channel-interactions', async (req, res) => {
       userId = user._id
       
     } catch(err){
+      res.json({status: false, message: err});
       return err
     }
     
@@ -195,9 +209,9 @@ router.post('/channel-interactions', async (req, res) => {
         
         new Promise(async (resolve, reject) => {
                     
-          const dateThread = await Channel.findOne({"chat.date": date});
-          
-          if(!dateThread){                
+          const dateThread = await Channel.findOne({'name': channel, "chat.date": date});
+                    
+          if(!dateThread){         
             
             let newdateinthread = await Channel.findOneAndUpdate(
               {name: channel},
