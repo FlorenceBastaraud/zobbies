@@ -1,5 +1,6 @@
 import {goTo, updateNav} from './managmentFunctions.js';
 
+
 export async function handleRegister(formData, event){
 
   const userRegisterData = {
@@ -186,7 +187,7 @@ export async function checkUserConnexionStatus(){
     }
   };
 
-  const response = await fetch('http://localhost:5000/auth/connected', connectData);
+  const response = await fetch(`http://localhost:5000/auth/connected`, connectData);
   const data = await response.json();
   return data.status;
   
@@ -204,7 +205,7 @@ export async function getUserInfos(){
     }
   };
 
-  const response = await fetch('http://localhost:5000/auth/user', profileData);
+  const response = await fetch(`http://localhost:5000/auth/user`, profileData);
   const data = await response.json();
 
   if(data.status){
@@ -316,7 +317,7 @@ export async function getAdminAccess(){
     'credentials': 'include'
   };
 
-  const response = await fetch('http://localhost:5000/auth/add-channel', addChannelData);
+  const response = await fetch(`http://localhost:5000/auth/add-channel`, addChannelData);
   const data = await response.json();  
 
   return data.status; 
@@ -338,7 +339,7 @@ export async function handleAddChannel(formData, event){
 
   try {
 
-    const response = await fetch('http://localhost:5000/auth/add-channel', addChannelData);
+    const response = await fetch(`http://localhost:5000/auth/add-channel`, addChannelData);
     const data = await response.json();
 
     if(!data.status){
@@ -399,7 +400,7 @@ export async function userChannelInteractions(channel, action, updateChatData = 
     }
     
   
-    const response = await fetch('http://localhost:5000/auth/channel-interactions', fetchData)
+    const response = await fetch(`http://localhost:5000/auth/channel-interactions`, fetchData)
     const data = await response.json();
     
     if(data.status){
@@ -422,7 +423,7 @@ export async function getChannels(){
     'credentials': 'include'
   };
 
-  const response = await fetch('http://localhost:5000/auth/channels', channelsData);
+  const response = await fetch(`http://localhost:5000/auth/channels`, channelsData);
   const data = await response.json();
 
   if(data.status){

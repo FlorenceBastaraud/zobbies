@@ -24,7 +24,7 @@ export default class Nav {
     };
 
     
-    const response = await fetch('http://localhost:5000/auth/connected', connectData);
+    const response = await fetch(`http://localhost:5000/auth/connected`, connectData);
     const data = await response.json();
 
     return data.status;
