@@ -2,7 +2,7 @@
 
 ### A place to meet like minded people.
 
-### Fullstack Javaqcript Social media web app.
+### Fullstack Javascript Social media web app.
 
 #### Full authentification system reset password via email with token
 #### Real time chat rooms with multiple users
