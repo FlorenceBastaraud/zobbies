@@ -27,7 +27,11 @@ app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
 
 const server = app.listen(PORT, () => {
-  console.log("Servir running on " + PORT + "...");
+  console.log("Servir running on " + PORT + "... click here: http://localhost:" + PORT);
+});
+
+app.get("/", (req, res) => {
+  res.status(200).send("Zobbies server running...");
 });
 
 const socketsOptions = {cors: true, origin: ["http://localhost:5000"], credentials: true};
