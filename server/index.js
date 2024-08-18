@@ -25,6 +25,12 @@ app.use(cors({
 }));
 app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
+app.use((req,res,next)=>{
+  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENTURL);
+  res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type','Authorization');
+  next(); 
+})
 
 const server = app.listen(PORT, () => {
   console.log(`Servir running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
