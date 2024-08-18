@@ -1,5 +1,3 @@
-import { goTo, updateNav } from "../helpers/managmentFunctions.js";
-
 export default class {
   constructor(){
     this.countriesListHtml = "";

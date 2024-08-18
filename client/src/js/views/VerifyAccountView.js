@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-import { getServerUrl } from "../helpers/functions.js";
+import { getServerUrl } from "../../../src/js/helpers/functions.js";
 const serverUrl = getServerUrl();
 
 export default class extends AbstractView {

@@ -10,16 +10,16 @@ const app = express();
 
 // reload
 const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'static'));
+liveReloadServer.watch(path.join(__dirname, 'src'));
 
 // middlewarres
 app.use(connectLiveReload());
-app.use("/src", express.static(path.resolve(__dirname, "static", "src")));
-
+app.use(express.static('./'));
+// app.use("/src", express.static(path.resolve(__dirname, "src")));
 
 // routing
 app.get("/*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "static", "index.html"));
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
 });
 
 // server

@@ -1,4 +1,4 @@
-import {callRouter, goTo, updateNav} from './helpers/managmentFunctions.js';
+import {callRouter, goTo, updateNav} from './js/helpers/managmentFunctions.js';
 
 // history, router and click events
 window.addEventListener('popstate', callRouter);
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       goTo(e.target.href);
       updateNav();
-      
+     
     }
   });
   
