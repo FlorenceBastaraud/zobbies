@@ -1,5 +1,6 @@
 import {goTo, updateNav} from './managmentFunctions.js';
-
+import { getServerUrl} from './functions.js';
+const serverUrl = getServerUrl();
 
 export async function handleRegister(formData, event){
 
@@ -15,7 +16,7 @@ export async function handleRegister(formData, event){
 
   try {
 
-    const response = await fetch("http://localhost:5000/auth/register", userRegisterData);
+    const response = await fetch(`${serverUrl}/auth/register`, userRegisterData);
     const data = await response.json();
 
     if(data.message == 'This user already exists'){
@@ -59,7 +60,7 @@ export async function handleLogin(formData, event){
 
   try {
 
-    const response = await fetch("http://localhost:5000/auth/login", userLoginData);
+    const response = await fetch(`${serverUrl}/auth/login`, userLoginData);
     const data = await response.json();
 
     if(data.message == 'This user does not exist'){
@@ -104,7 +105,7 @@ export async function handleForgotPassword(formData, event){
 
   try {
 
-    const response = await fetch("http://localhost:5000/auth/forgot-password", userForgotData);
+    const response = await fetch(`${serverUrl}/auth/forgot-password`, userForgotData);
     const data = await response.json();
 
     if(data.message == 'This email address is not associated with any account'){
@@ -147,7 +148,7 @@ export async function handleResetPassword(formData, event){
 
   try {
 
-    const response = await fetch(`http://localhost:5000/auth/reset-password/${token}`, userResetData);
+    const response = await fetch(`${serverUrl}/auth/reset-password/${token}`, userResetData);
     const data = await response.json();
 
     if(!data.status){
@@ -187,7 +188,7 @@ export async function checkUserConnexionStatus(){
     }
   };
 
-  const response = await fetch(`http://localhost:5000/auth/connected`, connectData);
+  const response = await fetch(`${serverUrl}/auth/connected`, connectData);
   const data = await response.json();
   return data.status;
   
@@ -205,7 +206,7 @@ export async function getUserInfos(){
     }
   };
 
-  const response = await fetch(`http://localhost:5000/auth/user`, profileData);
+  const response = await fetch(`${serverUrl}/auth/user`, profileData);
   const data = await response.json();
 
   if(data.status){
@@ -226,7 +227,7 @@ export async function handleUpdateUserInfos(formData, event){
 
   try {
 
-    const response = await fetch("http://localhost:5000/auth/update-user", userInfosData);
+    const response = await fetch(`${serverUrl}/auth/update-user`, userInfosData);
     const data = await response.json();
 
     if(!data.status){
@@ -274,7 +275,7 @@ export async function handleSettings(formData, event){
 
   try {
 
-    const response = await fetch("http://localhost:5000/auth/settings", userSettingsData);
+    const response = await fetch(`${serverUrl}/auth/settings`, userSettingsData);
     const data = await response.json();
 
     if(!data.status && data.spec == 'Email already taken'){
@@ -317,7 +318,7 @@ export async function getAdminAccess(){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/add-channel`, addChannelData);
+  const response = await fetch(`${serverUrl}/auth/add-channel`, addChannelData);
   const data = await response.json();  
 
   return data.status; 
@@ -339,7 +340,7 @@ export async function handleAddChannel(formData, event){
 
   try {
 
-    const response = await fetch(`http://localhost:5000/auth/add-channel`, addChannelData);
+    const response = await fetch(`${serverUrl}/auth/add-channel`, addChannelData);
     const data = await response.json();
 
     if(!data.status){
@@ -400,7 +401,7 @@ export async function userChannelInteractions(channel, action, updateChatData = 
     }
     
   
-    const response = await fetch(`http://localhost:5000/auth/channel-interactions`, fetchData)
+    const response = await fetch(`${serverUrl}/auth/channel-interactions`, fetchData)
     const data = await response.json();
     
     if(data.status){
@@ -423,7 +424,7 @@ export async function getChannels(){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/channels`, channelsData);
+  const response = await fetch(`${serverUrl}/auth/channels`, channelsData);
   const data = await response.json();
 
   if(data.status){
@@ -445,7 +446,7 @@ export async function getChannel(){
 
   try {
 
-    const response = await fetch(`http://localhost:5000/auth/channel/${name}`, userChannelData);
+    const response = await fetch(`${serverUrl}/auth/channel/${name}`, userChannelData);
     const data = await response.json();
 
     if(data.status){
@@ -469,7 +470,7 @@ export async function getUserById(id){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/user/${id}`, userData);
+  const response = await fetch(`${serverUrl}/auth/user/${id}`, userData);
   const data = await response.json();  
 
   if(data.status){
@@ -486,7 +487,7 @@ export async function getUsers(){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/users`, usersData);
+  const response = await fetch(`${serverUrl}/auth/users`, usersData);
   const data = await response.json();  
 
   if(data.status){
@@ -503,7 +504,7 @@ export async function getUserBySocketId(socketId){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/current-user/${socketId}`, userData);
+  const response = await fetch(`${serverUrl}/auth/current-user/${socketId}`, userData);
   const data = await response.json();  
 
   if(data.status){
@@ -520,7 +521,7 @@ export async function getMessagesByUser(userId){
     'credentials': 'include'
   };
 
-  const response = await fetch(`http://localhost:5000/auth/all-messages/`, userData);
+  const response = await fetch(`${serverUrl}/auth/all-messages/`, userData);
   const data = await response.json();  
 
   if(data.status){

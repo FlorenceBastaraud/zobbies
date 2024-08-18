@@ -1,4 +1,6 @@
 import AbstractView from "./AbstractView.js";
+import { getServerUrl } from "../helpers/functions.js";
+const serverUrl = getServerUrl();
 
 export default class extends AbstractView {
     constructor() {
@@ -23,7 +25,7 @@ export default class extends AbstractView {
     
       try {
     
-        await fetch(`http://localhost:5000/auth/verify-account/${token}`, verifyData);
+        await fetch(`${serverUrl}/auth/verify-account/${token}`, verifyData);
         
     
       } catch(err){

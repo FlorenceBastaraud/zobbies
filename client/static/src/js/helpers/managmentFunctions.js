@@ -13,10 +13,12 @@ import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 import ChannelView from "../views/ChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId, getMessagesByUser} from './apiCallsFunctions.js';
-import { getStaticImgFolder, getUploadImgFolder, getStars } from "./functions.js";
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId} from './apiCallsFunctions.js';
+import { getStaticImgFolder, getUploadImgFolder, getStars, getServerUrl } from "./functions.js";
 
-const socket = io('http://localhost:5000');
+const serverUrl = getServerUrl();
+
+const socket = io(serverUrl);
 
 export async function callRouter(){
 
@@ -305,7 +307,7 @@ export async function callRouter(){
           };
         
       
-          const response = await fetch(`http://localhost:5000/auth/logout/`, logoutData);
+          const response = await fetch(`${serverUrl}/auth/logout/`, logoutData);
           const data = await response.json();
 
           if(data.status){
@@ -699,7 +701,7 @@ export async function callRouter(){
           
           
           // chat config
-          const socket = io('http://localhost:5000');
+          const socket = io(serverUrl);
           socket.on("connect", () => {
             currUserSocketId = socket.id;
             userChannelInteractions('', 'socket', currUserSocketId);

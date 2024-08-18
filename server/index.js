@@ -20,21 +20,21 @@ app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-  origin: ["http://localhost:3050"],
+  origin: [process.env.CLIENTURL],
   credentials: true
 }));
 app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
 
 const server = app.listen(PORT, () => {
-  console.log("Servir running on " + PORT + "... click here: http://localhost:" + PORT);
+  console.log(`Servir running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
 });
 
 app.get("/", (req, res) => {
   res.status(200).send("Zobbies server running...");
 });
 
-const socketsOptions = {cors: true, origin: ["http://localhost:5000"], credentials: true};
+const socketsOptions = {cors: true, origin: [`${process.env.SERVERURL}`], credentials: true};
 const io = new Server(server, socketsOptions);
 
 io.on("connection", socket => {

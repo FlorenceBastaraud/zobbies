@@ -13,3 +13,27 @@ export function getStars(pl){
   }
   return stars;
 }
+
+
+
+export function getClientUrl(){
+  return location.origin;
+}
+
+
+export function getServerUrl(){
+
+  let url;
+
+  switch(getClientUrl()){
+    case 'http://localhost:3050':
+      url = 'http://localhost:5000';
+      break;
+    default:
+      url = 'https://zobbies.vercel.app'
+      break;
+  }
+
+  return url;
+
+}

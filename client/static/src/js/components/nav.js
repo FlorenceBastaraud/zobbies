@@ -1,4 +1,6 @@
 import { getAdminAccess } from "../helpers/apiCallsFunctions.js";
+import { getServerUrl } from "../helpers/functions.js";
+const serverUrl = getServerUrl();
 
 export default class Nav {
 
@@ -24,7 +26,7 @@ export default class Nav {
     };
 
     
-    const response = await fetch(`http://localhost:5000/auth/connected`, connectData);
+    const response = await fetch(`${serverUrl}/auth/connected`, connectData);
     const data = await response.json();
 
     return data.status;

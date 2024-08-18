@@ -68,8 +68,8 @@ router.post('/register', async (req, res) => {
     html: `
     
       Hi ${firstname},<br><br>
-      Your <strong><em><a href="http://localhost:3000/" target="_blank">Zobbies</a></em></strong> account has been created.<br><br>
-      Make sure to verify your account by clicking on the following link <a href="http://localhost:3000/verify-account#${token}" target="_blank">here</a>.<br><br>
+      Your <strong><em><a href="${process.env.CLIENTURL}/" target="_blank">Zobbies</a></em></strong> account has been created.<br><br>
+      Make sure to verify your account by clicking on the following link <a href="${process.env.CLIENTURL}/verify-account#${token}" target="_blank">here</a>.<br><br>
       Thanks,<br>
       <strong><em>Zobbies</em></strong>
 
@@ -94,6 +94,7 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+  
   const {username, password} = req.body;  
 
   const user = await User.findOne({username});
@@ -153,9 +154,9 @@ router.post('/forgot-password', async (req, res) => {
         html: `
         
           Hi ${user.firstname},<br><br>
-          We received a request for a password reset on your <strong><em><a href="http://localhost:3000/" target="_blank">Zobbies</a></em></strong> account.<br><br>
+          We received a request for a password reset on your <strong><em><a href="${process.env.CLIENTURL}/" target="_blank">Zobbies</a></em></strong> account.<br><br>
           If you never made this request, simply disregard this email.<br><br>
-          You can reset your password by clicking on the following link <a href="http://localhost:3000/reset-password#${token}" target="_blank">here</a>.<br><br>
+          You can reset your password by clicking on the following link <a href="${process.env.CLIENTURL}/reset-password#${token}" target="_blank">here</a>.<br><br>
           This link will expire in 10 minutes. After that, you'll need to submit a new request in order to reset your password.<br><br>
           Thanks,<br>
           <strong><em>Zobbies</em></strong>

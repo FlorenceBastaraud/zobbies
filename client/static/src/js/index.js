@@ -1,11 +1,9 @@
 import {callRouter, goTo, updateNav} from './helpers/managmentFunctions.js';
 
-
 // history, router and click events
 window.addEventListener('popstate', callRouter);
 
 document.addEventListener('DOMContentLoaded', () => {
-
   
   document.body.addEventListener('click', (e) => {    
 
