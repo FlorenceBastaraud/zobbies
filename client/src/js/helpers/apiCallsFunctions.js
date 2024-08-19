@@ -8,8 +8,8 @@ export async function handleRegister(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   };
@@ -52,7 +52,7 @@ export async function handleLogin(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formData)
@@ -97,7 +97,7 @@ export async function handleForgotPassword(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formData)
@@ -140,7 +140,7 @@ export async function handleResetPassword(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formData)
@@ -185,7 +185,7 @@ export async function checkUserConnexionStatus(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -203,7 +203,7 @@ export async function getUserInfos(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -224,7 +224,7 @@ export async function handleUpdateUserInfos(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: formData
@@ -272,7 +272,7 @@ export async function handleSettings(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formData)
@@ -323,7 +323,7 @@ export async function getAdminAccess(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -341,7 +341,7 @@ export async function handleAddChannel(formData, event){
     method: 'POST',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(formData)
@@ -403,7 +403,7 @@ export async function userChannelInteractions(channel, action, updateChatData = 
     const fetchData = {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       'credentials': 'include',
@@ -433,7 +433,7 @@ export async function getChannels(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -455,7 +455,7 @@ export async function getChannel(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -487,7 +487,7 @@ export async function getUserById(id){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -508,7 +508,7 @@ export async function getUsers(){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -529,7 +529,7 @@ export async function getUserBySocketId(socketId){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };
@@ -550,7 +550,7 @@ export async function getMessagesByUser(userId){
     method: 'GET',
     'credentials': 'include',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   };

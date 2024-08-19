@@ -13,12 +13,27 @@ const connectionString = process.env.MONGODBCONNECTIONSTRING;
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.CLIENTURL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Accept'],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: process.env.CLIENTURL,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Accept'],
+//   credentials: true
+// }));
+
+// app.options('*', cors({
+//   origin: process.env.CLIENTURL,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Accept'],
+//   credentials: true
+// }));
+
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(204);
+});
 
 mongoose.connect(connectionString);
 
