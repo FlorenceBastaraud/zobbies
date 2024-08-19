@@ -740,7 +740,7 @@ export async function callRouter(){
 
                 let currentUser = await getUserBySocketId(messageSocketId);  
                 
-                const currentUserPictureName = currentUser.userPicture?.length > 0 ? JSON.parse(currentUser.userPicture).filename : '';
+                const currentUserPictureName = currentUser.userPicture?.length > 1 ? JSON.parse(currentUser.userPicture).filename : '';
                 const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
                 const currentUserUsername = '@' + currentUser.username || '@username-undefined';
                 const mainChatWrapper = document.querySelector('.channel__chat');

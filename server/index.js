@@ -13,26 +13,26 @@ const connectionString = process.env.MONGODBCONNECTIONSTRING;
 
 const app = express();
 
-// app.use(cors({
-//   origin: process.env.CLIENTURL,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Accept'],
-//   credentials: true
-// }));
 
+app.use(cors({
+  origin: process.env.CLIENTURL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Accept'], // 'Authorization'
+  credentials: true
+}));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-  res.header('Access-Control-Allow-Credentials', 'true');
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+//   res.header('Access-Control-Allow-Credentials', 'true');
 
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
-  }
-  next();
+//   if (req.method === 'OPTIONS') {
+//     return res.sendStatus(204);
+//   }
+//   next();
 
-});
+// });
 
 mongoose.connect(connectionString);
 
@@ -53,7 +53,14 @@ app.get("/", (req, res) => {
 
 
 
-const socketsOptions = {cors: true, origin: [`${process.env.SERVERURL}`], credentials: true};
+const socketsOptions = {
+  cors: {
+    origin: process.env.CLIENTURL,
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+};
+
 const io = new Server(server, socketsOptions);
 
 io.on("connection", socket => {
