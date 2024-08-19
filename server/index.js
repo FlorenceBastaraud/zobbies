@@ -15,11 +15,16 @@ mongoose.connect(connectionString);
 
 const app = express();
 
+app.use(cors({
+  origin: [process.env.CLIENTURL, 'https://florence-b.com/zobbies/', 'https://florence-b.com/', 'https://florence-b.com/zobbies/*'],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type','Authorization'],
+  credentials: true
+}));
 app.use(cookieParser());
 app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
 app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
 
