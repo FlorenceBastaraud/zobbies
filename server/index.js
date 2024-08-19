@@ -14,12 +14,6 @@ const connectionString = process.env.MONGODBCONNECTIONSTRING;
 const app = express();
 
 app.use(cors({
-  origin: process.env.CLIENTUR,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
-app.options('*', cors({
   origin: process.env.CLIENTURL,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
