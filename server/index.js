@@ -18,12 +18,15 @@ const app = express();
 app.use(cors({
   origin: [
     process.env.CLIENTURL,
+    'https://zobbies-spa.vercel.app/',
+    'https://zobbies-spa.vercel.app/*',
     'https://florence-b.com/zobbies/',
     'https://florence-b.com/',
     'http://florence-b.com/',
     'http://florence-b.com/zobbies',
     'http://florence-b.com',
-    'https://florence-b.com/zobbies/*'],
+    'https://florence-b.com/zobbies/*'
+  ],
   methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type','Authorization'],
   credentials: true
