@@ -11,16 +11,17 @@ dotenv.config();
 const PORT = process.env.PORT;
 const connectionString = process.env.MONGODBCONNECTIONSTRING;
 
-mongoose.connect(connectionString);
-
 const app = express();
 
 app.use(cors({
-  origin: process.env.CLIENTURL,
+  origin: 'https://zobbies-spa.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
+
+mongoose.connect(connectionString);
+
 app.use(cookieParser());
 app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
