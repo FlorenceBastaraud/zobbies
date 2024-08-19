@@ -16,7 +16,14 @@ mongoose.connect(connectionString);
 const app = express();
 
 app.use(cors({
-  origin: [process.env.CLIENTURL, 'https://florence-b.com/zobbies/', 'https://florence-b.com/', 'https://florence-b.com/zobbies/*'],
+  origin: [
+    process.env.CLIENTURL,
+    'https://florence-b.com/zobbies/',
+    'https://florence-b.com/',
+    'http://florence-b.com/',
+    'http://florence-b.com/zobbies',
+    'http://florence-b.com',
+    'https://florence-b.com/zobbies/*'],
   methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type','Authorization'],
   credentials: true

@@ -1,5 +1,5 @@
 export function getStaticImgFolder(){
-  return './src/images/default/';
+  return './images/';
 }
 
 export function getUploadImgFolder(){

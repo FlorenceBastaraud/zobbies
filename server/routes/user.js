@@ -43,10 +43,10 @@ router.post('/register', async (req, res) => {
     pl,
     isVerified: false,
     displayName: lastname + ' ' + firstname,
-    bio: '',
-    userPicture: '',
+    bio: ' ',
+    userPicture: ' ',
     channels: [],
-    socketId: ''
+    socketId: ' '
   });
 
 
@@ -130,6 +130,8 @@ router.post('/forgot-password', async (req, res) => {
   try {
 
     const user = await User.findOne({email});
+
+    
     
     if(!user){
 

@@ -7,6 +7,10 @@ export async function handleRegister(formData, event){
   const userRegisterData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   };
 
@@ -47,6 +51,10 @@ export async function handleLogin(formData, event){
   const userLoginData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   };
 
@@ -88,6 +96,10 @@ export async function handleForgotPassword(formData, event){
   const userForgotData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   };
 
@@ -99,7 +111,7 @@ export async function handleForgotPassword(formData, event){
 
     if(data.message == 'This email address is not associated with any account'){
 
-      document.getElementById('error-forgot-password').innerText = 'Sorry, this email address in not linked to any account. Make sure your email address is correct.';
+      document.getElementById('error-forgot-password').innerText = 'Sorry, this email address is not linked to any account. Make sure your email address is correct.';
 
     } else {
 
@@ -127,6 +139,10 @@ export async function handleResetPassword(formData, event){
   const userResetData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   };
 
@@ -167,7 +183,11 @@ export async function checkUserConnexionStatus(){
 
   const connectData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/connected`, connectData);
@@ -181,7 +201,11 @@ export async function getUserInfos(){
 
   const profileData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/user`, profileData);
@@ -199,6 +223,10 @@ export async function handleUpdateUserInfos(formData, event){
   const userInfosData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: formData
   };
 
@@ -243,6 +271,10 @@ export async function handleSettings(formData, event){
   const userSettingsData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   };
 
@@ -289,7 +321,11 @@ export async function getAdminAccess(){
 
   const addChannelData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/add-channel`, addChannelData);
@@ -304,6 +340,10 @@ export async function handleAddChannel(formData, event){
   const addChannelData = {
     method: 'POST',
     'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(formData)
   }
 
@@ -362,7 +402,11 @@ export async function userChannelInteractions(channel, action, updateChatData = 
     
     const fetchData = {
       method: 'POST',
-      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      'credentials': 'include',
       body: JSON.stringify({channel, action, updateChatData})
     }
     
@@ -387,7 +431,11 @@ export async function getChannels(){
 
   const channelsData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/channels`, channelsData);
@@ -405,7 +453,11 @@ export async function getChannel(){
 
   const userChannelData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const name = location.hash.replace('#', '');
@@ -433,7 +485,11 @@ export async function getUserById(id){
 
   const userData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/user/${id}`, userData);
@@ -450,7 +506,11 @@ export async function getUsers(){
 
   const usersData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/users`, usersData);
@@ -467,7 +527,11 @@ export async function getUserBySocketId(socketId){
 
   const userData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/current-user/${socketId}`, userData);
@@ -484,7 +548,11 @@ export async function getMessagesByUser(userId){
 
   const userData = {
     method: 'GET',
-    'credentials': 'include'
+    'credentials': 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   };
 
   const response = await fetch(`${serverUrl}/auth/all-messages/`, userData);

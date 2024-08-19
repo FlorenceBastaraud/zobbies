@@ -331,7 +331,7 @@ export async function callRouter(){
         const userInfos = async () => {
           const userDetails = await getUserInfos();
 
-          const userPictureName = userDetails.userPicture.length > 0 ? JSON.parse(userDetails.userPicture).filename : '';
+          const userPictureName = userDetails.userPicture.length > 1 ? JSON.parse(userDetails.userPicture).filename : '';
           const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
           const username = '@' + userDetails.username || '@username-undefined';
           const displayName = userDetails.displayName || userDetails.lastname + ' ' + userDetails.firstname;
@@ -387,7 +387,7 @@ export async function callRouter(){
         const userInfos = async () => {
           const user = await getUserInfos();
 
-          const userPictureName = user.userPicture.length > 0 ? JSON.parse(user.userPicture).filename : '';
+          const userPictureName = user.userPicture.length > 1 ? JSON.parse(user.userPicture).filename : '';
           const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
           const displayName = user.displayName || user.lastname + ' ' + user.firstname;
           const bio = user.bio || `No bio yet`;
@@ -809,7 +809,7 @@ export async function callRouter(){
   
                 const {userId: user} = message;
   
-                const userPictureName = user.userPicture.length > 0 ? JSON.parse(user.userPicture).filename : '';
+                const userPictureName = user.userPicture.length > 1 ? JSON.parse(user.userPicture).filename : '';
                 const userPhoto = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
                 const username = '@' + user.username || '@username-undefined';
   
