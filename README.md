@@ -17,5 +17,3 @@
 UI and Web design by me
 
 (More to come)
-
-[view site / voir site](/)
