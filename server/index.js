@@ -20,28 +20,18 @@ const app = express();
 //   credentials: true
 // }));
 
-// app.options('*', cors({
-//   origin: process.env.CLIENTURL,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Accept'],
-//   credentials: true
-// }));
-
-// app.options('*', (req, res) => {
-//   res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   console.log(res)
-//   res.sendStatus(204);
-// });
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL); // Or specify your origin
+  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials', 'true');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
   next();
+
 });
 
 mongoose.connect(connectionString);

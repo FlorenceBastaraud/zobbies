@@ -6,7 +6,7 @@ export async function handleRegister(formData, event){
 
   const userRegisterData = {
     method: 'POST',
-    'credentials': 'include',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ export async function handleLogin(formData, event){
   
   const userLoginData = {
     method: 'POST',
-    'credentials': 'include',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
