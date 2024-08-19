@@ -27,12 +27,21 @@ const app = express();
 //   credentials: true
 // }));
 
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
+// app.options('*', (req, res) => {
+//   res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   console.log(res)
+//   res.sendStatus(204);
+// });
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', process.env.CLIENTURL); // Or specify your origin
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(204);
+  next();
 });
 
 mongoose.connect(connectionString);
@@ -51,6 +60,8 @@ const server = app.listen(PORT, () => {
 app.get("/", (req, res) => {
   res.status(200).send("Zobbies server running...");
 });
+
+
 
 const socketsOptions = {cors: true, origin: [`${process.env.SERVERURL}`], credentials: true};
 const io = new Server(server, socketsOptions);
