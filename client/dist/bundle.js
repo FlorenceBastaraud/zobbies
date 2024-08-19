@@ -1156,10 +1156,7 @@ async function handleRegister(formData, event){
 
   const userRegisterData = {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    'credentials': 'include',
     body: JSON.stringify(formData)
   };
 
@@ -1200,10 +1197,6 @@ async function handleLogin(formData, event){
   const userLoginData = {
     method: 'POST',
     'credentials': 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify(formData)
   };
 
@@ -1245,10 +1238,6 @@ async function handleForgotPassword(formData, event){
   const userForgotData = {
     method: 'POST',
     'credentials': 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify(formData)
   };
 
@@ -1287,10 +1276,7 @@ async function handleResetPassword(formData, event){
 
   const userResetData = {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    'credentials': 'include',
     body: JSON.stringify(formData)
   };
 
@@ -1331,11 +1317,7 @@ async function checkUserConnexionStatus(){
 
   const connectData = {
     method: 'GET',
-    'credentials': 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    }
+    'credentials': 'include'
   };
 
   const response = await fetch(`${serverUrl}/auth/connected`, connectData);
@@ -1349,11 +1331,7 @@ async function getUserInfos(){
 
   const profileData = {
     method: 'GET',
-    'credentials': 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    }
+    'credentials': 'include'
   };
 
   const response = await fetch(`${serverUrl}/auth/user`, profileData);
@@ -1415,10 +1393,6 @@ async function handleSettings(formData, event){
   const userSettingsData = {
     method: 'POST',
     'credentials': 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify(formData)
   };
 
@@ -1480,10 +1454,6 @@ async function handleAddChannel(formData, event){
   const addChannelData = {
     method: 'POST',
     'credentials': 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify(formData)
   }
 
@@ -1543,10 +1513,6 @@ async function userChannelInteractions(channel, action, updateChatData = null){
     const fetchData = {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        Accept: 'Application/json',
-        'Content-Type': 'Application/json'
-      },
       body: JSON.stringify({channel, action, updateChatData})
     }
     
