@@ -15,7 +15,12 @@ mongoose.connect(connectionString);
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENTURL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 app.use(cookieParser());
 app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
