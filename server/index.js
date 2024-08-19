@@ -26,10 +26,7 @@ app.use(cors({
     'http://florence-b.com/zobbies',
     'http://florence-b.com',
     'https://florence-b.com/zobbies/*'
-  ],
-  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type','Authorization'],
-  credentials: true
+  ]
 }));
 app.use(cookieParser());
 app.use('/server/uploads', express.static('uploads'));
