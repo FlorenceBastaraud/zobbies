@@ -20,17 +20,13 @@ app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
-  origin: [process.env.CLIENTURL],
+  origin: [process.env.CLIENTURL, 'https://florence-b.com/zobbies/', 'https://florence-b.com/', 'https://florence-b.com/zobbies/*'],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type','Authorization'],
   credentials: true
 }));
 app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
-app.use((req,res,next)=>{
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENTURL);
-  res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
-  res.setHeader('Access-Control-Allow-Headers','Content-Type','Authorization');
-  next(); 
-})
 
 const server = app.listen(PORT, () => {
   console.log(`Servir running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
