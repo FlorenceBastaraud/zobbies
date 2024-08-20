@@ -18,8 +18,6 @@ app.use(connectLiveReload());
 // app.use("/src", express.static(path.resolve(__dirname, "src")));
 app.use(express.static(path.join(__dirname, 'dist')));
 
-console.log(path.join(__dirname, "dist", "index.html"));
-
 // routing
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
