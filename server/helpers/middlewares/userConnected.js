@@ -9,6 +9,9 @@ export default async function isUserConnected(req, res, next){
     console.log('--------- is User Connected backend func:');
     console.log(token);
     console.log(req.cookies);
+    console.log('---signed cookie');
+    console.log(req.signedCookies);
+    
     
     if(token.length < 1){
 

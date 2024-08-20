@@ -10,9 +10,16 @@ import { Server } from 'socket.io';
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const connectionString = process.env.MONGODBCONNECTIONSTRING;
+const cookieSecret = process.env.COOKIE_SECRET || 'zoobies-cookies-secret';
+
+mongoose.connect(connectionString);
 
 const app = express();
 
+
+app.use(cookieParser(cookieSecret, {
+  secure: process.env.NODE_ENV === 'production',
+}));
 
 app.use(cors({
   origin: process.env.CLIENTURL,
@@ -21,23 +28,11 @@ app.use(cors({
   credentials: true
 }));
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', process.env.CLIENTURL);
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-//   res.header('Access-Control-Allow-Credentials', 'true');
+app.use((req, res, next) => {
+  console.log('Cookies:', req.cookies);
+  next();
+});
 
-//   if (req.method === 'OPTIONS') {
-//     return res.sendStatus(204);
-//   }
-//   next();
-
-// });
-
-
-mongoose.connect(connectionString);
-
-app.use(cookieParser());
 app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
