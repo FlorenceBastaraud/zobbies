@@ -8,7 +8,7 @@ import { ChannelRouter } from './routes/channel.js';
 import { Server } from 'socket.io';
 
 dotenv.config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const connectionString = process.env.MONGODBCONNECTIONSTRING;
 
 const app = express();
