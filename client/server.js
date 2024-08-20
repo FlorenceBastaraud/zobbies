@@ -13,7 +13,7 @@ const port = process.env.PORT || 3050;
 // liveReloadServer.watch(path.join(__dirname, 'src'));
 
 // middlewarres
-app.use(connectLiveReload());
+// app.use(connectLiveReload());
 // app.use(express.static('./'));
 // app.use("/src", express.static(path.resolve(__dirname, "src")));
 app.use(express.static(path.join(__dirname, 'dist')));
