@@ -11,7 +11,7 @@
     "start-nodemon": "nodemon server.js",
     "node-sass": "sass -w src/sass/:dist/css/",
     "build": "webpack watch",
-    "buld-render": "npm install",
+    "build-render": "npm install",
     "dev-server": "webpack serve --open"
   },
   "repository": {
