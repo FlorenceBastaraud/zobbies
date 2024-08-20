@@ -2,13 +2,16 @@
   "type": "module",
   "name": "serverzobbies",
   "version": "1.0.0",
-  "description": "",
+  "description": "API for Zobbies frontend",
   "main": "index.js",
+  "engines": {
+  "node": "16.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node server/index.js",
     "start-nodemon": "nodemon index.js",
-    "build": ""
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
