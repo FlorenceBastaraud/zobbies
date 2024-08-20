@@ -30,7 +30,7 @@ export function getServerUrl(){
       url = 'http://localhost:5000';
       break;
     default:
-      url = 'https://zobbies.vercel.app'
+      url = 'https://zobbies.onrender.com'
       break;
   }
 
