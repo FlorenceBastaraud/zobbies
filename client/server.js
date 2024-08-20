@@ -1,16 +1,16 @@
 // dependencies
 const express = require("express");
 const path = require("path");
-const livereload = require('livereload');
-const connectLiveReload = require('connect-livereload');
+// const livereload = require('livereload');
+// const connectLiveReload = require('connect-livereload');
 
 // variables
 const app = express();
 const port = process.env.PORT || 3050;
 
 // reload
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'src'));
+// const liveReloadServer = livereload.createServer();
+// liveReloadServer.watch(path.join(__dirname, 'src'));
 
 // middlewarres
 app.use(connectLiveReload());
