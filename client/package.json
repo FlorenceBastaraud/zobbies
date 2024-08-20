@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "A place to meet like minded people",
   "main": "server.js",
+  "engines": {
+  "node": "16.x"
+  },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "start-nodemon": "nodemon server.js",
     "node-sass": "sass -w src/sass/:dist/css/",
     "build": "webpack watch",
+    "buld-render": "npm install",
     "dev-server": "webpack serve --open"
   },
   "repository": {
