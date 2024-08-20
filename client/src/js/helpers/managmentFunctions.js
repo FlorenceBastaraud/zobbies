@@ -28,7 +28,15 @@ export async function callRouter(){
 
     let routes = [];
 
+    
+
     if(checkStatus){
+
+      console.log('is connected');
+      console.log(location.pathname);
+      console.log(checkStatus);
+      
+      
 
       routes = [
         {path: '/', view: LandingPageView},
@@ -55,6 +63,11 @@ export async function callRouter(){
       }
     
     } else {
+
+      console.log('is not connected');
+      console.log(location.pathname);
+      console.log(checkStatus);
+
   
       routes = [
         {path: '/', view: LandingPageView},
@@ -78,6 +91,11 @@ export async function callRouter(){
 
 
   }).then(async (routes) => {
+
+    console.log('routes available');
+    console.log(routes);
+    
+    console.log(location.pathname);
 
 
     const router = new Router(routes);
