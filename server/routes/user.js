@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
 
   console.log('--------- login user name and mdp:');
   console.log(req.body);
-  
+
   const user = await User.findOne({username});
 
   console.log('--------- login: check if user exists in database:');
@@ -123,7 +123,12 @@ router.post('/login', async (req, res) => {
     {expiresIn: 2 * 60 * 60 * 1000}
   );
 
-  res.cookie('token', token, {httpOnly: true, maxAge: 2 * 60 * 60 * 1000})
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 2 * 60 * 60 * 1000,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV === 'production'
+  });
 
   return res.json({message: 'Login was successful.'});
 
