@@ -22,19 +22,27 @@ const socket = io(serverUrl);
 
 export async function callRouter(){
 
+  console.log('in call router');
+
   const isAdmin = await getAdminAccess();
+
+  console.log('-- isAdmin --');
+  console.log(isAdmin);
+  
+
 
   await checkUserConnexionStatus().then((checkStatus) => {
 
     let routes = [];
 
+    console.log('-------');
     
 
     if(checkStatus){
 
       console.log('is connected');
-      console.log(location.pathname);
       console.log(checkStatus);
+      console.log(location.pathname);
       
       
 
@@ -65,8 +73,8 @@ export async function callRouter(){
     } else {
 
       console.log('is not connected');
-      console.log(location.pathname);
       console.log(checkStatus);
+      console.log(location.pathname);
 
   
       routes = [

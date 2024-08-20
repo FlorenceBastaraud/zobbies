@@ -97,7 +97,14 @@ router.post('/login', async (req, res) => {
   
   const {username, password} = req.body;  
 
+  console.log('--------- login user name and mdp:');
+  console.log(req.body);
+  
   const user = await User.findOne({username});
+
+  console.log('--------- login: check if user exists in database:');
+  console.log(user);
+  
 
   if(!user){
     return res.json({message: 'This user does not exist'});
