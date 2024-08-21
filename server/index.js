@@ -64,7 +64,8 @@ app.get("/", (req, res) => {
 const socketsOptions = {
   cors: {
     origin: process.env.CLIENTURL,
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Accept'],
     credentials: true
   }
 };
