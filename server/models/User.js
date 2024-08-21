@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   bio: {type: String, required: true},
   userPicture: {type: String, required: true},
   channels: {type: Array, required: true},
-  socketId: {type: String, required: true},
+  socketId: {type: String},
 });
 
 
