@@ -267,11 +267,11 @@ router.post('/verify-account/:token', async (req, res) => {
 router.get('/logout', (req, res) => {
 
   if(process.env.NODE_ENV === 'production'){
-    res.clearCookie('token', {secure: true, httpOnly: true});
+    res.clearCookie('token', '', {sameSite: 'None', secure: true});
   } else {
     res.clearCookie('token');
   }
-  
+
   return res.json({status: true});
   
 });
