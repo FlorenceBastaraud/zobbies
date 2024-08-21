@@ -3,7 +3,7 @@ export function getStaticImgFolder(){
 }
 
 export function getUploadImgFolder(){
-  return location.protocol + '//' + location.hostname + ':5000/server/uploads/';
+  return getServerUrl() + '/server/uploads/';
 }
 
 export function getStars(pl){

@@ -16,10 +16,18 @@ mongoose.connect(connectionString);
 
 const app = express();
 
+if(process.env.NODE_ENV === 'production'){
+  
+  app.use(cookieParser(cookieSecret, {
+    secure: true,
+  }));
 
-app.use(cookieParser(cookieSecret, {
-  secure: process.env.NODE_ENV === 'production',
-}));
+} else {
+
+  app.use(cookieParser());
+
+}
+
 
 app.use(cors({
   origin: process.env.CLIENTURL,

@@ -9,6 +9,16 @@ import upload from '../helpers/middlewares/upload.js';
 
 const router = express.Router();
 
+const cookieParams = {
+  httpOnly: true,
+  maxAge: 2 * 60 * 60 * 1000
+};
+
+if(process.env.NODE_ENV === 'production'){
+  cookieParams.sameSite = 'None',
+  cookieParams.secure = true
+}
+
 router.post('/register', async (req, res) => {
   const {
     lastname,
@@ -116,12 +126,8 @@ router.post('/login', async (req, res) => {
     {expiresIn: 2 * 60 * 60 * 1000}
   );
 
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: 2 * 60 * 60 * 1000,
-    sameSite: 'None',
-    secure: process.env.NODE_ENV === 'production'
-  });
+
+  res.cookie('token', token, cookieParams);
 
   return res.json({message: 'Login was successful.'});
 
@@ -362,7 +368,9 @@ router.post('/settings', async (req, res) => {
         {expiresIn: 2 * 60 * 60 * 1000}
       );
     
-      res.cookie('token', token, {httpOnly: true, maxAge: 2 * 60 * 60 * 1000})
+      
+      res.cookie('token', token, cookieParams);
+
     }
 
     if(password.length > 0){ 
