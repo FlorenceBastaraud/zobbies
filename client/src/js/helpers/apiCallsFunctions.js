@@ -193,6 +193,7 @@ export async function checkUserConnexionStatus(){
   const response = await fetch(`${serverUrl}/auth/connected`, connectData);
   const data = await response.json();
 
+
   return data.status;
   
 }

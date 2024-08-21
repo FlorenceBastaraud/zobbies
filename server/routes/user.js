@@ -56,7 +56,7 @@ router.post('/register', async (req, res) => {
     bio: ' ',
     userPicture: ' ',
     channels: [],
-    socketId: ' '
+    socketId: ''
   });
 
 
