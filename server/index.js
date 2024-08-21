@@ -16,6 +16,9 @@ mongoose.connect(connectionString);
 
 const app = express();
 
+app.use('/server/uploads', express.static('uploads'));
+
+
 if(process.env.NODE_ENV === 'production'){
   
   app.use(cookieParser(cookieSecret, {
@@ -37,7 +40,6 @@ app.use(cors({
 }));
 
 
-app.use('/server/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/auth', UserRouter);
@@ -45,6 +47,10 @@ app.use('/auth', ChannelRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`Servir running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
+});
+
+app.use((req, res, next) => {
+  res.status(404).send('Sorry, source not found');
 });
 
 app.get("/", (req, res) => {
