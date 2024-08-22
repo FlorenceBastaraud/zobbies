@@ -41,6 +41,8 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const socketIdValuePlaceholder = new Date().toLocaleString().split('').join('a');
+
     const newUser = new User({
       lastname,
       firstname,
@@ -56,7 +58,7 @@ router.post('/register', async (req, res) => {
       bio: ' ',
       userPicture: ' ',
       channels: [],
-      socketId: ''
+      socketId: socketIdValuePlaceholder
     });
 
     await newUser.save();
