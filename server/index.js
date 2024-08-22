@@ -31,6 +31,16 @@ if(process.env.NODE_ENV === 'production'){
 
 }
 
+const socketsOptions = {
+  cors: {
+    origin: process.env.CLIENTURL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Accept'],
+    credentials: true
+  }
+};
+
+const io = new Server(server, socketsOptions);
 
 app.use(cors({
   origin: process.env.CLIENTURL,
@@ -61,16 +71,6 @@ app.get("/", (req, res) => {
 
 
 
-const socketsOptions = {
-  cors: {
-    origin: process.env.CLIENTURL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Accept'],
-    credentials: true
-  }
-};
-
-const io = new Server(server, socketsOptions);
 
 io.on("connection", socket => {
   
