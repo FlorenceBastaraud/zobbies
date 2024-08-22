@@ -18,19 +18,11 @@ const app = express();
 
 app.use('/server/uploads', express.static('uploads'));
 
-
-if(process.env.NODE_ENV === 'production'){
-  
-  app.use(cookieParser(cookieSecret, {
-    secure: true,
-  }));
-
+if (process.env.NODE_ENV === 'production') {
+  app.use(cookieParser(cookieSecret, { secure: true }));
 } else {
-
   app.use(cookieParser());
-
 }
-
 
 app.use(cors({
   origin: process.env.CLIENTURL,
@@ -39,17 +31,6 @@ app.use(cors({
   credentials: true
 }));
 
-const socketsOptions = {
-  cors: {
-    origin: process.env.CLIENTURL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Accept'],
-    credentials: true
-  }
-};
-
-
-const io = new Server(server, socketsOptions);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -58,29 +39,38 @@ app.use(express.json());
 app.use('/auth', UserRouter);
 app.use('/auth', ChannelRouter);
 
-const server = app.listen(PORT, () => {
-  console.log(`Servir running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
-});
 
 app.use((req, res, next) => {
-  res.status(404).send('Sorry, source not found');
+  res.status(404).send('Sorry, resource not found');
 });
+
 
 app.get("/", (req, res) => {
   res.status(200).send("Zobbies server running...");
 });
 
 
+const server = app.listen(PORT, () => {
+  console.log(`Server running on ${PORT} ... click to access: ${process.env.SERVERURL}`);
+});
 
 
-io.on("connection", socket => {
-  
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENTURL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Accept'],
+    credentials: true
+  }
+});
+
+
+io.on("connection", (socket) => {
   socket.join('room');
-  socket.on('message', (message) => {       
+  socket.on('message', (message) => {
     io.to('room').emit('newMessage', {
       messageSocketId: message.messageSocketId,
       incomingMessage: message.message
     });
   });
-  
 });
