@@ -1708,6 +1708,27 @@
     font-size: 0.75rem;
   }
 }
+.settings__form button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  position: relative;
+  top: -8px;
+  transition: 0.3s ease-in-out;
+}
+.settings__form button:hover::after {
+  display: flex;
+}
+.settings__form button::after {
+  content: "";
+  position: absolute;
+  width: 98%;
+  height: 1px;
+  background-color: #070707;
+  left: 0;
+  bottom: -1px;
+  display: none;
+}
 
 .add-channel {
   padding: 5em 0;

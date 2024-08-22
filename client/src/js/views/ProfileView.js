@@ -3,7 +3,18 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor() {
       super();
-      this.setWindowDetails('Zobbies - profile', 'profile');
+      this.setVisitProfileDetails();
+    }
+
+    async setVisitProfileDetails(){
+
+      const title = document.body.getAttribute('is-visitor') ? `Zobbies - this user profile` : 'Zobbies - profile';
+      this.setWindowDetails(title, 'profile');
+
+    }
+
+    getUserIdProfileVisit(){
+      return document.body.getAttribute('user-profile-id-visit');
     }
 
 
@@ -29,8 +40,8 @@ export default class extends AbstractView {
 
                   <div class="platform">
                     <a href="/edit-profile" title="Edit profile" data-link class="platform__edit-profile">Edit profile</a>
-                    <a href="/settings" title="Settings" class="platform__settings">Settings</a>
-                    <a href="/" class="platform__logout" id="logout">
+                    <a href="/settings" title="Settings" data-link class="platform__settings">Settings</a>
+                    <a href="/" class="platform__logout" data-link id="logout">
                       <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                   </div>

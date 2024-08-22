@@ -13,7 +13,7 @@ import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 import ChannelView from "../views/ChannelView.js";
 
-import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId} from './apiCallsFunctions.js';
+import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId, getUserById} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars, getServerUrl } from "./functions.js";
 
 const serverUrl = getServerUrl();
@@ -23,7 +23,7 @@ const socket = io(serverUrl);
 export async function callRouter(){
 
   const isAdmin = await getAdminAccess();
-
+  
   await checkUserConnexionStatus().then((checkStatus) => {
 
     let routes = [];
@@ -31,7 +31,6 @@ export async function callRouter(){
     if(checkStatus){
 
       routes = [
-        {path: '/', view: LandingPageView},
         {path: '/channels', view: ChannelsView},
         {path: '/verify-account', view: VerifyAccountView},
         {path: '/profile', view: ProfileView},
@@ -83,12 +82,21 @@ export async function callRouter(){
     const view = await new router.match.route.view();
     const zobbies = document.querySelector("#app");
     const viewHtml = await view.getHtml();
-
+    
     zobbies.innerHTML = viewHtml;
 
+    let getUserIdProfileVisit = null;
 
-  }).then(() => {
+    if(location.pathname === '/profile'){
+      getUserIdProfileVisit = await view.getUserIdProfileVisit();
+    }
 
+    return getUserIdProfileVisit;
+
+
+  }).then((getUserIdProfileVisit) => {
+
+  
       // enter space view specificities
       if(location.pathname == '/enter-space'){
         const registerBloc = document.getElementById('register-bloc');
@@ -325,10 +333,14 @@ export async function callRouter(){
 
       // handle profile view
       if(location.pathname == '/profile'){
-
         
         const userInfos = async () => {
-          const userDetails = await getUserInfos();
+
+          const userDetails = getUserIdProfileVisit ? await getUserById(getUserIdProfileVisit) : await getUserInfos();
+      
+          if(getUserIdProfileVisit){
+            document.querySelector('.platform').classList.add('display-none');
+          }
 
           const userPictureName = userDetails.userPicture.length > 1 ? JSON.parse(userDetails.userPicture).filename : '';
           const profilePicture = userPictureName !== '' ? getUploadImgFolder() + userPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
@@ -518,8 +530,6 @@ export async function callRouter(){
         })
 
 
-        
-
         document.getElementById('settings-form')?.addEventListener('submit', function(e){
 
           e.preventDefault();
@@ -577,6 +587,17 @@ export async function callRouter(){
   
           
         })
+
+
+        document.querySelector('.cancel-settings').addEventListener('click', (e) => {
+          
+          e.preventDefault();
+          document.getElementById('settings-form').reset();
+          goTo('/profile');
+
+
+        });
+
 
       }
 
@@ -750,7 +771,7 @@ export async function callRouter(){
                                 <div class="user__image">
                                   <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
                                 </div>
-                                <span class="user__username">${currentUserUsername}</span>
+                                <a class="user__username" data-user-profile-id="${currentUser._id}" data-link href="/profile" title="Visit ${currentUser.username}'s profile">${currentUserUsername}</a>
                               </div>
           
                               <p class="message">${incomingMessage}</p>
@@ -819,7 +840,7 @@ export async function callRouter(){
                         <div class="user__image">
                           <img class="user__image--item" src="${userPhoto}" alt="${displayName} profile picture">
                         </div>
-                        <span class="user__username">${username}</span>
+                        <a class="user__username" data-user-profile-id="${user._id}" data-link href="/profile" title="Visit ${user.username}'s profile">${username}</a>
                       </div>
   
                       <p class="message">${message.message}</p>
@@ -892,7 +913,6 @@ export async function callRouter(){
           }
           
         });
-
 
 
       }

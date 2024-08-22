@@ -207,7 +207,7 @@ export async function getUserInfos(){
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    },
+    }
   };
 
   const response = await fetch(`${serverUrl}/auth/user`, profileData);

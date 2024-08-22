@@ -86,6 +86,9 @@ export default class extends AbstractView {
 
                 <input type="submit" name="save" value="Save" class="primary-cta submit submit-settings">
 
+                <button class="cancel-settings">Cancel</button>
+
+
                 <span class="error-message" id="error-settings"></span>
 
               </form>

@@ -160,3 +160,26 @@
 
       @include media-query(666px)
         font-size: toRem(12)
+
+
+    button
+      cursor: pointer
+      border: none
+      background: none
+      position: relative
+      top: -8px
+      transition: .3s ease-in-out
+
+      &:hover
+        &::after
+          display: flex
+
+      &::after
+        content: ''
+        position: absolute
+        width: 98%
+        height: 1px
+        background-color: $mainBackground
+        left: 0
+        bottom: -1px
+        display: none
