@@ -12,9 +12,9 @@ const UserSchema = new mongoose.Schema({
   pl: {type: Number, required: true},
   isVerified: {type: Boolean, required: true},
   displayName: {type: String, required: true},
-  bio: {type: String, required: true},
-  userPicture: {type: String, required: true},
-  channels: {type: Array, required: true},
+  bio: {type: String},
+  userPicture: {type: String},
+  channels: {type: Array},
   socketId: {type: String},
 });
 

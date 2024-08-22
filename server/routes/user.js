@@ -20,120 +20,117 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 router.post('/register', async (req, res) => {
-  const {
-    lastname,
-    firstname,
-    dateOfBirth,
-    gender,
-    country,
-    email,
-    username,
-    password
-  } = req.body;
+  try {
 
-  const pl = password.length;
+    const {
+      lastname,
+      firstname,
+      dateOfBirth,
+      gender,
+      country,
+      email,
+      username,
+      password
+    } = req.body;
 
-  const user = await User.findOne({email});
+    const user = await User.findOne({email});
 
-
-  if(user){
-    return res.json({message: 'This user already exists'});
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new User({
-    lastname,
-    firstname,
-    dateOfBirth,
-    gender,
-    country,
-    email,
-    username,
-    password: hashedPassword,
-    pl,
-    isVerified: false,
-    displayName: lastname + ' ' + firstname,
-    bio: ' ',
-    userPicture: ' ',
-    channels: [],
-    socketId: ''
-  });
-
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'florence.bastaraud.dw@gmail.com',
-      pass: process.env.GOOGLEMAILERPASSWORD
+    if(user){
+      return res.status(400).json({message: 'This user already exists'});
     }
-  });
 
-  const token = jwt.sign({id: newUser._id}, process.env.JWTSECRETKEY, {expiresIn: 60000});
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    const newUser = new User({
+      lastname,
+      firstname,
+      dateOfBirth,
+      gender,
+      country,
+      email,
+      username,
+      password: hashedPassword,
+      pl: password.length,
+      isVerified: false,
+      displayName: `${lastname} ${firstname}`,
+      bio: ' ',
+      userPicture: ' ',
+      channels: [],
+      socketId: ''
+    });
 
-  const mailOptions = {
-    from: 'florence.bastaraud.dw@gmail.com',
-    to: email,
-    subject: 'Zobbies: verify your account',
-    html: `
-    
-      Hi ${firstname},<br><br>
-      Your <strong><em><a href="${process.env.CLIENTURL}/" target="_blank">Zobbies</a></em></strong> account has been created.<br><br>
-      Make sure to verify your account by clicking on the following link <a href="${process.env.CLIENTURL}/verify-account#${token}" target="_blank">here</a>.<br><br>
-      Thanks,<br>
-      <strong><em>Zobbies</em></strong>
+    await newUser.save();
 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'florence.bastaraud.dw@gmail.com',
+        pass: process.env.GOOGLEMAILERPASSWORD
+      }
+    });
 
-    
-    `
-  };
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      return res.json({message: "Error sending the email with verification link"});
-    } else {
-      return res.json({message: "Email sent successfully"});
-    }
-  });
+    const token = jwt.sign({id: newUser._id}, process.env.JWTSECRETKEY, {expiresIn: '10m'});
 
+    const mailOptions = {
+      from: 'florence.bastaraud.dw@gmail.com',
+      to: email,
+      subject: 'Zobbies: Verify Your Account',
+      html: `
+        Hi ${firstname},<br><br>
+        Your <strong><em><a href="${process.env.CLIENTURL}" target="_blank">Zobbies</a></em></strong> account has been created.<br><br>
+        Make sure to verify your account by clicking on the following link <a href="${process.env.CLIENTURL}/verify-account#${token}" target="_blank">here</a>.<br><br>
+        Thanks,<br>
+        <strong><em>Zobbies</em></strong>
+      `
+    };
 
-  await newUser.save();
-  return res.json({message: 'Registration was successful.'});
+    await transporter.sendMail(mailOptions);
 
-})
+    res.status(201).json({message: 'Registration was successful. Please check your email for verification.'});
 
+  } catch(error){
 
-router.post('/login', async (req, res) => {
-  
-  const {username, password} = req.body;  
+    console.error('Registration error:', error);
 
-  const user = await User.findOne({username});
+    res.status(500).json({message: 'Server error during registration.'});
 
-  if(!user){
-    return res.json({message: 'This user does not exist'});
   }
-
-  const passwordMatched = await bcrypt.compare(password, user.password);
-
-  if(!passwordMatched){
-    return res.json({message: 'This password is incorrect'});
-  }
-
-
-  const token = jwt.sign(
-    {username: user.username},
-    process.env.JWTSECRETKEY,
-    {expiresIn: 2 * 60 * 60 * 1000}
-  );
-
-
-  res.cookie('token', token, cookieParams);
-
-  return res.json({message: 'Login was successful.'});
-
 
 });
 
+
+router.post('/login', async (req, res) => {
+
+  try {
+
+    const {username, password} = req.body;
+
+    const user = await User.findOne({username});
+
+    if(!user){
+      return res.status(400).json({message: 'This user does not exist'});
+    }
+
+    const passwordMatched = await bcrypt.compare(password, user.password);
+
+    if(!passwordMatched){
+      return res.status(400).json({message: 'Incorrect password'});
+    }
+
+    const token = jwt.sign({username: user.username}, process.env.JWTSECRETKEY, {expiresIn: '2h'});
+
+    res.cookie('token', token, cookieParams);
+
+    res.status(200).json({message: 'Login was successful.'});
+
+  } catch(error){
+    
+    console.error('Login error:', error);
+    res.status(500).json({message: 'Server error during login.'});
+
+  }
+
+});
 
 router.post('/forgot-password', async (req, res) => {
   const {email} = req.body;
