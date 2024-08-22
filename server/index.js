@@ -31,6 +31,14 @@ if(process.env.NODE_ENV === 'production'){
 
 }
 
+
+app.use(cors({
+  origin: process.env.CLIENTURL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Accept'],
+  credentials: true
+}));
+
 const socketsOptions = {
   cors: {
     origin: process.env.CLIENTURL,
@@ -40,15 +48,8 @@ const socketsOptions = {
   }
 };
 
+
 const io = new Server(server, socketsOptions);
-
-app.use(cors({
-  origin: process.env.CLIENTURL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Accept'],
-  credentials: true
-}));
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
