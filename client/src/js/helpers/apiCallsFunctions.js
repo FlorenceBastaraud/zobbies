@@ -162,7 +162,7 @@ export async function handleResetPassword(formData, event){
       event.target.reset();
 
       document.querySelector('.reset-password__title').innerText = "Your password has been reset!";
-      document.querySelector('.reset-password__description').innerHTML = `<span>You can now <a href="/enter-space">log in</a> into your account, using your username (<strong><em>${data.user.username}</em></strong>), your new password.</span>`;
+      document.querySelector('.reset-password__description').innerHTML = `<span>You can now <a href="/enter-space">log in</a> into your account, using your username (<strong><em>${data.user.username}</em></strong>), and your new password.</span>`;
       document.getElementById('ResetPasswordForm').innerHTML = "";
       window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -225,10 +225,6 @@ export async function handleUpdateUserInfos(formData, event){
   const userInfosData = {
     method: 'POST',
     'credentials': 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: formData
   };
 
