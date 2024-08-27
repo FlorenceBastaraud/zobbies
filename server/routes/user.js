@@ -18,7 +18,7 @@ const cookieParams = {
 
 if(process.env.NODE_ENV === 'production'){
   cookieParams.sameSite = 'Lax';
-  cookieParams.secure = true;
+  // cookieParams.secure = true;
 }
 
 router.post('/register', async (req, res) => {
