@@ -11,13 +11,11 @@ const router = express.Router();
 
 const cookieParams = {
   httpOnly: true,
-  maxAge: 2 * 60 * 60 * 1000,
-  path: '/',
-  domain: process.env.WEBSITEDOMAIN
+  maxAge: 2 * 60 * 60 * 1000
 };
 
 if(process.env.NODE_ENV === 'production'){
-  cookieParams.sameSite = 'Lax',
+  cookieParams.sameSite = 'None',
   cookieParams.secure = true
 }
 
