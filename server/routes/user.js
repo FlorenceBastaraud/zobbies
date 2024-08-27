@@ -11,15 +11,17 @@ const router = express.Router();
 
 const cookieParams = {
   httpOnly: true,
-  maxAge: 2 * 60 * 60 * 1000,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'Lax',
+  domain: process.env.WEBSITEDOMAIN,
   path: '/',
-  domain: process.env.WEBSITEDOMAIN
+  expires: new Date(Date.now() + 2 * 60 * 60 * 1000)
 };
 
-if(process.env.NODE_ENV === 'production'){
-  cookieParams.sameSite = 'Lax';
-  // cookieParams.secure = true;
-}
+// if(process.env.NODE_ENV === 'production'){
+//   cookieParams.sameSite = 'Lax';
+//   // cookieParams.secure = true;
+// }
 
 router.post('/register', async (req, res) => {
   try {
