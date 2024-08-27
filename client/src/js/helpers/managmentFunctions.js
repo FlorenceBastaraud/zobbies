@@ -12,6 +12,7 @@ import EditProfileView from "../views/EditProfileView.js";
 import SettingsView from "../views/SettingsView.js";
 import AddChannelView from "../views/AddChannelView.js";
 import ChannelView from "../views/ChannelView.js";
+import StaticView from "../views/StaticView.js";
 
 import {handleRegister, handleLogin, handleForgotPassword, handleResetPassword, checkUserConnexionStatus, getUserInfos, handleUpdateUserInfos, handleSettings, getAdminAccess, handleAddChannel, getChannels, getChannel, getUsers, userChannelInteractions, getUserBySocketId, getUserById} from './apiCallsFunctions.js';
 import { getStaticImgFolder, getUploadImgFolder, getStars, getServerUrl } from "./functions.js";
@@ -26,19 +27,25 @@ export async function callRouter(){
   
   await checkUserConnexionStatus().then((checkStatus) => {
 
-    let routes = [];
+    let routes = [
+      {path: '/cookies', view: StaticView},
+      {path: '/privacy-policy', view: StaticView},
+      {path: '/conditions-of-use', view: StaticView},
+      {path: '/disclaimers', view: StaticView},
+      {path: '/genesis', view: StaticView},
+    ];
 
     if(checkStatus){
 
-      routes = [
-        {path: '/channels', view: ChannelsView},
+      routes.unshift({path: '/channels', view: ChannelsView});
+      routes.push(
         {path: '/verify-account', view: VerifyAccountView},
         {path: '/profile', view: ProfileView},
         {path: '/edit-profile', view: EditProfileView},
         {path: '/settings', view: SettingsView},
         {path: '/add-channel', view: AddChannelView},
         {path: '/channel', view: ChannelView}
-      ];
+      );
 
       const routesPaths = routes.map(route => route.path);
       
@@ -55,13 +62,13 @@ export async function callRouter(){
     
     } else {
 
-      routes = [
-        {path: '/', view: LandingPageView},
+      routes.unshift({path: '/', view: LandingPageView});
+      routes.push(
         {path: '/enter-space', view: EnterSpaceView},
         {path: '/forgot-password', view: ForgotPasswordView},
         {path: '/reset-password', view: ResetPasswordView},
         {path: '/verify-account', view: VerifyAccountView}
-      ];
+      );
 
       const routesPaths = routes.map(route => route.path);
 
@@ -71,7 +78,6 @@ export async function callRouter(){
       }
   
     }
-
 
     return routes;
 
@@ -917,6 +923,14 @@ export async function callRouter(){
 
       }
 
+
+      // static pages view
+      const statisRoutes = ['/genesis', '/cookies', '/privacy-policy', '/conditions-of-use', '/disclaimers'];
+      if(statisRoutes.includes(location.pathname)){
+        window.document.body.setAttribute('type', 'static');
+      } else {
+        window.document.body.removeAttribute('type');
+      }
 
 
   });

@@ -66,7 +66,7 @@ router.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'florence.bastaraud.dw@gmail.com',
+        user: 'fbastaraud@yahoo.fr',
         pass: process.env.GOOGLEMAILERPASSWORD
       }
     });
@@ -74,7 +74,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({id: newUser._id}, process.env.JWTSECRETKEY, {expiresIn: '10m'});
 
     const mailOptions = {
-      from: 'florence.bastaraud.dw@gmail.com',
+      from: 'fbastaraud@yahoo.fr',
       to: email,
       subject: 'Zobbies: Verify Your Account',
       html: `
@@ -121,7 +121,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({username: user.username}, process.env.JWTSECRETKEY, {expiresIn: '2h'});
 
-    res.cookie('token', token, cookieParams);
+    res.cookie('session_cookie', token, cookieParams);
 
     res.status(200).json({message: 'Login was successful.'});
 
@@ -152,7 +152,7 @@ router.post('/forgot-password', async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'florence.bastaraud.dw@gmail.com',
+          user: 'fbastaraud@yahoo.fr',
           pass: process.env.GOOGLEMAILERPASSWORD
         }
       });
@@ -160,7 +160,7 @@ router.post('/forgot-password', async (req, res) => {
       const token = jwt.sign({id: user._id}, process.env.JWTSECRETKEY, {expiresIn: 60000});
 
       const mailOptions = {
-        from: 'florence.bastaraud.dw@gmail.com',
+        from: 'fbastaraud@yahoo.fr',
         to: email,
         subject: 'Zobbies: reset your password',
         html: `
@@ -275,7 +275,7 @@ router.get('/logout', (req, res) => {
     clearCookieParams.secure = true;
   }
   
-  res.clearCookie('token', clearCookieParams);
+  res.clearCookie('session_cookie', clearCookieParams);
 
   return res.json({status: true});
   
@@ -379,7 +379,7 @@ router.post('/settings', async (req, res) => {
       );
     
       
-      res.cookie('token', token, cookieParams);
+      res.cookie('session_cookie', token, cookieParams);
 
     }
 

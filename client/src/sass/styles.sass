@@ -20,6 +20,7 @@
 @import './views/settings'
 @import './views/add-channel'
 @import './views/_channel'
+@import './views/_static'
 
 *, *::before, *::after
   margin: 0
@@ -58,6 +59,29 @@ body
       .footer__content
         @media (min-width: 1550px) and (min-height:733px)
           padding: 0 toEm(20)
+
+
+  &[type="static"]
+    background-color: $primaryColor
+    color: $mainBackground
+
+    a
+      color: $mainBackground
+
+      &:hover
+        color: $labelColor
+
+        &::after
+            background-color: $labelColor
+
+    .copyrights
+      a
+        font-weight: 400
+
+
+
+main
+  margin-top: auto
 
 a
   color: $primaryColor

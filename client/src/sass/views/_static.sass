@@ -1,0 +1,50 @@
+.static
+  padding: toEm(15) 0
+  position: relative
+  @include displayFlex(column, flex-start, center)
+  column-gap: 40px
+
+  @include media-query(1350px)
+    justify-content: center
+    align-content: center
+    padding: toEm(20)
+
+  &__main
+    width: 100%
+    @include displayFlex(column, center, flex-start)
+    row-gap: 40px
+
+    &--title
+      font-size: toRem(52)
+      font-weight: 400
+      text-align: left
+      font-weight: 500
+      @include media-query(1240px)
+        font-size: toRem(42)
+
+      @include media-query(666px)
+          font-size: toRem(32)
+
+      @include media-query(440px)
+          font-size: toRem(26)
+
+    &--content
+      @include displayFlex(column, flex-start, flex-start)
+      gap: 10px
+      color: #000
+      font-size: toRem(18)
+
+      .paragraph
+        a
+          text-decoration: underline
+          color: #000
+
+          &:hover
+            color: $labelColor
+
+      ul
+        padding-left: toEm(40)
+
+      .data  
+        li
+          font-style: italic

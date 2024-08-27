@@ -22,8 +22,8 @@
 }
 
 .ptl {
-  top: 0;
-  left: 0;
+  top: -15px;
+  left: -70px;
 }
 @media (max-width: 900px) {
   .ptl {
@@ -109,6 +109,31 @@
 .error-message {
   color: red;
   font-weight: 500;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.medium {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.space {
+  margin-top: 1.25em;
 }
 
 @keyframes animateBlobType1 {
@@ -220,6 +245,9 @@
     bottom: 0;
     height: 1px;
   }
+}
+.header__content--nav a i {
+  pointer-events: none;
 }
 
 .footer {
@@ -2146,6 +2174,74 @@
   color: #070707;
 }
 
+.static {
+  padding: 0.9375em 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 40px;
+}
+@media (max-width: 1350px) {
+  .static {
+    justify-content: center;
+    align-content: center;
+    padding: 1.25em;
+  }
+}
+.static__main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  row-gap: 40px;
+}
+.static__main--title {
+  font-size: 3.25rem;
+  font-weight: 400;
+  text-align: left;
+  font-weight: 500;
+}
+@media (max-width: 1240px) {
+  .static__main--title {
+    font-size: 2.625rem;
+  }
+}
+@media (max-width: 666px) {
+  .static__main--title {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 440px) {
+  .static__main--title {
+    font-size: 1.625rem;
+  }
+}
+.static__main--content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  color: #000;
+  font-size: 1.125rem;
+}
+.static__main--content .paragraph a {
+  text-decoration: underline;
+  color: #000;
+}
+.static__main--content .paragraph a:hover {
+  color: #FFAFAF;
+}
+.static__main--content ul {
+  padding-left: 2.5em;
+}
+.static__main--content .data li {
+  font-style: italic;
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -2189,6 +2285,26 @@ body[view=channel] header {
   body[view=channel] footer .footer__content {
     padding: 0 1.25em;
   }
+}
+body[type=static] {
+  background-color: #FFF;
+  color: #070707;
+}
+body[type=static] a {
+  color: #070707;
+}
+body[type=static] a:hover {
+  color: #FFAFAF;
+}
+body[type=static] a:hover::after {
+  background-color: #FFAFAF;
+}
+body[type=static] .copyrights a {
+  font-weight: 400;
+}
+
+main {
+  margin-top: auto;
 }
 
 a {

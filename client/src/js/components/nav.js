@@ -86,6 +86,16 @@ export default class Nav {
 
   generateConnectedElements(isAdmin){
 
+    if(location.pathname !== '/channels'){
+      this.linksItems +=  `
+
+      <a href="/channels" title="Channels" data-link class="nav-link">
+        Channels
+      </a>
+
+    `;
+    }
+
     if(location.pathname !== '/profile'){
       this.linksItems +=  `
 

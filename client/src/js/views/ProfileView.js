@@ -8,7 +8,7 @@ export default class extends AbstractView {
 
     async setVisitProfileDetails(){
 
-      const title = document.body.getAttribute('is-visitor') ? `Zobbies - this user profile` : 'Zobbies - profile';
+      const title = document.body.getAttribute('is-visitor') ? `Zobbies` : 'Zobbies - profile';
       this.setWindowDetails(title, 'profile');
 
     }
