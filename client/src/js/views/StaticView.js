@@ -21,7 +21,7 @@ export default class extends AbstractView {
               <p class="paragraph">
                 Nous utilisons un cookie de connexion pour assurer la continuité de votre session utilisateur sur notre site. Ce cookie est essentiel au fonctionnement de notre site et vous permet de rester connecté pendant que vous naviguez entre les différentes pages.
               </p>
-              <p class="italic medium"><span class="underline">Nom du cookie</span> : session_cookie</p>
+              <p class="italic medium"><span class="underline">Nom du cookie</span> : token</p>
               <p class="italic medium"><span class="underline">Objectif</span> : Connexion de l'utilisateur</p>
               <p class="paragraph">                
                 Ce cookie est utilisé pour maintenir votre session utilisateur active après que vous vous soyez connecté. Il permet à notre site de vous reconnaître et de vous offrir une expérience continue et sécurisée.

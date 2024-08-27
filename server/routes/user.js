@@ -121,7 +121,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({username: user.username}, process.env.JWTSECRETKEY, {expiresIn: '2h'});
 
-    res.cookie('session_cookie', token, cookieParams);
+    res.cookie('token', token, cookieParams);
 
     res.status(200).json({message: 'Login was successful.'});
 
@@ -275,7 +275,7 @@ router.get('/logout', (req, res) => {
     clearCookieParams.secure = true;
   }
   
-  res.clearCookie('session_cookie', clearCookieParams);
+  res.clearCookie('token', clearCookieParams);
 
   return res.json({status: true});
   
@@ -379,7 +379,7 @@ router.post('/settings', async (req, res) => {
       );
     
       
-      res.cookie('session_cookie', token, cookieParams);
+      res.cookie('token', token, cookieParams);
 
     }
 
