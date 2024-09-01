@@ -675,11 +675,13 @@ export async function callRouter(){
       }
 
       // channel view      
+      
       if(location.pathname == '/channel'){
-
+        
         let currUserSocketId;
-
-
+        let socket;
+        let room;
+        
         async function currentChannel(options = {}){
           
           let channel = await getChannel();
@@ -720,6 +722,17 @@ export async function callRouter(){
 
             }
 
+
+            socket = io(serverUrl)
+
+            socket.emit('leaveRoom', channel.name);
+            currUserSocketId = null;
+            socket.off('newMessage');
+            socket.disconnect();
+
+            return await currentChannel();
+
+
           }
 
           
@@ -727,72 +740,77 @@ export async function callRouter(){
           
           
           // chat config
-          const socket = io(serverUrl);
+          socket = io(serverUrl);
+          room = name;
+
           socket.on("connect", () => {
+            socket.emit('joinRoom', room);
             currUserSocketId = socket.id;
             userChannelInteractions('', 'socket', currUserSocketId);
           });
 
-          socket.on('newMessage', async newMessage => {
 
-              const {messageSocketId, incomingMessage} = newMessage;
-                            
-              const isMyMessage = currUserSocketId == messageSocketId;
-                                    
-              if(newMessage !== ''){
+          const addNewMessage = async newMessage => {
 
-                const dateISO = moment().toISOString(true).split('T');
-                const date = dateISO[0];
-                const time = dateISO[1].split(':', 2).join(':');
+            const {messageSocketId, incomingMessage} = newMessage;
+                          
+            const isMyMessage = currUserSocketId == messageSocketId;
+                                  
+            if(newMessage !== ''){
 
-                const currentDateThread = chat.find(chatItem => chatItem.date === date);
-                        
+              const dateISO = moment().toISOString(true).split('T');
+              const date = dateISO[0];
+              const time = dateISO[1].split(':', 2).join(':');
+
+              const currentDateThread = chat.find(chatItem => chatItem.date === date);
+                      
+              
+              
+              if(isMyMessage){
                 
-                
-                if(isMyMessage){
-                  
-                  let dataToAdd = {newThread: false, date, incomingMessage, time};
+                let dataToAdd = {newThread: false, date, incomingMessage, time};
 
-                  if(!currentDateThread){
+                if(!currentDateThread){
 
-                    dataToAdd.newThread = true;
-  
-                  }
-
-                  await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
-
+                  dataToAdd.newThread = true;
 
                 }
 
-                let currentUser = await getUserBySocketId(messageSocketId);  
-                
-                const currentUserPictureName = currentUser.userPicture?.length > 1 ? JSON.parse(currentUser.userPicture).filename : '';
-                const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
-                const currentUserUsername = '@' + currentUser.username || '@username-undefined';
-                const mainChatWrapper = document.querySelector('.channel__chat');
-                const chatElement = `
-                        <div class="channel__chat--item">
-          
-                              <div class="user" data-user="${currentUser._id}">
-                                <div class="user__image">
-                                  <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
-                                </div>
-                                <a class="user__username" data-user-profile-id="${currentUser._id}" data-link href="/profile" title="Visit ${currentUser.username}'s profile">${currentUserUsername}</a>
-                              </div>
-          
-                              <p class="message">${incomingMessage}</p>
-          
-                              <span class="publish-time">${time}</span>
-          
-                          </div>`;
-                  mainChatWrapper.innerHTML += chatElement;
-
-                  document.querySelector('.channel__chat').scrollTop = 9999999;
+                await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
 
 
               }
-            
-          });
+
+              let currentUser = await getUserBySocketId(messageSocketId);  
+              
+              const currentUserPictureName = currentUser.userPicture?.length > 1 ? JSON.parse(currentUser.userPicture).filename : '';
+              const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+              const currentUserUsername = '@' + currentUser.username || '@username-undefined';
+              const mainChatWrapper = document.querySelector('.channel__chat');
+              const chatElement = `
+                      <div class="channel__chat--item">
+        
+                            <div class="user" data-user="${currentUser._id}">
+                              <div class="user__image">
+                                <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
+                              </div>
+                              <a class="user__username exit-channel" data-user-profile-id="${currentUser._id}" data-link href="/profile" title="Visit ${currentUser.username}'s profile">${currentUserUsername}</a>
+                            </div>
+        
+                            <p class="message">${incomingMessage}</p>
+        
+                            <span class="publish-time">${time}</span>
+        
+                        </div>`;
+                mainChatWrapper.innerHTML += chatElement;
+
+                document.querySelector('.channel__chat').scrollTop = 9999999;
+
+
+            }
+          
+          }
+          socket.on('newMessage', addNewMessage);
         
           
           document.querySelector('.channel').setAttribute('data-channel', name);
@@ -846,7 +864,7 @@ export async function callRouter(){
                         <div class="user__image">
                           <img class="user__image--item" src="${userPhoto}" alt="${displayName} profile picture">
                         </div>
-                        <a class="user__username" data-user-profile-id="${user._id}" data-link href="/profile" title="Visit ${user.username}'s profile">${username}</a>
+                        <a class="user__username exit-channel" data-user-profile-id="${user._id}" data-link href="/profile" title="Visit ${user.username}'s profile">${username}</a>
                       </div>
   
                       <p class="message">${message.message}</p>
@@ -901,7 +919,7 @@ export async function callRouter(){
           
           if(message === '') return
           
-          socket.emit("message", {messageSocketId: currUserSocketId, message});
+          socket.emit("message", {room, messageSocketId: currUserSocketId, message});
           e.target.reset();
           
         });
@@ -920,6 +938,20 @@ export async function callRouter(){
           
         });
 
+        document.querySelectorAll('.exit-channel').forEach(exit => {
+
+          exit.addEventListener('click', (e) => {
+            
+            socket.emit('leaveRoom', room);
+            currUserSocketId = null;
+            socket.off('newMessage');
+            socket.disconnect();
+
+          })
+
+        })
+
+        
 
       }
 

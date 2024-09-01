@@ -13,11 +13,11 @@ export default class extends AbstractView {
             
           <div class="channel wrapper" data-channel="">
 
-            <div class="channel__top-ctas display-none">
+            <div class="channel__top-ctas exit-channel display-none">
               <a href="/channels" data-link class="channel__top-ctas--back">
               <i class="fa-solid fa-arrow-left-long"></i> <span>Channels</span>
               </a>
-              <button class="channel__top-ctas--leave" id="leave-channel">Leave the channel</button>
+              <button class="channel__top-ctas--leave exit-channel" id="leave-channel">Leave the channel</button>
             </div>
 
             <div class="channel__join">

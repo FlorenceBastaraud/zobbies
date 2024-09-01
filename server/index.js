@@ -65,12 +65,30 @@ const io = new Server(server, {
 });
 
 
-io.on("connection", (socket) => {
-  socket.join('room');
-  socket.on('message', (message) => {
-    io.to('room').emit('newMessage', {
-      messageSocketId: message.messageSocketId,
-      incomingMessage: message.message
+io.on("connect", (socket) => {
+
+
+  socket.on('joinRoom', (room) => {
+    // console.log(room + ' join');
+    
+    socket.join(room);
+  })
+
+  socket.on('message', (data) => {    
+    io.to(data.room).emit('newMessage', {
+      messageSocketId: data.messageSocketId,
+      incomingMessage: data.message
     });
   });
+
+  socket.on('leaveRoom', room => {
+    // console.log(room + ' leave');
+
+    socket.leave(room)
+    socket.removeAllListeners('message');
+  })
+
+
 });
+
+
