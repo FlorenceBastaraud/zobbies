@@ -66,7 +66,7 @@ router.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'fbastaraud@yahoo.fr',
+        user: 'florence.bastaraud.dw@gmail.com',
         pass: process.env.GOOGLEMAILERPASSWORD
       }
     });
@@ -74,7 +74,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({id: newUser._id}, process.env.JWTSECRETKEY, {expiresIn: '10m'});
 
     const mailOptions = {
-      from: 'fbastaraud@yahoo.fr',
+      from: 'florence.bastaraud.dw@gmail.com',
       to: email,
       subject: 'Zobbies: Verify Your Account',
       html: `
@@ -152,7 +152,7 @@ router.post('/forgot-password', async (req, res) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'fbastaraud@yahoo.fr',
+          user: 'florence.bastaraud.dw@gmail.com',
           pass: process.env.GOOGLEMAILERPASSWORD
         }
       });
@@ -160,7 +160,7 @@ router.post('/forgot-password', async (req, res) => {
       const token = jwt.sign({id: user._id}, process.env.JWTSECRETKEY, {expiresIn: 60000});
 
       const mailOptions = {
-        from: 'fbastaraud@yahoo.fr',
+        from: 'florence.bastaraud.dw@gmail.com',
         to: email,
         subject: 'Zobbies: reset your password',
         html: `
@@ -311,6 +311,11 @@ router.post('/update-user', upload.single('user_picture'), async (req, res) => {
   const {displayName, bio} = req.body;
   const userPicture = JSON.stringify(req.file) || '';
 
+  const updatedUserInfos = { displayName, bio};
+  if(userPicture != ''){
+    updatedUserInfos.userPicture = userPicture;
+  }
+
   try {
 
     const token = await req.cookies?.token;
@@ -319,7 +324,7 @@ router.post('/update-user', upload.single('user_picture'), async (req, res) => {
 
     await User.findOneAndUpdate(
       {username},
-      { "$set": { userPicture, displayName, bio}}
+      { "$set": updatedUserInfos}
     );
 
     return res.json({status: true, message: 'User infos updated successfully'});

@@ -31,7 +31,7 @@ export default class extends AbstractView {
                 </fieldset>
 
 
-                <a href="/forgot-password" id="forgot-password">Forgot password?</a>
+                <a href="/forgot-password" id="forgot-password" data-link>Forgot password?</a>
 
                 <input type="submit" name="login" value="Login" class="primary-cta submit submit-login">
 
@@ -120,7 +120,7 @@ export default class extends AbstractView {
                 </fieldset>
 
 
-                <p class="legal">By registering, you agree to the <a href="/" target="_blank">terms of use</a>, and <a href="/" target="_blank">the privacy policy</a> as well as the <a href="/" target="_blank">use of cookies</a>.</p>
+                <p class="legal">By registering, you agree to the <a href="/conditions-of-use" target="_blank" data-link>terms of use</a>, and <a href="/privacy-policy" target="_blank" data-link>the privacy policy</a> as well as the <a href="/cookies" target="_blank" data-link>use of cookies</a>.</p>
 
                 <input type="submit" name="register" value="Register" class="primary-cta submit submit-register">
 

@@ -1911,6 +1911,9 @@
 .channel__top-ctas--back span {
   text-transform: uppercase;
 }
+.channel__top-ctas--back span, .channel__top-ctas--back i {
+  pointer-events: none;
+}
 .channel__top-ctas--leave {
   background: none;
   cursor: pointer;
