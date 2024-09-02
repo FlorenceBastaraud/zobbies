@@ -654,7 +654,7 @@ export async function callRouter(){
             
             channelElements += `
                     <div class="channels__blobs--item blob">
-                      <a href="/channel#${name}" data-link data-blob="${name}">${displayName}</a>
+                      <a href="/channel#${name}" data-blob="${name}">${displayName}</a>
                       <div class="members">
                         <i class="fa-solid fa-user"></i>
                         <span>${members.length}</span>
