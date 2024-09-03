@@ -654,7 +654,7 @@ export async function callRouter(){
             
             channelElements += `
                     <div class="channels__blobs--item blob">
-                      <a href="/channel#${name}" data-blob="${name}">${displayName}</a>
+                      <a href="/channel#${name}" data-link data-blob="${name}">${displayName}</a>
                       <div class="members">
                         <i class="fa-solid fa-user"></i>
                         <span>${members.length}</span>
@@ -678,7 +678,6 @@ export async function callRouter(){
 
       // channel view      
       const footerNavLinks = document.querySelectorAll('.footer__content--nav .nav-links');
-      console.log("dofus");
 
       if(location.pathname == '/channel'){
 
@@ -726,7 +725,9 @@ export async function callRouter(){
 
             
             if(document.querySelector('.channel-join')){
-              
+
+              document.querySelector('.channel__join').classList.remove('display-none');
+   
               document.querySelector('.channel-join').addEventListener('click', (e) => {
 
                 e.preventDefault();          
@@ -737,12 +738,22 @@ export async function callRouter(){
                 document.querySelector('.channel__input').classList.remove('display-none');
 
                 userChannelInteractions(name, 'join')
+
+                document.querySelector('.channel__chat').scrollTop = 9999999;
+
       
               });
 
             }
 
           }
+
+        }).then(() => {
+
+          setTimeout(() => {
+            document.querySelector('.channel__loading').classList.add('display-none');
+          }, 1000);
+
 
         }).then(async() => {
 
@@ -946,7 +957,6 @@ export async function callRouter(){
             exit.addEventListener('click', (e) => {
 
               e.preventDefault();
-              console.log('test');
               
               socket.emit('leaveRoom', room);
               currUserSocketId = null;

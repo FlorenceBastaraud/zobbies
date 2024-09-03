@@ -1927,7 +1927,7 @@
 .channel__top-ctas--leave:hover {
   text-decoration: underline;
 }
-.channel__join {
+.channel__loading, .channel__join {
   position: absolute;
   z-index: 20;
   width: 100%;
@@ -1939,8 +1939,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   background: #070707;
+}
+.channel__join {
+  gap: 10px;
 }
 .channel__join--title {
   font-size: 4.5rem;
