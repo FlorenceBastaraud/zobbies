@@ -674,144 +674,80 @@ export async function callRouter(){
 
       }
 
+
+
       // channel view      
-      
+      const footerNavLinks = document.querySelectorAll('.footer__content--nav .nav-links');
+      console.log("dofus");
+
       if(location.pathname == '/channel'){
-        
+
+
+        footerNavLinks.forEach(footerNavLink => {
+          footerNavLink.removeAttribute('data-link', '');
+          footerNavLink.setAttribute('data-in-channel-link', 'simple');
+        })
+
+
+                
         let currUserSocketId;
         let socket;
         let room;
-        
-        async function currentChannel(options = {}){
-          
-          let channel = await getChannel();
-          
-          if(Object.keys(options).length > 0){
+        let channel;
+        let name;
+        let displayName;
+        let description;
+        let members;
+        let chat;
 
-            if(options.action == 'firstLoaded'){
-              
-              const currUser = await getUserInfos();
-              
-              if(channel?.members.find(member => member == currUser._id)){
+        const isAChannelMember = new Promise(async(res, rej) => {
 
+          channel = await getChannel();
+          const currUser = await getUserInfos()
+
+          if(channel?.members.find(member => member == currUser._id)){
+            res(true);
+          } else {
+            res(false);
+          }
+
+        }).then((isAMember) => {
+
+
+          if(isAMember){
+
+            document.querySelector('.channel__join').classList.add('display-none');
+            document.querySelector('.channel__top-ctas').classList.remove('display-none');
+            document.querySelector('.channel__infos').classList.remove('display-none');
+            document.querySelector('.channel__chat').classList.remove('display-none');
+            document.querySelector('.channel__input').classList.remove('display-none');
+
+          } else {
+
+            
+            if(document.querySelector('.channel-join')){
+              
+              document.querySelector('.channel-join').addEventListener('click', (e) => {
+
+                e.preventDefault();          
                 document.querySelector('.channel__join').classList.add('display-none');
                 document.querySelector('.channel__top-ctas').classList.remove('display-none');
                 document.querySelector('.channel__infos').classList.remove('display-none');
                 document.querySelector('.channel__chat').classList.remove('display-none');
                 document.querySelector('.channel__input').classList.remove('display-none');
-                
-              }
-              
-              
 
-            } else {
-              
-              userChannelInteractions(channel.name, options.action);
-              channel = await getChannel();
-
-              if(options.action == 'redirect'){
-                return goTo('/channels');
-              }
-
-
-              if(options.action == 'leave'){
-                return await currentChannel({action: 'redirect'});
-              }
-
-              return await currentChannel();
+                userChannelInteractions(name, 'join')
+      
+              });
 
             }
 
-
-            socket = io(serverUrl)
-
-            socket.emit('leaveRoom', channel.name);
-            currUserSocketId = null;
-            socket.off('newMessage');
-            socket.disconnect();
-
-            return await currentChannel();
-
-
           }
 
-          
-          const {name, displayName, description, members, chat} = channel;
-          
-          
-          // chat config
-          socket = io(serverUrl);
-          room = name;
-
-          socket.on("connect", () => {
-            socket.emit('joinRoom', room);
-            currUserSocketId = socket.id;
-            userChannelInteractions('', 'socket', currUserSocketId);
-          });
+        }).then(async() => {
 
 
-          const addNewMessage = async newMessage => {
-
-            const {messageSocketId, incomingMessage} = newMessage;
-                          
-            const isMyMessage = currUserSocketId == messageSocketId;
-                                  
-            if(newMessage !== ''){
-
-              const dateISO = moment().toISOString(true).split('T');
-              const date = dateISO[0];
-              const time = dateISO[1].split(':', 2).join(':');
-
-              const currentDateThread = chat.find(chatItem => chatItem.date === date);
-                      
-              
-              
-              if(isMyMessage){
-                
-                let dataToAdd = {newThread: false, date, incomingMessage, time};
-
-                if(!currentDateThread){
-
-                  dataToAdd.newThread = true;
-
-                }
-
-                await userChannelInteractions(channel.name, 'update-chat', dataToAdd);
-
-
-              }
-
-              let currentUser = await getUserBySocketId(messageSocketId);  
-              
-              const currentUserPictureName = currentUser.userPicture?.length > 1 ? JSON.parse(currentUser.userPicture).filename : '';
-              const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
-              const currentUserUsername = '@' + currentUser.username || '@username-undefined';
-              const mainChatWrapper = document.querySelector('.channel__chat');
-              const chatElement = `
-                      <div class="channel__chat--item">
-        
-                            <div class="user" data-user="${currentUser._id}">
-                              <div class="user__image">
-                                <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
-                              </div>
-                              <a class="user__username exit-channel" data-user-profile-id="${currentUser._id}" data-link href="/profile" title="Visit ${currentUser.username}'s profile">${currentUserUsername}</a>
-                            </div>
-        
-                            <p class="message">${incomingMessage}</p>
-        
-                            <span class="publish-time">${time}</span>
-        
-                        </div>`;
-                mainChatWrapper.innerHTML += chatElement;
-
-                document.querySelector('.channel__chat').scrollTop = 9999999;
-
-
-            }
-          
-          }
-          socket.on('newMessage', addNewMessage);
-        
+          ({ name, displayName, description, members, chat } = channel);
           
           document.querySelector('.channel').setAttribute('data-channel', name);
           document.querySelector('.channel__infos--title').innerText = displayName;
@@ -864,7 +800,7 @@ export async function callRouter(){
                         <div class="user__image">
                           <img class="user__image--item" src="${userPhoto}" alt="${displayName} profile picture">
                         </div>
-                        <a class="user__username exit-channel" data-user-profile-id="${user._id}" data-link href="/profile" title="Visit ${user.username}'s profile">${username}</a>
+                        <a class="user__username exit-channel" data-user-profile-id="${user._id}" data-in-channel-link href="/profile" title="Visit ${user.username}'s profile">${username}</a>
                       </div>
   
                       <p class="message">${message.message}</p>
@@ -886,72 +822,169 @@ export async function callRouter(){
   
           document.querySelector('.channel__chat').scrollTop = 9999999;
 
-        }
 
-        if(document.querySelector('.channel-join')){
+        }).then(() => {
           
-          document.querySelector('.channel-join').addEventListener('click', (e) => {
-            e.preventDefault();          
-            document.querySelector('.channel__join').classList.add('display-none');
-            document.querySelector('.channel__top-ctas').classList.remove('display-none');
-            document.querySelector('.channel__infos').classList.remove('display-none');
-            document.querySelector('.channel__chat').classList.remove('display-none');
-            document.querySelector('.channel__input').classList.remove('display-none');
-            currentChannel({isNewMember: true, action: 'join'});
-  
+          socket = io(serverUrl);
+          room = name;
+
+          socket.on("connect", () => {
+            socket.emit('joinRoom', room);
+            currUserSocketId = socket.id;
+            userChannelInteractions('', 'socket', currUserSocketId);
           });
 
 
-        }
 
-        currentChannel({action: 'firstLoaded'});
+        }).then(() => {
 
 
-        document.querySelector('#leave-channel').addEventListener('click', (e) => {
-          e.preventDefault();            
-          currentChannel({isNewMember: false, action: 'leave'});
-        });
 
-        
-        document.querySelector('.channel__input--form').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const message = document.getElementById('text-message').value;
+          const addNewMessage = async newMessage => {
+
+            const {messageSocketId, incomingMessage} = newMessage;
+                      
+            const isMyMessage = currUserSocketId == messageSocketId;
+                              
+            if(newMessage !== ''){
+
+              const dateISO = moment().toISOString(true).split('T');
+              const date = dateISO[0];
+              const time = dateISO[1].split(':', 2).join(':');
+
+              const currentDateThread = chat.find(chatItem => chatItem.date === date);
+                  
           
-          if(message === '') return
           
-          socket.emit("message", {room, messageSocketId: currUserSocketId, message});
-          e.target.reset();
-          
-        });
-
-        document.querySelector('#text-message').addEventListener('keypress', (e) => {
-          const message = document.getElementById('text-message').value;
-          
-          if(message === '') return
-
-          if(e.key === 'Enter'){
+              if(isMyMessage){
             
+                let dataToAdd = {newThread: false, date, incomingMessage, time};
+
+                if(!currentDateThread){
+
+                  dataToAdd.newThread = true;
+
+                }
+
+                await userChannelInteractions(name, 'update-chat', dataToAdd);
+
+              }
+
+              let currentUser = await getUserBySocketId(messageSocketId);  
+          
+              const currentUserPictureName = currentUser.userPicture?.length > 1 ? JSON.parse(currentUser.userPicture).filename : '';
+              const currentUserPhoto = currentUserPictureName !== '' ? getUploadImgFolder() + currentUserPictureName : getStaticImgFolder() + 'profile-picture-default.jpg';
+              const currentUserUsername = '@' + currentUser.username || '@username-undefined';
+              const mainChatWrapper = document.querySelector('.channel__chat');
+              const chatElement = `
+                  <div class="channel__chat--item">
+    
+                        <div class="user" data-user="${currentUser._id}">
+                          <div class="user__image">
+                            <img class="user__image--item" src="${currentUserPhoto}" alt="${currentUser.displayName} profile picture">
+                          </div>
+                          <a class="user__username exit-channel" data-user-profile-id="${currentUser._id}" data-in-channel-link href="/profile" title="Visit ${currentUser.username}'s profile">${currentUserUsername}</a>
+                        </div>
+    
+                        <p class="message">${incomingMessage}</p>
+    
+                        <span class="publish-time">${time}</span>
+    
+                    </div>`;
+
+              mainChatWrapper.innerHTML += chatElement;
+
+              document.querySelector('.channel__chat').scrollTop = 9999999;
+
+
+            }
+      
+          } 
+
+          socket.on('newMessage', addNewMessage);
+  
+
+          document.querySelector('#leave-channel').addEventListener('click', (e) => {
             e.preventDefault();
-            document.getElementById("submit-message").click();
-          
-          }
-          
-        });
+            userChannelInteractions(name, 'leave')          
+            goTo('/channels');
+          });
 
-        document.querySelectorAll('.exit-channel').forEach(exit => {
-
-          exit.addEventListener('click', (e) => {
+    
+          document.querySelector('.channel__input--form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = document.getElementById('text-message').value;
             
-            socket.emit('leaveRoom', room);
-            currUserSocketId = null;
-            socket.off('newMessage');
-            socket.disconnect();
+            if(message === '') return
+            
+            socket.emit("message", {room, messageSocketId: currUserSocketId, message});
+            e.target.reset();
+            
+          });
+
+
+
+          document.querySelector('#text-message').addEventListener('keypress', (e) => {
+
+            const message = document.getElementById('text-message').value;
+            
+            if(message === '') return
+
+            if(e.key === 'Enter'){
+              
+              e.preventDefault();
+              document.getElementById("submit-message").click();
+            
+            }
+      
+          });
+
+          
+          document.querySelectorAll('[data-in-channel-link]').forEach(exit => {
+
+      
+            exit.addEventListener('click', (e) => {
+
+              e.preventDefault();
+              console.log('test');
+              
+              socket.emit('leaveRoom', room);
+              currUserSocketId = null;
+              socket.off('newMessage');
+              socket.disconnect();
+
+
+              const userProfileId = e.target.getAttribute('data-user-profile-id');
+
+              if(userProfileId){
+                document.body.setAttribute('is-visitor', true);      
+                document.body.setAttribute('user-profile-id-visit', userProfileId);      
+              } else {
+                document.body.removeAttribute('is-visitor');      
+                document.body.removeAttribute('user-profile-id-visit');      
+              }
+              
+              goTo(e.target.href);
+              updateNav();
+
+
+            })
 
           })
 
+
+
+        });
+        
+        
+
+      } else {
+
+        footerNavLinks.forEach(footerNavLink => {
+          footerNavLink.setAttribute('data-link', '');
+          footerNavLink.removeAttribute('data-in-channel-link', 'simple');
         })
 
-        
 
       }
 

@@ -11,20 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       e.preventDefault();
       
-      const userProfileId = e.target.getAttribute('data-user-profile-id');
-
-      if(userProfileId){
-        document.body.setAttribute('is-visitor', true);      
-        document.body.setAttribute('user-profile-id-visit', userProfileId);      
-      } else {
-        document.body.removeAttribute('is-visitor');      
-        document.body.removeAttribute('user-profile-id-visit');      
-      }
-      
+      document.body.removeAttribute('is-visitor');      
+      document.body.removeAttribute('user-profile-id-visit');      
+  
       goTo(e.target.href);
       updateNav();
      
+    } else if(e.target.matches('[data-in-channel-link')){
+
+      return;
+
     }
+
   });
   
   updateNav();

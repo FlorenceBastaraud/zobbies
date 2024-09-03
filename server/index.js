@@ -83,7 +83,6 @@ io.on("connect", (socket) => {
 
   socket.on('leaveRoom', room => {
     // console.log(room + ' leave');
-
     socket.leave(room)
     socket.removeAllListeners('message');
   })

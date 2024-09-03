@@ -14,10 +14,10 @@ export default class extends AbstractView {
           <div class="channel wrapper" data-channel="">
 
             <div class="channel__top-ctas exit-channel display-none">
-              <a href="/channels" data-link class="channel__top-ctas--back">
+              <a href="/channels" data-in-channel-link class="channel__top-ctas--back">
               <i class="fa-solid fa-arrow-left-long"></i> <span>Channels</span>
               </a>
-              <button class="channel__top-ctas--leave exit-channel" id="leave-channel">Leave the channel</button>
+              <button class="channel__top-ctas--leave exit-channel" data-in-channel-link id="leave-channel">Leave the channel</button>
             </div>
 
             <div class="channel__join">
@@ -25,7 +25,7 @@ export default class extends AbstractView {
               <h4 class="channel__join--description">Hey, you're new here! Do you want to join the channel?</h4>
               <div class="channel__join--buttons">
               <button class="join channel-join primary-cta">Join</button>
-              <a href="/channels" data-link class="cancel cancel-join">Not yet</a>
+              <a href="/channels" data-in-channel-link class="cancel cancel-join exit-channel">Not yet</a>
               </div>
             </div>
 
